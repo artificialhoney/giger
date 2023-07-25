@@ -1,2 +1,3 @@
 inputDir: in/
-outputDir: out/
+outputMap: |
+  out/{{ .in | strings.ReplaceAll ".go.tpl" ".txt" }}  
