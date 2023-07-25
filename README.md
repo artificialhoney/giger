@@ -35,15 +35,9 @@ Also try to add **Aesthetic Gradients** with same prompt!
 
 **Model:** [DreamShaper](https://civitai.com/models/4384/dreamshaper)
 
-## Prompts
+## Docs
 
-![Clipart of Flava Flav](./examples/prompts/Clipart%20of%20Flava%20Flav.png?raw=true)
-
-`Clipart of Flava Flav`, **DreamShaper**, creates an vectorizable clipart.
-
-![Wolpertinger](./examples/prompts/Wolpertinger.png?raw=true)
-
-`Wolpertinger`, **Photon**, creates an photo realistic instance of the [bavarian legend](https://de.wikipedia.org/wiki/Wolpertinger#/media/Datei:Wolpertinger.jpg).
+### [Prompts](/docs/prompts.md)
 
 ## Links
 
