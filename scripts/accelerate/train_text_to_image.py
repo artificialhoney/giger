@@ -19,7 +19,9 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 import argparse
 import logging
 import math
+
 import os
+
 import random
 import shutil
 from pathlib import Path
