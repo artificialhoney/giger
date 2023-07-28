@@ -8,8 +8,7 @@ Make sure you have **stable-diffusion-webui** with the **control-net** extension
 
 ## Installation
 
-1. `brew install gomplate`
-2. `git clone git@github.com:artificialhoney/stable-diffusion-templates.git`
+`pip install -r requirements.txt`
 
 
 ## Usage
@@ -17,7 +16,13 @@ Make sure you have **stable-diffusion-webui** with the **control-net** extension
 To generate prompts with settings for use in Webui try e.g.:
 
 ```bash
-gomplate -d death-knights=./data/death-knights/default.yaml -d parisienne=./data/parisienne/default.yaml
+jinja2 ./templates/death-knights/default.j2 ./data/death-knights/default.yaml > ./out/death-knights.txt
+```
+
+or
+
+```bash
+jinja2 ./templates/parisienne/default.j2 ./data/parisienne/default.yaml > ./out/parisienne.txt
 ```
 
 ### Death Knights

@@ -1,3 +1,0 @@
-inputDir: in/
-outputMap: |
-  out/{{ .in | strings.ReplaceAll ".go.tpl" ".txt" }}  
