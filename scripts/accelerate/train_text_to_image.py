@@ -138,6 +138,7 @@ These are the key hyperparameters used during training:
 
 """
     wandb_info = ""
+    wandb_run_url = None
     if is_wandb_available():
         wandb_run_url = None
         if wandb.run is not None:
