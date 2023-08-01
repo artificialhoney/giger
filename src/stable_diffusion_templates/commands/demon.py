@@ -20,8 +20,8 @@ class DemonCommand:
         self.parser.add_argument("-n", "--name", help="Name of the text", required=True)
         self.parser.add_argument("-p",
                               "--part", help="Part of input", required=True)
-        self.service = DemonService()
     def run(self, args):
+        self.service = DemonService(args.model, args.alias)
         f = open(args.template, "r")
         template = f.read()
         f.close()
@@ -37,5 +37,5 @@ class DemonCommand:
         _logger.info("Running demon batch for '{0}'".format(args.name))
 
         data["name"] = args.name
-        self.service.render(args.name, args.model, args.alias, args.part, input, args.output, template, data)
+        self.service.render(args.name, args.part, input, args.output, template, data)
             

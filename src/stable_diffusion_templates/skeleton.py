@@ -29,6 +29,7 @@ from stable_diffusion_templates import __version__
 from .commands.template import TemplateCommand
 from .commands.demon import DemonCommand
 from .commands.prompt import PromptCommand
+from .commands.txt2img import Txt2ImgCommand
 
 __author__ = "Sebastian Krüger"
 __copyright__ = "Sebastian Krüger"
@@ -82,6 +83,7 @@ class CLI():
         self.template = TemplateCommand(subparsers)
         self.demon = DemonCommand(subparsers)
         self.prompt = PromptCommand(subparsers)
+        self.txt2img = Txt2ImgCommand(subparsers)
 
         return parser.parse_args(args)
     def setup_logging(self, loglevel):
@@ -110,10 +112,13 @@ class CLI():
         self.setup_logging(args.loglevel)
         if args.command == 'template':
             self.template.run(args)
-        if args.command == 'demon':
+        elif args.command == 'demon':
             self.demon.run(args)
-        if args.command == 'prompt':
+        elif args.command == 'prompt':
             self.prompt.run(args)
+        elif args.command == 'txt2img':
+            self.txt2img.run(args)
+
 
 def run():
     """Calls :func:`main` passing the CLI arguments extracted from :obj:`sys.argv`

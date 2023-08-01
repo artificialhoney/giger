@@ -13,19 +13,25 @@ Make sure you have **stable-diffusion-webui** with the **control-net** extension
 
 ## CLI
 
-### Template
+### template
 
 ```bash
 python -m stable_diffusion_templates.skeleton template -t templates/hero.j2 -d data/hero.yaml
 ```
 
-### Prompt
+### prompt
 
 ```bash
 python -m stable_diffusion_templates.skeleton prompt --time "ancient" --type "Comic Book" --description "Spawn in a battle" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k"
 ```
 
-### Demon
+### txt2img
+
+```bash
+python -m stable_diffusion_templates.skeleton txt2img --prompt "Comic Book of Spawn in a battle, Concept art, Photorealistic, Octane render, Cinematic, Ultra-Wide-Angle Shot, 8k" --output $HOME/Desktop/spawn.png
+```
+
+### demon
 
 ```bash
 python -m stable_diffusion_templates.skeleton demon -t templates/demon.j2 -d data/demon.yaml -i examples/demon/the_demon_pt1.txt -o out/ -n "The Demon, Part 1" -p IV
