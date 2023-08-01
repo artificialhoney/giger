@@ -16,19 +16,25 @@ Make sure you have **stable-diffusion-webui** with the **control-net** extension
 ### template
 
 ```bash
-python -m stable_diffusion_templates.skeleton template -t templates/hero.j2 -d data/hero.yaml
+python -m stable_diffusion_templates.skeleton template -c type=Viking  -d data/hero.yaml "$(cat templates/hero.j2)"
 ```
 
 ### prompt
 
 ```bash
-python -m stable_diffusion_templates.skeleton prompt --time "ancient" --type "Comic Book" --description "Spawn in a battle" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k"
+python -m stable_diffusion_templates.skeleton prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k" 
 ```
 
 ### txt2img
 
 ```bash
-python -m stable_diffusion_templates.skeleton txt2img --prompt "Comic Book of Spawn in a battle, Concept art, Photorealistic, Octane render, Cinematic, Ultra-Wide-Angle Shot, 8k" --output $HOME/Desktop/spawn.png
+python -m stable_diffusion_templates.skeleton txt2img "Comic Book of Spawn in a battle, Concept art, Photorealistic, Octane render, Cinematic, Ultra-Wide-Angle Shot, 8k" --output $HOME/Desktop/ --name spawn
+```
+
+or e.g.
+
+```bash
+python -m stable_diffusion_templates.skeleton txt2img "$(python -m stable_diffusion_templates.skeleton prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k")" --output $HOME/Desktop/ --name spawn
 ```
 
 ### demon

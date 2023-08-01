@@ -8,9 +8,9 @@ class PromptCommand:
     def __init__(self, parser):
         self.service = PromptService()
         self.parser = parser.add_parser("prompt", help="Generate prompt")
+        self.parser.add_argument("description", nargs="+")
         self.parser.add_argument("--time", choices=self.service.times())
         self.parser.add_argument("--type", choices=self.service.types())
-        self.parser.add_argument("--description", required=True, nargs="+")
         self.parser.add_argument("--background_color", help="RGB-HEX value")
         self.parser.add_argument("--art_style", choices=self.service.art_styles(), nargs="*")
         self.parser.add_argument("--artist", choices=self.service.artists(), nargs="*")
