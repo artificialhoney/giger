@@ -28,6 +28,7 @@ from stable_diffusion_templates import __version__
 
 from .commands.template import TemplateCommand
 from .commands.demon import DemonCommand
+from .commands.prompt import PromptCommand
 
 __author__ = "Sebastian Krüger"
 __copyright__ = "Sebastian Krüger"
@@ -52,7 +53,8 @@ class CLI():
         Returns:
         :obj:`argparse.Namespace`: command line parameters namespace
         """
-        parser = argparse.ArgumentParser(description="Tools for Stable Diffusion")
+        parser = argparse.ArgumentParser(prog="sd-cli", description="Tools for Stable Diffusion")
+
         parser.add_argument(
             "--version",
             action="version",
@@ -79,6 +81,7 @@ class CLI():
 
         self.template = TemplateCommand(subparsers)
         self.demon = DemonCommand(subparsers)
+        self.prompt = PromptCommand(subparsers)
 
         return parser.parse_args(args)
     def setup_logging(self, loglevel):
@@ -109,7 +112,8 @@ class CLI():
             self.template.run(args)
         if args.command == 'demon':
             self.demon.run(args)
-
+        if args.command == 'prompt':
+            self.prompt.run(args)
 
 def run():
     """Calls :func:`main` passing the CLI arguments extracted from :obj:`sys.argv`

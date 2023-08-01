@@ -8,9 +8,22 @@ Make sure you have **stable-diffusion-webui** with the **control-net** extension
 
 ## Installation
 
+`pip install -r requirements.txt`
 `pip install -e .`
 
-## Batch
+## CLI
+
+### Template
+
+```bash
+python -m stable_diffusion_templates.skeleton template -t templates/hero.j2 -d data/hero.yaml
+```
+
+### Prompt
+
+```bash
+python -m stable_diffusion_templates.skeleton prompt --time "ancient" --type "Comic Book" --description "Spawn in a battle" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k"
+```
 
 ### Demon
 
