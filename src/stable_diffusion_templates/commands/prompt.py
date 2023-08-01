@@ -1,4 +1,5 @@
 import logging
+import sys
 
 _logger = logging.getLogger(__name__)
 
@@ -8,7 +9,7 @@ class PromptCommand:
     def __init__(self, parser):
         self.service = PromptService()
         self.parser = parser.add_parser("prompt", help="Generate prompt")
-        self.parser.add_argument("description", nargs="+")
+        self.parser.add_argument("description", nargs="?", default=(None if sys.stdin.isatty() else sys.stdin))
         self.parser.add_argument("--time", choices=self.service.times())
         self.parser.add_argument("--type", choices=self.service.types())
         self.parser.add_argument("--background_color", help="RGB-HEX value")
@@ -28,5 +29,3 @@ class PromptCommand:
     def run(self, args):
         _logger.info("Creating prompt for '{0}'".format(args.description))
         print(self.service.generate(args))
-        
-            

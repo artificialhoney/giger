@@ -37,12 +37,6 @@ or e.g.
 python -m stable_diffusion_templates.skeleton txt2img "$(python -m stable_diffusion_templates.skeleton prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k")" --output $HOME/Desktop/ --name spawn
 ```
 
-### demon
-
-```bash
-python -m stable_diffusion_templates.skeleton demon -t templates/demon.j2 -d data/demon.yaml -i examples/demon/the_demon_pt1.txt -o out/ -n "The Demon, Part 1" -p IV
-```
-
 ## Templates
 
 ### Hero

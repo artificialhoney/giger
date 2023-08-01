@@ -27,7 +27,6 @@ import sys
 from stable_diffusion_templates import __version__
 
 from .commands.template import TemplateCommand
-from .commands.demon import DemonCommand
 from .commands.prompt import PromptCommand
 from .commands.txt2img import Txt2ImgCommand
 
@@ -81,7 +80,6 @@ class CLI():
         subparsers = parser.add_subparsers(dest="command", required=True)
 
         self.template = TemplateCommand(subparsers)
-        self.demon = DemonCommand(subparsers)
         self.prompt = PromptCommand(subparsers)
         self.txt2img = Txt2ImgCommand(subparsers)
 
@@ -112,8 +110,6 @@ class CLI():
         self.setup_logging(args.loglevel)
         if args.command == 'template':
             self.template.run(args)
-        elif args.command == 'demon':
-            self.demon.run(args)
         elif args.command == 'prompt':
             self.prompt.run(args)
         elif args.command == 'txt2img':

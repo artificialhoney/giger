@@ -1,3 +1,5 @@
+import io
+
 class PromptService:
     def times(self):
         return [
@@ -361,9 +363,15 @@ class PromptService:
     def generate(self, args):
         separator = ", "
         output = ""
+        if args.time != None:
+            output += args.time + " "
         if args.type != None:
             output += args.type + " of "
-        output += separator.join(args.description)
+        if isinstance(args.description, io.TextIOWrapper):
+            description = args.description.read()
+        else:
+            description = args.description
+        output += description.strip()
         if args.background_color != None:
             output += " with background " + args.background_color
         if args.art_style != None and len(args.art_style) > 0:

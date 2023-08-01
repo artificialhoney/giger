@@ -21,4 +21,4 @@ class ImageService:
 
         images = self.pipeline(prompt, generator=generator, width=width, height=height, num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps)
         for x in range(count):
-            images[0][x].save(os.path.join(Path(output).resolve(), name + "-" + str(x).ljust(3, "0") + "-" + seed + ".png"), exif=exif_bytes)
+            images[0][x].save(os.path.join(Path(output).resolve(), name + "-" + str(x).rjust(3, "0") + "-" + str(seed) + ".png"), exif=exif_bytes)

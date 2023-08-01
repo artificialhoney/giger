@@ -3,6 +3,8 @@ import logging
 import os
 import pathlib
 import random
+import io
+import sys
 
 _logger = logging.getLogger(__name__)
 
@@ -12,7 +14,8 @@ class Txt2ImgCommand:
         self.parser = parser.add_parser(
             "txt2img", help="Generate generate image from prompt")
         self.parser.add_argument(
-            "prompt", help="The text prompt")
+            "prompt", help="The text prompt", nargs="?", default=(None if sys.stdin.isatty() else sys.stdin))
+
         self.parser.add_argument(
             "--model", help="The Stable Diffusion model to use", default="Lykon/DreamShaper")
         self.parser.add_argument(
@@ -37,7 +40,13 @@ class Txt2ImgCommand:
         else:
             seed = args.seed
 
+        if isinstance(args.prompt, io.TextIOWrapper):
+            prompt = args.prompt.read()
+        else:
+            prompt = args.prompt
+
+
         for x in range(args.batch_size):
             path = os.path.join(args.output, args.name)
             pathlib.Path(path).mkdir(parents=True, exist_ok=True)
-            self.service.txt2img(args.prompt, args.negative_prompt, path, args.width, args.height, seed + x, args.batch_count, args.inference_steps, args.name + "-" + str(x).ljust(3, "0"))
+            self.service.txt2img(prompt, args.negative_prompt, path, args.width, args.height, seed + x, args.batch_count, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
