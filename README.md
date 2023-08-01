@@ -8,23 +8,31 @@ Make sure you have **stable-diffusion-webui** with the **control-net** extension
 
 ## Installation
 
-`pip install -r requirements.txt`
+`pip install -e .`
+
+## Batch
+
+### Demon
+
+```bash
+python -m stable_diffusion_templates.skeleton demon -t templates/demon.j2 -d data/demon.yaml -i examples/demon/the_demon_pt1.txt -o out/ -n "The Demon, Part 1" -p IV
+```
 
 ## Templates
 
-### Death Knights
+### Hero
 
-Take your favorite character with pose, e.g. [assets](./assets/death-knights/valkyrie.png) and input it to a ControlNet unit of type **SoftLine** with weight **0.75**.
+Take your favorite character with pose, e.g. [assets](./assets/hero/valkyrie.png) and input it to a ControlNet unit of type **SoftLine** with weight **0.75**.
 
 **Model:** [Photon](https://civitai.com/models/84728/photon)
 
 To generate prompts with settings for use in Webui try e.g.:
 
 ```bash
-jinja2 ./templates/death-knights/default.j2 ./data/death-knights/default.yaml > ./out/death-knights.txt
+python -m stable_diffusion_templates.skeleton template -t templates/hero.j2 -d data/hero.yaml
 ```
 
-### Parisienne
+### Graffiti
 
 Use a text image of best 4 characters in black font on white background like [assets](./assets/parisienne/pali.png) and input it to a ControlNet unit of type **Depth** with weight **0.5**.
 Make sure to invert in preprocessor settings!
@@ -34,7 +42,7 @@ Also try to add **Aesthetic Gradients** with same prompt!
 **Model:** [DreamShaper](https://civitai.com/models/4384/dreamshaper)
 
 ```bash
-jinja2 ./templates/parisienne/default.j2 ./data/parisienne/default.yaml > ./out/parisienne.txt
+python -m stable_diffusion_templates.skeleton template -t templates/graffiti.j2 -d data/graffiti.yaml
 ```
 
 ## Notebooks
