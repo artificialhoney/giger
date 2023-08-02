@@ -34,6 +34,7 @@ from stable_diffusion_templates import __version__
 from .commands.template import TemplateCommand
 from .commands.prompt import PromptCommand
 from .commands.txt2img import Txt2ImgCommand
+from .commands.roop import RoopCommand
 
 __author__ = "Sebastian Krüger"
 __copyright__ = "Sebastian Krüger"
@@ -88,6 +89,7 @@ class CLI():
         self.template = TemplateCommand(subparsers)
         self.prompt = PromptCommand(subparsers)
         self.txt2img = Txt2ImgCommand(subparsers)
+        self.roop = RoopCommand(subparsers)
 
         argcomplete.autocomplete(parser)
 
@@ -122,7 +124,8 @@ class CLI():
             self.prompt.run(args)
         elif args.command == 'txt2img':
             self.txt2img.run(args)
-
+        elif args.command == 'roop':
+            self.roop.run(args)
 
 def run():
     """Calls :func:`main` passing the CLI arguments extracted from :obj:`sys.argv`
