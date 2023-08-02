@@ -1,10 +1,6 @@
-# stable-diffusion-templates
+# sd
 
-Collection of templates to create stable-diffusion artworks.
-
-## Prerequistes
-
-Make sure you have **stable-diffusion-webui** with the **control-net** extension installed.
+CLI for Stable Diffusion tasks.
 
 ## Installation
 
@@ -16,32 +12,32 @@ Make sure you have **stable-diffusion-webui** with the **control-net** extension
 ### template
 
 ```bash
-python -m stable_diffusion_templates.skeleton template -c type=Viking  -d data/hero.yaml "$(cat templates/hero.j2)"
+sd template -c type=Viking  -d data/hero.yaml "$(cat templates/hero.j2)"
 ```
 
 ### prompt
 
 ```bash
-python -m stable_diffusion_templates.skeleton prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k" 
+sd prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k" 
 ```
 
 ### image
 
 ```bash
-python -m stable_diffusion_templates.skeleton image "Comic Book of Spawn in a battle, Concept art, Photorealistic, Octane render, Cinematic, Ultra-Wide-Angle Shot, 8k" --output $HOME/Desktop/ --name spawn
+sd image "Comic Book of Spawn in a battle, Concept art, Photorealistic, Octane render, Cinematic, Ultra-Wide-Angle Shot, 8k" --output $HOME/Desktop/ --name spawn
 ```
 
 or e.g.
 
 ```bash
-python -m stable_diffusion_templates.skeleton image "$(python -m stable_diffusion_templates.skeleton prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k")" --output $HOME/Desktop/ --name spawn
+sd image "$(sd prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k")" --output $HOME/Desktop/ --name spawn
 ```
 
 ```bash
 prompt="a wall with graffiti on it, with text Seen, in the art of Seen, located in New York City"
-echo "$prompt" | python -m stable_diffusion_templates.skeleton image --output $(pwd)/out/batch --name graffiti --input $(pwd)/assets/img/sketch.png --controlnet_model "lllyasviel/sd-controlnet-hed"
-echo "$prompt" | python -m stable_diffusion_templates.skeleton image --output $(pwd)/out/batch --name graffiti --input $(pwd)/assets/img/sketch.png
-echo "$prompt" | python -m stable_diffusion_templates.skeleton image --output $(pwd)/out/batch --name graffiti
+echo "$prompt" | sd image --output $(pwd)/out/batch --name graffiti --input $(pwd)/assets/img/sketch.png --controlnet_model "lllyasviel/sd-controlnet-hed"
+echo "$prompt" | sd image --output $(pwd)/out/batch --name graffiti --input $(pwd)/assets/img/sketch.png
+echo "$prompt" | sd image --output $(pwd)/out/batch --name graffiti
 ```
 
 ### roop
@@ -49,7 +45,7 @@ echo "$prompt" | python -m stable_diffusion_templates.skeleton image --output $(
 All work is done in the [roop](https://github.com/s0md3v/roop) repository!
 
 ```bash
-python -m stable_diffusion_templates.skeleton roop -s face.jpg -t target.png -o output.png
+sd roop -s face.jpg -t target.png -o output.png
 ```
 
 ## Templates
@@ -63,7 +59,7 @@ Take your favorite character with pose, e.g. [assets](./assets/hero/valkyrie.png
 To generate prompts with settings for use in Webui try e.g.:
 
 ```bash
-python -m stable_diffusion_templates.skeleton template -t templates/hero.j2 -d data/hero.yaml
+sd template -t templates/hero.j2 -d data/hero.yaml
 ```
 
 ### Graffiti
@@ -76,7 +72,7 @@ Also try to add **Aesthetic Gradients** with same prompt!
 **Model:** [DreamShaper](https://civitai.com/models/4384/dreamshaper)
 
 ```bash
-python -m stable_diffusion_templates.skeleton template -t templates/graffiti.j2 -d data/graffiti.yaml
+sd template -t templates/graffiti.j2 -d data/graffiti.yaml
 ```
 
 ## Notebooks

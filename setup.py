@@ -1,5 +1,5 @@
 """
-    Setup file for stable-diffusion-templates.
+    Setup file for sd.
     Use setup.cfg to configure your project.
 
     This file was generated with PyScaffold 4.5.
@@ -10,7 +10,13 @@ from setuptools import setup
 
 if __name__ == "__main__":
     try:
-        setup(use_scm_version={"version_scheme": "no-guess-dev"})
+        setup(use_scm_version={"version_scheme": "no-guess-dev"}, name='sd',
+              entry_points={
+                  'console_scripts': [
+                      'sd = sd.skeleton:run',
+                  ],
+        },
+        )
     except:  # noqa
         print(
             "\n\nAn error occurred while building the project, "

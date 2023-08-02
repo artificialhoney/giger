@@ -1,27 +1,27 @@
 .. These are examples of badges you might want to add to your README:
    please update the URLs accordingly
 
-    .. image:: https://api.cirrus-ci.com/github/<USER>/stable-diffusion-templates.svg?branch=main
+    .. image:: https://api.cirrus-ci.com/github/<USER>/sd.svg?branch=main
         :alt: Built Status
-        :target: https://cirrus-ci.com/github/<USER>/stable-diffusion-templates
-    .. image:: https://readthedocs.org/projects/stable-diffusion-templates/badge/?version=latest
+        :target: https://cirrus-ci.com/github/<USER>/sd
+    .. image:: https://readthedocs.org/projects/sd/badge/?version=latest
         :alt: ReadTheDocs
-        :target: https://stable-diffusion-templates.readthedocs.io/en/stable/
-    .. image:: https://img.shields.io/coveralls/github/<USER>/stable-diffusion-templates/main.svg
+        :target: https://sd.readthedocs.io/en/stable/
+    .. image:: https://img.shields.io/coveralls/github/<USER>/sd/main.svg
         :alt: Coveralls
-        :target: https://coveralls.io/r/<USER>/stable-diffusion-templates
-    .. image:: https://img.shields.io/pypi/v/stable-diffusion-templates.svg
+        :target: https://coveralls.io/r/<USER>/sd
+    .. image:: https://img.shields.io/pypi/v/sd.svg
         :alt: PyPI-Server
-        :target: https://pypi.org/project/stable-diffusion-templates/
-    .. image:: https://img.shields.io/conda/vn/conda-forge/stable-diffusion-templates.svg
+        :target: https://pypi.org/project/sd/
+    .. image:: https://img.shields.io/conda/vn/conda-forge/sd.svg
         :alt: Conda-Forge
-        :target: https://anaconda.org/conda-forge/stable-diffusion-templates
-    .. image:: https://pepy.tech/badge/stable-diffusion-templates/month
+        :target: https://anaconda.org/conda-forge/sd
+    .. image:: https://pepy.tech/badge/sd/month
         :alt: Monthly Downloads
-        :target: https://pepy.tech/project/stable-diffusion-templates
+        :target: https://pepy.tech/project/sd
     .. image:: https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Twitter
         :alt: Twitter
-        :target: https://twitter.com/stable-diffusion-templates
+        :target: https://twitter.com/sd
 
 .. image:: https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold
     :alt: Project generated with PyScaffold
@@ -30,7 +30,7 @@
 |
 
 ==========================
-stable-diffusion-templates
+sd
 ==========================
 
 

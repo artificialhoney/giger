@@ -87,7 +87,7 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = "stable-diffusion-templates"
+project = "sd"
 copyright = "2023, Sebastian Krüger"
 
 # The version info for the project you're documenting, acts as replacement for
@@ -229,7 +229,7 @@ html_static_path = ["_static"]
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "stable-diffusion-templates-doc"
+htmlhelp_basename = "sd-doc"
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -246,7 +246,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    ("index", "user_guide.tex", "stable-diffusion-templates Documentation", "Sebastian Krüger", "manual")
+    ("index", "user_guide.tex", "sd Documentation", "Sebastian Krüger", "manual")
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

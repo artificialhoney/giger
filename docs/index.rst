@@ -1,8 +1,8 @@
 ==========================
-stable-diffusion-templates
+sd
 ==========================
 
-This is the documentation of **stable-diffusion-templates**.
+This is the documentation of **sd**.
 
 .. note::
 

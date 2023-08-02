@@ -29,7 +29,7 @@ import sys
 
 import argcomplete
 
-from stable_diffusion_templates import __version__
+from sd import __version__
 
 from .commands.template import TemplateCommand
 from .commands.prompt import PromptCommand
@@ -60,12 +60,12 @@ class CLI():
         :obj:`argparse.Namespace`: command line parameters namespace
         """
         parser = argparse.ArgumentParser(
-            prog="sd-cli", description="Tools for Stable Diffusion")
+            prog="sd", description="Tools for Stable Diffusion")
 
         parser.add_argument(
             "--version",
             action="version",
-            version=f"stable-diffusion-templates {__version__}",
+            version=f"sd {__version__}",
         )
         parser.add_argument(
             "-v",
