@@ -25,16 +25,23 @@ python -m stable_diffusion_templates.skeleton template -c type=Viking  -d data/h
 python -m stable_diffusion_templates.skeleton prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k" 
 ```
 
-### txt2img
+### image
 
 ```bash
-python -m stable_diffusion_templates.skeleton txt2img "Comic Book of Spawn in a battle, Concept art, Photorealistic, Octane render, Cinematic, Ultra-Wide-Angle Shot, 8k" --output $HOME/Desktop/ --name spawn
+python -m stable_diffusion_templates.skeleton image "Comic Book of Spawn in a battle, Concept art, Photorealistic, Octane render, Cinematic, Ultra-Wide-Angle Shot, 8k" --output $HOME/Desktop/ --name spawn
 ```
 
 or e.g.
 
 ```bash
-python -m stable_diffusion_templates.skeleton txt2img "$(python -m stable_diffusion_templates.skeleton prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k")" --output $HOME/Desktop/ --name spawn
+python -m stable_diffusion_templates.skeleton image "$(python -m stable_diffusion_templates.skeleton prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k")" --output $HOME/Desktop/ --name spawn
+```
+
+```bash
+prompt="a wall with graffiti on it, with text Seen, in the art of Seen, located in New York City"
+echo "$prompt" | python -m stable_diffusion_templates.skeleton image --output $(pwd)/out/batch --name graffiti --input $(pwd)/assets/img/sketch.png --controlnet_model "lllyasviel/sd-controlnet-hed"
+echo "$prompt" | python -m stable_diffusion_templates.skeleton image --output $(pwd)/out/batch --name graffiti --input $(pwd)/assets/img/sketch.png
+echo "$prompt" | python -m stable_diffusion_templates.skeleton image --output $(pwd)/out/batch --name graffiti
 ```
 
 ### roop

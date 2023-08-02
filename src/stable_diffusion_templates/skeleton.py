@@ -33,7 +33,7 @@ from stable_diffusion_templates import __version__
 
 from .commands.template import TemplateCommand
 from .commands.prompt import PromptCommand
-from .commands.txt2img import Txt2ImgCommand
+from .commands.image import ImageCommand
 from .commands.roop import RoopCommand
 
 __author__ = "Sebastian Krüger"
@@ -88,7 +88,7 @@ class CLI():
 
         self.template = TemplateCommand(subparsers)
         self.prompt = PromptCommand(subparsers)
-        self.txt2img = Txt2ImgCommand(subparsers)
+        self.image = ImageCommand(subparsers)
         self.roop = RoopCommand(subparsers)
 
         argcomplete.autocomplete(parser)
@@ -122,8 +122,8 @@ class CLI():
             self.template.run(args)
         elif args.command == 'prompt':
             self.prompt.run(args)
-        elif args.command == 'txt2img':
-            self.txt2img.run(args)
+        elif args.command == 'image':
+            self.image.run(args)
         elif args.command == 'roop':
             self.roop.run(args)
 
