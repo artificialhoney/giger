@@ -4,3 +4,4 @@ jupyterlab
 diffusers
 torch
 piexif
+argcomplete

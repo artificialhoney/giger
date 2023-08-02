@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# PYTHON_ARGCOMPLETE_OK
+
 """
 This is a skeleton file that can serve as a starting point for a Python
 console script. To run this script uncomment the following lines in the
@@ -23,6 +26,8 @@ References:
 import argparse
 import logging
 import sys
+
+import argcomplete
 
 from stable_diffusion_templates import __version__
 
@@ -53,7 +58,8 @@ class CLI():
         Returns:
         :obj:`argparse.Namespace`: command line parameters namespace
         """
-        parser = argparse.ArgumentParser(prog="sd-cli", description="Tools for Stable Diffusion")
+        parser = argparse.ArgumentParser(
+            prog="sd-cli", description="Tools for Stable Diffusion")
 
         parser.add_argument(
             "--version",
@@ -83,7 +89,10 @@ class CLI():
         self.prompt = PromptCommand(subparsers)
         self.txt2img = Txt2ImgCommand(subparsers)
 
+        argcomplete.autocomplete(parser)
+
         return parser.parse_args(args)
+
     def setup_logging(self, loglevel):
         """Setup basic logging
 
@@ -94,7 +103,6 @@ class CLI():
         logging.basicConfig(
             level=loglevel, stream=sys.stdout, format=logformat, datefmt="%Y-%m-%d %H:%M:%S"
         )
-
 
     def run(self, args):
         """Wrapper allowing :func:`fib` to be called with string arguments in a CLI fashion
