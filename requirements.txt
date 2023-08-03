@@ -1,6 +1,5 @@
 jinja2
 pyyaml
-jupyterlab
 diffusers
 torch
 piexif

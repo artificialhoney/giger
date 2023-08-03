@@ -75,14 +75,6 @@ Also try to add **Aesthetic Gradients** with same prompt!
 sd template -t templates/graffiti.j2 -d data/graffiti.yaml
 ```
 
-## Notebooks
-
-Start jupyter lab with `jupyter lab` for editing.
-
-### Graffiti
-
-See [create_lora.ipynb](./notebooks/graffiti/create_lora.ipynb), which you can run in Google Colab.
-
 ## Docs
 
 ### [Prompts](/docs/prompts.md)
