@@ -5,6 +5,7 @@ CLI for Stable Diffusion tasks.
 ## Installation
 
 `pip install -r requirements.txt`
+
 `pip install -e .`
 
 ## CLI
@@ -52,7 +53,7 @@ sd roop -s face.jpg -t target.png -o output.png
 
 ### Hero
 
-Take your favorite character with pose, e.g. [assets](./assets/hero/valkyrie.png) and input it to a ControlNet unit of type **SoftLine** with weight **0.75**.
+Take your favorite character with pose and input it to a ControlNet unit of type **SoftLine** with weight **0.75**.
 
 **Model:** [Photon](https://civitai.com/models/84728/photon)
 
@@ -64,7 +65,7 @@ sd template -t templates/hero.j2 -d data/hero.yaml
 
 ### Graffiti
 
-Use a text image of best 4 characters in black font on white background like [assets](./assets/parisienne/pali.png) and input it to a ControlNet unit of type **Depth** with weight **0.5**.
+Use a text image of best 4 characters in black font on white background and input it to a ControlNet unit of type **Depth** with weight **0.5**.
 Make sure to invert in preprocessor settings!
 
 Also try to add **Aesthetic Gradients** with same prompt!
@@ -81,7 +82,6 @@ sd template -t templates/graffiti.j2 -d data/graffiti.yaml
 
 ## Links
 
-- Local Jupyter instance: http://localhost:8888/
 - Webui installation: https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Installation-on-Apple-Silicon
 - ControlNet installation: https://github.com/Mikubill/sd-webui-controlnet#installation
 - Roop extension for face swap: https://github.com/s0md3v/sd-webui-roop
