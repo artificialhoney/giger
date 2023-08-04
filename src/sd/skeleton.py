@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# PYTHON_ARGCOMPLETE_OK
 
 """
 This is a skeleton file that can serve as a starting point for a Python
@@ -26,8 +25,6 @@ References:
 import argparse
 import logging
 import sys
-
-import argcomplete
 
 from sd import __version__
 
@@ -90,8 +87,6 @@ class CLI():
         self.prompt = PromptCommand(subparsers)
         self.image = ImageCommand(subparsers)
         self.roop = RoopCommand(subparsers)
-
-        argcomplete.autocomplete(parser)
 
         return parser.parse_args(args)
 
