@@ -27,7 +27,8 @@ class ImageService:
             model)
 
         if self.cuda:
-            pipeline.to("cuda")
+            pipeline.enable_model_cpu_offload()
+            pipeline.enable_xformers_memory_efficient_attention()
 
         exif_ifd = {piexif.ImageIFD.ImageDescription: prompt.encode()}
         exif_dict = {
@@ -51,7 +52,8 @@ class ImageService:
         )
 
         if self.cuda:
-            pipeline.to("cuda")
+            pipeline.enable_model_cpu_offload()
+            pipeline.enable_xformers_memory_efficient_attention()
 
         # speed up diffusion process with faster scheduler and memory optimization
         pipeline.scheduler = UniPCMultistepScheduler.from_config(
@@ -80,7 +82,8 @@ class ImageService:
         pipeline = StableDiffusionImg2ImgPipeline.from_pretrained(model)
 
         if self.cuda:
-            pipeline.to("cuda")
+            pipeline.enable_model_cpu_offload()
+            pipeline.enable_xformers_memory_efficient_attention()
 
         exif_ifd = {piexif.ImageIFD.ImageDescription: prompt.encode()}
         exif_dict = {

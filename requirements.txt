@@ -6,6 +6,7 @@ torch
 piexif
 argcomplete
 accelerate
+xformers
 
 
 # roop
