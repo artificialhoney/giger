@@ -4,13 +4,16 @@ from diffusers import StableDiffusionImg2ImgPipeline
 from diffusers.utils import load_image
 import piexif
 import os
+from sys import platform
 
 from pathlib import Path
 from PIL import Image
 
 # see https://github.com/facebookresearch/fairseq/issues/2413#issuecomment-1387445867
 import torch
-torch.set_default_dtype(torch.float32)
+
+if platform == "darwin":
+    torch.set_default_dtype(torch.float32)
 
 class ImageService:
     def txt2img(self, model, prompt, negative_prompt, output, width, height, seed=0, count=1, steps=50, name="txt2img"):
