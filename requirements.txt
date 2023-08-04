@@ -5,6 +5,7 @@ diffusers
 torch
 piexif
 argcomplete
+accelerate
 
 
 # roop

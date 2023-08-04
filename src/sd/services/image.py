@@ -9,13 +9,17 @@ from sys import platform
 from pathlib import Path
 from PIL import Image
 
-# see https://github.com/facebookresearch/fairseq/issues/2413#issuecomment-1387445867
 import torch
 
-if platform == "darwin":
-    torch.set_default_dtype(torch.float32)
 
 class ImageService:
+    # see https://github.com/facebookresearch/fairseq/issues/2413#issuecomment-1387445867
+    def __init__(self):
+        if torch.cuda.is_available():
+            torch.set_default_device("cuda")
+        elif platform == "darwin":
+            torch.set_default_dtype(torch.float32)
+
     def txt2img(self, model, prompt, negative_prompt, output, width, height, seed=0, count=1, steps=50, name="txt2img"):
         pipeline = StableDiffusionPipeline.from_pretrained(
             model)
@@ -38,7 +42,7 @@ class ImageService:
         controlnet = ControlNetModel.from_pretrained(controlnet_model)
         pipeline = StableDiffusionControlNetPipeline.from_pretrained(
             model, controlnet=controlnet
-        )
+        ).to()
 
         # speed up diffusion process with faster scheduler and memory optimization
         pipeline.scheduler = UniPCMultistepScheduler.from_config(pipeline.scheduler.config)
