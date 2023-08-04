@@ -1,3 +1,4 @@
+transformers
 jinja2
 pyyaml
 diffusers
