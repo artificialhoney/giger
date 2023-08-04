@@ -33,6 +33,8 @@ class ImageCommand:
         self.parser.add_argument("--input", help="The input image")
         self.parser.add_argument(
             "--controlnet_model", help="The ControlNet model to use")
+        self.parser.add_argument(
+            "--controlnet_conditioning_scale", help="The ControlNet conditioning scale", type=float, default=1.0)
 
     def run(self, args):
         _logger.info("Creating image for '{0}'".format(args.prompt))
@@ -53,7 +55,7 @@ class ImageCommand:
             pathlib.Path(path).mkdir(parents=True, exist_ok=True)
             if args.input != None:
                 if args.controlnet_model != None:
-                    self.service.controlnet(args.model, prompt, args.negative_prompt, path, args.width, args.height, args.controlnet_model,
+                    self.service.controlnet(args.model, prompt, args.negative_prompt, path, args.width, args.height, args.controlnet_model, args.controlnet_conditioning_scale,
                                             args.input, seed + x, args.batch_count, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
                 else:
                     self.service.img2img(args.model, prompt, args.negative_prompt, path, args.width, args.height,

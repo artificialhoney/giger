@@ -43,7 +43,7 @@ class ImageService:
             images[0][x].save(os.path.join(Path(output).resolve(
             ), name + "-" + str(x).rjust(3, "0") + "-" + str(seed) + ".png"), exif=exif_bytes)
 
-    def controlnet(self, model, prompt, negative_prompt, output, width, height, controlnet_model, image, seed=0, count=1, steps=50, name="controlnet"):
+    def controlnet(self, model, prompt, negative_prompt, output, width, height, controlnet_model, controlnet_conditioning_scale, image, seed=0, count=1, steps=50, name="controlnet"):
         controlnet = ControlNetModel.from_pretrained(controlnet_model)
         pipeline = StableDiffusionControlNetPipeline.from_pretrained(
             model, controlnet=controlnet
@@ -66,7 +66,7 @@ class ImageService:
 
         generator = [torch.Generator().manual_seed(i + seed) for i in range(count)]
         images = pipeline(prompt, generator=generator, width=width, height=height,
-                          num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=Image.open(image).convert("RGB"))
+                          num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=Image.open(image).convert("RGB"), controlnet_conditioning_scale=controlnet_conditioning_scale)
 
         for x in range(count):
             images[0][x].save(os.path.join(Path(output).resolve(
