@@ -1,7 +1,6 @@
 from diffusers import StableDiffusionPipeline
 from diffusers import StableDiffusionControlNetPipeline, ControlNetModel, UniPCMultistepScheduler
 from diffusers import StableDiffusionImg2ImgPipeline
-from diffusers.utils import load_image
 import piexif
 import os
 from sys import platform
@@ -17,7 +16,6 @@ class ImageService:
     def __init__(self):
         if torch.cuda.is_available():
             self.cuda = True
-            torch.set_default_device("cuda")
         elif platform == "darwin":
             self.cuda = False
             torch.set_default_dtype(torch.float32)
@@ -58,10 +56,6 @@ class ImageService:
         # speed up diffusion process with faster scheduler and memory optimization
         pipeline.scheduler = UniPCMultistepScheduler.from_config(
             pipeline.scheduler.config)
-        # remove following line if xformers is not installed
-        # pipeline.enable_xformers_memory_efficient_attention()
-
-        # pipeline.enable_model_cpu_offload()
 
         exif_ifd = {piexif.ImageIFD.ImageDescription: prompt.encode()}
         exif_dict = {
@@ -70,7 +64,7 @@ class ImageService:
         }
         exif_bytes = piexif.dump(exif_dict)
 
-        generator = [torch.Generator(device="cpu").manual_seed(i + seed) for i in range(count)]
+        generator = [torch.Generator().manual_seed(i + seed) for i in range(count)]
         images = pipeline(prompt, generator=generator, width=width, height=height,
                           num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=Image.open(image).convert("RGB"))
 
