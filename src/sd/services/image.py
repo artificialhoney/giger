@@ -70,7 +70,7 @@ class ImageService:
         }
         exif_bytes = piexif.dump(exif_dict)
 
-        generator = [torch.Generator().manual_seed(i + seed) for i in range(count)]
+        generator = [torch.Generator(device="cpu").manual_seed(i + seed) for i in range(count)]
         images = pipeline(prompt, generator=generator, width=width, height=height,
                           num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=Image.open(image).convert("RGB"))
 
