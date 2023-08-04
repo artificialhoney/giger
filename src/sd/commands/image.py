@@ -23,7 +23,7 @@ class ImageCommand:
         self.parser.add_argument(
             "--output", help="The output image folder", required=True)
         self.parser.add_argument(
-            "--name", help="The name of the generated image", default="txt2img")
+            "--name", help="The name of the generated image", default="image")
         self.parser.add_argument("--width", default=768, type=int)
         self.parser.add_argument("--height", default=432, type=int)
         self.parser.add_argument("--batch_size", default=1, type=int)
@@ -45,7 +45,7 @@ class ImageCommand:
         self.service = ImageService()
 
         if args.seed == None:
-            seed = random.randint(0, 1000)
+            seed = random.randint(0, 1000000)
         else:
             seed = args.seed
 
@@ -54,16 +54,16 @@ class ImageCommand:
         else:
             prompt = args.prompt
 
-        for x in range(args.batch_size):
+        for x in range(args.batch_count):
             path = os.path.join(args.output, args.name)
             pathlib.Path(path).mkdir(parents=True, exist_ok=True)
             if args.input != None:
                 if args.controlnet_model != None:
                     self.service.controlnet(args.model, prompt, args.negative_prompt, path, args.width, args.height, args.controlnet_model, args.controlnet_conditioning_scale, args.control_guidance_start, args.control_guidance_end,
-                                            args.input, seed + x, args.batch_count, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
+                                            args.input, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
                 else:
                     self.service.img2img(args.model, prompt, args.negative_prompt, path, args.width, args.height,
-                                         args.input, seed + x, args.batch_count, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
+                                         args.input, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
             else:
                 self.service.txt2img(args.model, prompt, args.negative_prompt, path, args.width, args.height,
-                                     seed + x, args.batch_count, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
+                                     seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))

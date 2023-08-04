@@ -41,7 +41,7 @@ class ImageService:
                           num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps)
         for x in range(count):
             images[0][x].save(os.path.join(Path(output).resolve(
-            ), name + "-" + str(x).rjust(3, "0") + "-" + str(seed) + ".png"), exif=exif_bytes)
+            ), name + "-" + str(x).rjust(3, "0") + "-" + str(seed + x).rjust(6, "0") + ".png"), exif=exif_bytes)
 
     def controlnet(self, model, prompt, negative_prompt, output, width, height, controlnet_model, controlnet_conditioning_scale, control_guidance_start, control_guidance_end, image, seed=0, count=1, steps=50, name="controlnet"):
         controlnet = ControlNetModel.from_pretrained(controlnet_model)
@@ -70,7 +70,7 @@ class ImageService:
 
         for x in range(count):
             images[0][x].save(os.path.join(Path(output).resolve(
-            ), name + "-" + str(x).rjust(3, "0") + "-" + str(seed) + ".png"), exif=exif_bytes)
+            ), name + "-" + str(x).rjust(3, "0") + "-" + str(seed + x).rjust(6, "0") + ".png"), exif=exif_bytes)
 
     def img2img(self, model, prompt, negative_prompt, output, width, height, image, seed=0, count=1, steps=50, name="img2img"):
         pipeline = StableDiffusionImg2ImgPipeline.from_pretrained(model)
@@ -92,4 +92,4 @@ class ImageService:
                           num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=Image.open(image).convert("RGB").resize((width, height)))
         for x in range(count):
             images[0][x].save(os.path.join(Path(output).resolve(
-            ), name + "-" + str(x).rjust(3, "0") + "-" + str(seed) + ".png"), exif=exif_bytes)
+            ), name + "-" + str(x).rjust(3, "0") + "-" + str(seed + x).rjust(6, "0") + ".png"), exif=exif_bytes)
