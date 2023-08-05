@@ -1,5 +1,6 @@
 import io
 
+
 class PromptService:
     def times(self):
         return [
@@ -378,40 +379,48 @@ class PromptService:
 
     def generate(self, args):
         separator = ", "
-        output = ""
+        output = []
+        prompt = ""
         if args.time != None:
-            output += args.time + " "
+            prompt += args.time + " "
         if args.type != None:
-            output += args.type + " of "
+            prompt += args.type + " of "
         if isinstance(args.description, io.TextIOWrapper):
             description = args.description.read()
         else:
             description = args.description
-        output += description.strip()
+        prompt += description.strip()
         if args.background_color != None:
-            output += " with background " + args.background_color
+            prompt += " with background " + args.background_color
         if args.art_style != None and len(args.art_style) > 0:
-            output += separator + separator.join(args.art_style)
+            prompt += separator + separator.join(args.art_style)
         if args.artist != None and len(args.artist) > 0:
-            output += separator + "by " + separator.join(args.artist)
+            prompt += separator + "by " + separator.join(args.artist)
+
+        output.append(prompt)
+
         if args.realism != None and len(args.realism) > 0:
-            output += separator + separator.join(args.realism)
+            output.append(separator.join(args.realism))
         if args.rendering_engine != None and len(args.rendering_engine) > 0:
-            output += separator + separator.join(args.rendering_engine)
+            output.append(separator.join(args.rendering_engine))
         if args.lightning_angle != None and len(args.lightning_angle) > 0:
-            output += separator + separator.join(args.lightning_angle)
+            output.append(separator.join(args.lightning_angle))
         if args.lightning_style != None and len(args.lightning_style) > 0:
-            output += separator + separator.join(args.lightning_style)
+            output.append(separator.join(args.lightning_style))
         if args.camera_position != None and len(args.camera_position) > 0:
-            output += separator + separator.join(args.camera_position)
+            output.append(separator.join(args.camera_position))
         if args.camera != None and len(args.camera) > 0:
-            output += separator + separator.join(args.camera)
+            output.append(separator.join(args.camera))
         if args.style != None and len(args.style) > 0:
-            output += separator + separator.join(args.style)
+            output.append(separator.join(args.style))
         if args.composition != None and len(args.composition) > 0:
-            output += separator + separator.join(args.composition)
+            output.append(separator.join(args.composition))
         if args.iso != None:
-            output += separator + args.iso
+            output.append(args.iso)
         if args.resolution != None and len(args.resolution) > 0:
-            output += separator + separator.join(args.resolution)
-        return output
+            output.append(separator.join(args.resolution))
+
+        if args.compel:
+            return "({0}).and()".format(separator.join(["\"" + output[0] + "\"", "\"" + separator.join(output[1:-1]) + "\""]))
+        else:
+            return separator.join(output)

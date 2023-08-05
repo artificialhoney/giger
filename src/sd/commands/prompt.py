@@ -12,7 +12,7 @@ class PromptCommand:
         self.parser.add_argument("description", nargs="?", default=(None if sys.stdin.isatty() else sys.stdin))
         self.parser.add_argument("--time", choices=self.service.times())
         self.parser.add_argument("--type", choices=self.service.types())
-        self.parser.add_argument("--background_color", help="RGB-HEX value")
+        self.parser.add_argument("--background_color")
         self.parser.add_argument("--art_style", choices=self.service.art_styles(), nargs="*")
         self.parser.add_argument("--artist", choices=self.service.artists(), nargs="*")
         self.parser.add_argument("--realism", choices=self.service.realisms(), nargs="*")
@@ -25,6 +25,7 @@ class PromptCommand:
         self.parser.add_argument("--composition", choices=self.service.compositions(), nargs="*")
         self.parser.add_argument("--iso", choices=self.service.isos())
         self.parser.add_argument("--resolution", choices=self.service.resolutions(), nargs="*")
+        self.parser.add_argument("--compel", default=False, type=bool)
 
     def run(self, args):
         _logger.info("Creating prompt for '{0}'".format(args.description))
