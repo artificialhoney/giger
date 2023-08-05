@@ -31,7 +31,7 @@ class TemplateCommand:
 
         _logger.info("Running template with input from {0} and data {1}".format(args.template, data))
 
-        if isinstance(args.description, io.TextIOWrapper):
+        if isinstance(args.template, io.TextIOWrapper):
             template = args.template.read()
         else:
             template = args.template
