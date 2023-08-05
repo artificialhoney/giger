@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# PYTHON_ARGCOMPLETE_OK
 
 """
 This is a skeleton file that can serve as a starting point for a Python
@@ -22,19 +23,18 @@ References:
     - https://pip.pypa.io/en/stable/reference/pip_install
 """
 
+import argparse
+import argcomplete
+from .commands.roop import RoopCommand
+from .commands.image import ImageCommand
+from .commands.prompt import PromptCommand
+from .commands.template import TemplateCommand
+from sd import __version__
+import sys
+import logging
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 
-import argparse
-import logging
-import sys
-
-from sd import __version__
-
-from .commands.template import TemplateCommand
-from .commands.prompt import PromptCommand
-from .commands.image import ImageCommand
-from .commands.roop import RoopCommand
 
 __author__ = "Sebastian Krüger"
 __copyright__ = "Sebastian Krüger"
@@ -91,6 +91,8 @@ class CLI():
         self.image = ImageCommand(subparsers)
         self.roop = RoopCommand(subparsers)
 
+        argcomplete.autocomplete(parser)
+
         return parser.parse_args(args)
 
     def setup_logging(self, loglevel):
@@ -124,6 +126,7 @@ class CLI():
             self.image.run(args)
         elif args.command == 'roop':
             self.roop.run(args)
+
 
 def run():
     """Calls :func:`main` passing the CLI arguments extracted from :obj:`sys.argv`
