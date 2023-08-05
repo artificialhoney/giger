@@ -22,6 +22,9 @@ References:
     - https://pip.pypa.io/en/stable/reference/pip_install
 """
 
+import warnings
+warnings.filterwarnings("ignore", category=FutureWarning)
+
 import argparse
 import logging
 import sys
