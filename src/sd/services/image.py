@@ -18,15 +18,17 @@ class ImageService:
             self.cuda = True
         elif platform == "darwin":
             self.cuda = False
-            torch.set_default_dtype(torch.float32)
 
     def txt2img(self, model, prompt, negative_prompt, output, width, height, seed=0, count=1, steps=50, name="txt2img"):
-        pipeline = StableDiffusionPipeline.from_pretrained(
-            model)
-
         if self.cuda:
+            pipeline = StableDiffusionPipeline.from_pretrained(
+                model, torch_dtype=torch.float16)
+            pipeline.to("cuda")
             pipeline.enable_model_cpu_offload()
             pipeline.enable_xformers_memory_efficient_attention()
+        else:
+            pipeline = StableDiffusionPipeline.from_pretrained(
+                model, torch_dtype=torch.float32)
 
         exif_ifd = {piexif.ImageIFD.ImageDescription: prompt.encode()}
         exif_dict = {
@@ -45,13 +47,16 @@ class ImageService:
 
     def controlnet(self, model, prompt, negative_prompt, output, width, height, controlnet_model, controlnet_conditioning_scale, control_guidance_start, control_guidance_end, image, seed=0, count=1, steps=50, name="controlnet"):
         controlnet = ControlNetModel.from_pretrained(controlnet_model)
-        pipeline = StableDiffusionControlNetPipeline.from_pretrained(
-            model, controlnet=controlnet
-        )
 
         if self.cuda:
+            pipeline = StableDiffusionControlNetPipeline.from_pretrained(
+            model, controlnet=controlnet, torch_dtype=torch.float16)
+            pipeline.to("cuda")
             pipeline.enable_model_cpu_offload()
             pipeline.enable_xformers_memory_efficient_attention()
+        else:
+            pipeline = StableDiffusionControlNetPipeline.from_pretrained(
+            model, controlnet=controlnet, torch_dtype=torch.float32)
 
         # speed up diffusion process with faster scheduler and memory optimization
         pipeline.scheduler = UniPCMultistepScheduler.from_config(
@@ -76,8 +81,14 @@ class ImageService:
         pipeline = StableDiffusionImg2ImgPipeline.from_pretrained(model)
 
         if self.cuda:
+            pipeline = StableDiffusionImg2ImgPipeline.from_pretrained(
+            model, torch_dtype=torch.float16)
+            pipeline.to("cuda")
             pipeline.enable_model_cpu_offload()
             pipeline.enable_xformers_memory_efficient_attention()
+        else:
+            pipeline = StableDiffusionImg2ImgPipeline.from_pretrained(
+            model, torch_dtype=torch.float32)
 
         exif_ifd = {piexif.ImageIFD.ImageDescription: prompt.encode()}
         exif_dict = {
