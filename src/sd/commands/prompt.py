@@ -25,7 +25,7 @@ class PromptCommand:
         self.parser.add_argument("--composition", choices=self.service.compositions(), nargs="*")
         self.parser.add_argument("--iso", choices=self.service.isos())
         self.parser.add_argument("--resolution", choices=self.service.resolutions(), nargs="*")
-        self.parser.add_argument("--compel", default=False, type=bool)
+        self.parser.add_argument("--compel_style", choices=self.service.compel_styles())
 
     def run(self, args):
         _logger.info("Creating prompt for '{0}'".format(args.description))

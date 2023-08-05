@@ -2,6 +2,12 @@ import io
 
 
 class PromptService:
+    def compel_styles(self):
+        return [
+            "subtle",
+            "full"
+        ]
+
     def times(self):
         return [
             "Ancient",
@@ -379,48 +385,63 @@ class PromptService:
 
     def generate(self, args):
         separator = ", "
-        output = []
-        prompt = ""
+
+        context = []
+        description = []
+        style = []
+        image = []
+
         if args.time != None:
-            prompt += args.time + " "
+            context.append(args.time)
         if args.type != None:
-            prompt += args.type + " of "
+            context.append(args.type)
+
         if isinstance(args.description, io.TextIOWrapper):
             description = args.description.read()
         else:
             description = args.description
-        prompt += description.strip()
-        if args.background_color != None:
-            prompt += " with background " + args.background_color
-        if args.art_style != None and len(args.art_style) > 0:
-            prompt += separator + separator.join(args.art_style)
-        if args.artist != None and len(args.artist) > 0:
-            prompt += separator + "by " + separator.join(args.artist)
+        description = [x.strip() for x in description.split(',')]
 
-        output.append(prompt)
+        if args.background_color != None:
+            style.append("with background " + args.background_color)
+        if args.art_style != None and len(args.art_style) > 0:
+            style.append(separator.join(args.art_style))
+        if args.artist != None and len(args.artist) > 0:
+            style.append("by " + separator.join(args.artist))
 
         if args.realism != None and len(args.realism) > 0:
-            output.append(separator.join(args.realism))
+            image.append(separator.join(args.realism))
         if args.rendering_engine != None and len(args.rendering_engine) > 0:
-            output.append(separator.join(args.rendering_engine))
+            image.append(separator.join(args.rendering_engine))
         if args.lightning_angle != None and len(args.lightning_angle) > 0:
-            output.append(separator.join(args.lightning_angle))
+            image.append(separator.join(args.lightning_angle))
         if args.lightning_style != None and len(args.lightning_style) > 0:
-            output.append(separator.join(args.lightning_style))
+            image.append(separator.join(args.lightning_style))
         if args.camera_position != None and len(args.camera_position) > 0:
-            output.append(separator.join(args.camera_position))
+            image.append(separator.join(args.camera_position))
         if args.camera != None and len(args.camera) > 0:
-            output.append(separator.join(args.camera))
+            image.append(separator.join(args.camera))
         if args.style != None and len(args.style) > 0:
-            output.append(separator.join(args.style))
+            image.append(separator.join(args.style))
         if args.composition != None and len(args.composition) > 0:
-            output.append(separator.join(args.composition))
+            image.append(separator.join(args.composition))
         if args.iso != None:
-            output.append(args.iso)
+            image.append(args.iso)
         if args.resolution != None and len(args.resolution) > 0:
-            output.append(separator.join(args.resolution))
+            image.append(separator.join(args.resolution))
 
-        if args.compel:
-            return "({0}).and()".format(separator.join(["\"" + output[0] + "\"", "\"" + separator.join(output[1:-1]) + "\""]))
+        if args.compel_style == "subtle":
+            return "({0}).and()".format(separator.join(["\"" + separator.join(context + description + style) + "\"", "\"" + separator.join(image) + "\""]))
+        if args.compel_style == "full":
+            segments = []
+            if len(description) > 0:
+                segments.append(separator.join(["\"" + x + "\"" for x in description]))
+            if len(context) > 0:
+                segments.append("\"" + " ".join(context) + "\"")
+            if len(style) > 0:
+                segments.append("\"" + separator.join(style) + "\"")
+            if len(image) > 0:
+                segments.append("\"" + separator.join(image) + "\"")
+            return "({0}).and()".format(separator.join(segments))
         else:
-            return separator.join(output)
+            return separator.join(context + description + style + image)
