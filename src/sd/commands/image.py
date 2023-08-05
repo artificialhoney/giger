@@ -39,6 +39,8 @@ class ImageCommand:
             "--control_guidance_start", help="The ControlNet control guidance start", type=float, default=0.0)
         self.parser.add_argument(
             "--control_guidance_end", help="The ControlNet control guidance end", type=float, default=1.0)
+        self.parser.add_argument(
+            "--lora_model", help="A LoRA model to use", nargs="*", default=[])
 
     def run(self, args):
         _logger.info("Creating image for '{0}'".format(args.prompt))
@@ -60,10 +62,10 @@ class ImageCommand:
             if args.input != None:
                 if args.controlnet_model != None:
                     self.service.controlnet(args.model, prompt, args.negative_prompt, path, args.width, args.height, args.controlnet_model, args.controlnet_conditioning_scale, args.control_guidance_start, args.control_guidance_end,
-                                            args.input, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
+                                            args.input, args.lora_model, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
                 else:
                     self.service.img2img(args.model, prompt, args.negative_prompt, path, args.width, args.height,
-                                         args.input, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
+                                         args.input, args.lora_model, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
             else:
                 self.service.txt2img(args.model, prompt, args.negative_prompt, path, args.width, args.height,
-                                     seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
+                                     args.lora_model, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
