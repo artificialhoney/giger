@@ -8,6 +8,7 @@ accelerate
 xformers
 argcomplete
 compel
+safetensors
 
 # roop
 --extra-index-url https://download.pytorch.org/whl/cu118

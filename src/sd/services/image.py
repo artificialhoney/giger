@@ -20,8 +20,8 @@ class ImageService:
         elif platform == "darwin":
             self.cuda = False
 
-    def txt2img(self, model, prompt, negative_prompt, output, width, height, lora_models = [], seed=0, count=1, steps=50, name="txt2img"):
-        pipeline = self.setup_pipeline(model, StableDiffusionPipeline, lora_models)
+    def txt2img(self, model, prompt, negative_prompt, output, width, height, lora_models = [], lora_filename = [],seed=0, count=1, steps=50, name="txt2img"):
+        pipeline = self.setup_pipeline(model, StableDiffusionPipeline, lora_models, lora_filename)
         exif_bytes = self.get_exif_bytes(prompt)
         generator = self.create_generator(seed, count)
         conditioning = self.add_compel(pipeline, prompt)
@@ -29,8 +29,8 @@ class ImageService:
                           num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps)
         self.save_images(images, output, name, seed, exif_bytes)
 
-    def controlnet(self, model, prompt, negative_prompt, output, width, height, controlnet_model, controlnet_conditioning_scale, control_guidance_start, control_guidance_end, image, lora_models = [], seed=0, count=1, steps=50, name="controlnet"):
-        pipeline = self.setup_pipeline(model, StableDiffusionControlNetPipeline, lora_models, controlnet_model)
+    def controlnet(self, model, prompt, negative_prompt, output, width, height, controlnet_model, controlnet_conditioning_scale, control_guidance_start, control_guidance_end, image, lora_models = [], lora_filename = [], seed=0, count=1, steps=50, name="controlnet"):
+        pipeline = self.setup_pipeline(model, StableDiffusionControlNetPipeline, lora_models, lora_filename, controlnet_model)
         exif_bytes = self.get_exif_bytes(prompt)
         generator = self.create_generator(seed, count)
         # speed up diffusion process with faster scheduler and memory optimization
@@ -41,8 +41,8 @@ class ImageService:
                           num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=Image.open(image).convert("RGB"), controlnet_conditioning_scale=controlnet_conditioning_scale, control_guidance_start=control_guidance_start, control_guidance_end=control_guidance_end)
         self.save_images(images, output, name, seed, exif_bytes)
 
-    def img2img(self, model, prompt, negative_prompt, output, width, height, image, lora_models = [], seed=0, count=1, steps=50, name="img2img"):
-        pipeline = self.setup_pipeline(model, StableDiffusionImg2ImgPipeline, lora_models)
+    def img2img(self, model, prompt, negative_prompt, output, width, height, image, lora_models = [], lora_filename = [], seed=0, count=1, steps=50, name="img2img"):
+        pipeline = self.setup_pipeline(model, StableDiffusionImg2ImgPipeline, lora_models, lora_filename)
         exif_bytes = self.get_exif_bytes(prompt)
         generator = self.create_generator(seed, count)
         conditioning = self.add_compel(pipeline, prompt)
@@ -66,7 +66,7 @@ class ImageService:
         }
         return piexif.dump(exif_dict)
     
-    def setup_pipeline(self, model, type, lora_models = [], controlnet_model = None):
+    def setup_pipeline(self, model, type, lora_models = [], lora_filenames = [], controlnet_model = None):
         if controlnet_model:
             controlnet = ControlNetModel.from_pretrained(controlnet_model)
         else:
@@ -89,8 +89,8 @@ class ImageService:
             else:
                 pipeline = type.from_pretrained(
                     model, torch_dtype=torch.float32)
-        for lora_model in lora_models:
-            pipeline.load_lora_weights(lora_model)
+        for lora_index in range(len(lora_models)):
+            pipeline.load_lora_weights(lora_models[lora_index], weight_name=lora_filenames[lora_index])
         
         return pipeline
     

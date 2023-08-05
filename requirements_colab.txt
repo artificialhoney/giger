@@ -8,6 +8,7 @@ accelerate
 xformers
 argcomplete
 compel
+safetensors
 
 numpy
 opencv-python
