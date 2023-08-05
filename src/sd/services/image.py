@@ -51,7 +51,7 @@ class ImageService:
         self.save_images(images, output, name, seed, exif_bytes)
 
     def save_images(self, images, output, name, seed, exif_bytes):
-        for x in range(len(list(images))):
+        for x in range(len(list(images[0]))):
             images[0][x].save(os.path.join(Path(output).resolve(
             ), name + "-" + str(x).rjust(3, "0") + "-" + str(seed + x).rjust(6, "0") + ".png"), exif=exif_bytes)
 
