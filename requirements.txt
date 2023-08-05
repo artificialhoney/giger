@@ -7,7 +7,7 @@ piexif
 accelerate
 xformers
 argcomplete
-
+compel
 
 # roop
 --extra-index-url https://download.pytorch.org/whl/cu118

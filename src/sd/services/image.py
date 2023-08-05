@@ -9,6 +9,7 @@ from pathlib import Path
 from PIL import Image
 
 import torch
+from compel import Compel
 
 
 class ImageService:
@@ -23,34 +24,30 @@ class ImageService:
         pipeline = self.setup_pipeline(model, StableDiffusionPipeline, lora_models)
         exif_bytes = self.get_exif_bytes(prompt)
         generator = self.create_generator(seed, count)
-
-        images = pipeline(prompt, generator=generator, width=width, height=height,
+        conditioning = self.add_compel(pipeline, prompt)
+        images = pipeline(prompt_embeds=conditioning,generator=generator, width=width, height=height,
                           num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps)
-
         self.save_images(images, output, name, seed, exif_bytes)
 
     def controlnet(self, model, prompt, negative_prompt, output, width, height, controlnet_model, controlnet_conditioning_scale, control_guidance_start, control_guidance_end, image, lora_models = [], seed=0, count=1, steps=50, name="controlnet"):
         pipeline = self.setup_pipeline(model, StableDiffusionControlNetPipeline, lora_models, controlnet_model)
         exif_bytes = self.get_exif_bytes(prompt)
         generator = self.create_generator(seed, count)
-
         # speed up diffusion process with faster scheduler and memory optimization
         pipeline.scheduler = UniPCMultistepScheduler.from_config(
             pipeline.scheduler.config)
-
-        images = pipeline(prompt, generator=generator, width=width, height=height,
+        conditioning = self.add_compel(pipeline, prompt)
+        images = pipeline(prompt_embeds=conditioning,generator=generator, width=width, height=height,
                           num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=Image.open(image).convert("RGB"), controlnet_conditioning_scale=controlnet_conditioning_scale, control_guidance_start=control_guidance_start, control_guidance_end=control_guidance_end)
-
         self.save_images(images, output, name, seed, exif_bytes)
 
     def img2img(self, model, prompt, negative_prompt, output, width, height, image, lora_models = [], seed=0, count=1, steps=50, name="img2img"):
         pipeline = self.setup_pipeline(model, StableDiffusionImg2ImgPipeline, lora_models)
         exif_bytes = self.get_exif_bytes(prompt)
         generator = self.create_generator(seed, count)
-
-        images = pipeline(prompt, generator=generator,
+        conditioning = self.add_compel(pipeline, prompt)
+        images = pipeline(prompt_embeds=conditioning, generator=generator,
                           num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=Image.open(image).convert("RGB").resize((width, height)))
-        
         self.save_images(images, output, name, seed, exif_bytes)
 
     def save_images(self, images, output, name, seed, exif_bytes):
@@ -94,5 +91,9 @@ class ImageService:
                     model, torch_dtype=torch.float32)
         for lora_model in lora_models:
             pipeline.load_lora_weights(lora_model)
-
+        
         return pipeline
+    
+    def add_compel(self, pipeline, prompt):
+        compel = Compel(tokenizer=pipeline.tokenizer, text_encoder=pipeline.text_encoder)
+        return compel.build_conditioning_tensor(prompt)
