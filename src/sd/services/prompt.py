@@ -390,7 +390,6 @@ class PromptService:
         description = []
         style = []
         image = []
-        lora = []
 
         if args.time != None:
             context.append(args.time)
@@ -431,9 +430,6 @@ class PromptService:
         if args.resolution != None and len(args.resolution) > 0:
             image.append(separator.join(args.resolution))
 
-        if args.lora != None:
-            lora = ["<lora:" + x + ">" for x in args.lora]
-
         if args.compel_style == "subtle":
             segments = []
             lead = context + description + style
@@ -441,8 +437,6 @@ class PromptService:
                 segments.append("\"" + separator.join(lead) + "\"")
             if len(image) > 0:
                 segments.append("\"" + separator.join(image) + "\"")
-            if len(lora) > 0:
-                segments.append("\"" + separator.join(lora) + "\"")
             return "({0}).and()".format(separator.join(segments))
         if args.compel_style == "full":
             segments = []
@@ -454,8 +448,6 @@ class PromptService:
                 segments.append("\"" + separator.join(style) + "\"")
             if len(image) > 0:
                 segments.append("\"" + separator.join(image) + "\"")
-            if len(lora) > 0:
-                segments.append("\"" + separator.join(lora) + "\"")
             return "({0}).and()".format(separator.join(segments))
         else:
             return separator.join(context + description + style + image + lora)

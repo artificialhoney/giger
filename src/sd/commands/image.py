@@ -43,6 +43,8 @@ class ImageCommand:
             "--lora_model", help="A LoRA model to use", nargs="*", default=[])
         self.parser.add_argument(
             "--lora_filename", help="The LoRA file name", nargs="*", default=[])
+        self.parser.add_argument(
+            "--lora_scale", help="The LoRA scale", nargs="*", default=[], type=float)
 
     def run(self, args):
         _logger.info("Creating image for '{0}'".format(args.prompt))
@@ -58,16 +60,24 @@ class ImageCommand:
         else:
             prompt = args.prompt
 
+        loras = []
+        for index, lora_model in enumerate(args.lora_model):
+            loras.append({
+                "model": lora_model,
+                "filename": args.lora_filename[index] if index < len(args.lora_filename) else None,
+                "scale": args.lora_scale[index] if index < len(args.lora_scale) else 1.0
+            })
+
         for x in range(args.batch_count):
             path = os.path.join(args.output, args.name)
             pathlib.Path(path).mkdir(parents=True, exist_ok=True)
             if args.input != None:
                 if args.controlnet_model != None:
                     self.service.controlnet(args.model, prompt, args.negative_prompt, path, args.width, args.height, args.controlnet_model, args.controlnet_conditioning_scale, args.control_guidance_start, args.control_guidance_end,
-                                            args.input, args.lora_model, args.lora_filename, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
+                                            args.input, loras, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
                 else:
                     self.service.img2img(args.model, prompt, args.negative_prompt, path, args.width, args.height,
-                                         args.input, args.lora_model, args.lora_filename, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
+                                         args.input, loras, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
             else:
                 self.service.txt2img(args.model, prompt, args.negative_prompt, path, args.width, args.height,
-                                     args.lora_model, args.lora_filename, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
+                                     loras, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
