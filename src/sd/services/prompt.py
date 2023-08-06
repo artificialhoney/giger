@@ -432,7 +432,7 @@ class PromptService:
 
         if args.compel_style == "subtle":
             segments = []
-            lead = context + description + style
+            lead = [" ".join(context)] + description + style
             if len(lead) > 0:
                 segments.append("\"" + separator.join(lead) + "\"")
             if len(image) > 0:
