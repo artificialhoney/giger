@@ -44,15 +44,14 @@ class ImageService:
         if vary:
             pipeline = self.setup_pipeline(
                 "lambdalabs/sd-image-variations-diffusers", StableDiffusionImageVariationPipeline, loras)
-        else:
-            pipeline = self.setup_pipeline(
-                model, StableDiffusionImg2ImgPipeline, loras)
-        exif_bytes = self.get_exif_bytes(prompt)
-        generator = self.create_generator(seed, count)
-        if vary:
+            generator = self.create_generator(seed, count)
             images = pipeline(generator=generator,
                               num_images_per_prompt=count, num_inference_steps=steps, image=Image.open(image).convert("RGB").resize((width, height)))
         else:
+            pipeline = self.setup_pipeline(
+                model, StableDiffusionImg2ImgPipeline, loras)
+            exif_bytes = self.get_exif_bytes(prompt)
+            generator = self.create_generator(seed, count)
             conditioning = self.add_compel(pipeline, prompt)
             images = pipeline(prompt_embeds=conditioning, generator=generator,
                               num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=Image.open(image).convert("RGB").resize((width, height)))
