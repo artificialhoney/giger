@@ -25,6 +25,7 @@ class PromptCommand:
         self.parser.add_argument("--composition", choices=self.service.compositions(), nargs="*")
         self.parser.add_argument("--iso", choices=self.service.isos())
         self.parser.add_argument("--resolution", choices=self.service.resolutions(), nargs="*")
+        self.parser.add_argument("--lora", nargs="*", default=None)
         self.parser.add_argument("--compel_style", choices=self.service.compel_styles())
 
     def run(self, args):
