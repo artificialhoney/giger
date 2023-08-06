@@ -450,4 +450,4 @@ class PromptService:
                 segments.append("\"" + separator.join(image) + "\"")
             return "({0}).and()".format(separator.join(segments))
         else:
-            return separator.join(context + description + style + image + lora)
+            return separator.join(context + description + style + image)
