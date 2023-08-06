@@ -44,8 +44,8 @@ class ImageService:
         pipeline = self.setup_pipeline(
                 "lambdalabs/sd-image-variations-diffusers", StableDiffusionImageVariationPipeline, loras)
         generator = self.create_generator(seed, count)
-        images = pipeline(generator=generator,
-                            num_images_per_prompt=count, num_inference_steps=steps, image=Image.open(image).convert("RGB").resize((width, height)))
+        images = pipeline(generator=generator, width=width, height=height,
+                            num_images_per_prompt=count, num_inference_steps=steps, image=Image.open(image).convert("RGB"))
         self.save_images(images, output, name, seed)
 
     def img2img(self, model, prompt, negative_prompt, output, width, height, image, loras, seed=0, count=1, steps=50, name="img2img"):
