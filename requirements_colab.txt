@@ -9,7 +9,6 @@ xformers
 argcomplete
 compel
 safetensors
-pytorch_lightning
 
 numpy
 opencv-python

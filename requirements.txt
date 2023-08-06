@@ -9,7 +9,6 @@ xformers
 argcomplete
 compel
 safetensors
-pytorch_lightning
 
 # roop
 --extra-index-url https://download.pytorch.org/whl/cu118
