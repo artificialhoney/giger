@@ -46,7 +46,7 @@ class ImageCommand:
         self.parser.add_argument(
             "--lora_scale", help="The LoRA scale", nargs="*", default=[], type=float)
         self.parser.add_argument(
-            "--vary", help="Create image variations", default=False, type=bool)
+            "--variations", help="Create image variations", default=False, type=bool)
 
     def run(self, args):
         _logger.info("Creating image for '{0}'".format(args.prompt))
@@ -77,9 +77,12 @@ class ImageCommand:
                 if args.controlnet_model != None:
                     self.service.controlnet(args.model, prompt, args.negative_prompt, path, args.width, args.height, args.controlnet_model, args.controlnet_conditioning_scale, args.control_guidance_start, args.control_guidance_end,
                                             args.input, loras, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
+                elif args.variations:
+                    self.service.variations(path, args.width, args.height,
+                                                            args.input, loras, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
                 else:
                     self.service.img2img(args.model, prompt, args.negative_prompt, path, args.width, args.height,
-                                         args.input, loras, args.vary, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
+                                         args.input, loras, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
             else:
                 self.service.txt2img(args.model, prompt, args.negative_prompt, path, args.width, args.height,
                                      loras, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))

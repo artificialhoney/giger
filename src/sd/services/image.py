@@ -40,24 +40,25 @@ class ImageService:
                           num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=Image.open(image).convert("RGB"), controlnet_conditioning_scale=controlnet_conditioning_scale, control_guidance_start=control_guidance_start, control_guidance_end=control_guidance_end)
         self.save_images(images, output, name, seed, exif_bytes)
 
-    def img2img(self, model, prompt, negative_prompt, output, width, height, image, loras, vary=False, seed=0, count=1, steps=50, name="img2img"):
-        if vary:
-            pipeline = self.setup_pipeline(
+    def variations(self, output, width, height, image, loras, seed=0, count=1, steps=50, name="img2img"):
+        pipeline = self.setup_pipeline(
                 "lambdalabs/sd-image-variations-diffusers", StableDiffusionImageVariationPipeline, loras)
-            generator = self.create_generator(seed, count)
-            images = pipeline(generator=generator,
-                              num_images_per_prompt=count, num_inference_steps=steps, image=Image.open(image).convert("RGB").resize((width, height)))
-        else:
-            pipeline = self.setup_pipeline(
-                model, StableDiffusionImg2ImgPipeline, loras)
-            exif_bytes = self.get_exif_bytes(prompt)
-            generator = self.create_generator(seed, count)
-            conditioning = self.add_compel(pipeline, prompt)
-            images = pipeline(prompt_embeds=conditioning, generator=generator,
-                              num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=Image.open(image).convert("RGB").resize((width, height)))
+        generator = self.create_generator(seed, count)
+        images = pipeline(generator=generator,
+                            num_images_per_prompt=count, num_inference_steps=steps, image=Image.open(image).convert("RGB").resize((width, height)))
+        self.save_images(images, output, name, seed)
+
+    def img2img(self, model, prompt, negative_prompt, output, width, height, image, loras, seed=0, count=1, steps=50, name="img2img"):
+        pipeline = self.setup_pipeline(
+            model, StableDiffusionImg2ImgPipeline, loras)
+        exif_bytes = self.get_exif_bytes(prompt)
+        generator = self.create_generator(seed, count)
+        conditioning = self.add_compel(pipeline, prompt)
+        images = pipeline(prompt_embeds=conditioning, generator=generator,
+                            num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=Image.open(image).convert("RGB").resize((width, height)))
         self.save_images(images, output, name, seed, exif_bytes)
 
-    def save_images(self, images, output, name, seed, exif_bytes):
+    def save_images(self, images, output, name, seed, exif_bytes=None):
         for x in range(len(list(images[0]))):
             images[0][x].save(os.path.join(Path(output).resolve(
             ), name + "-" + str(x).rjust(3, "0") + "-" + str(seed + x).rjust(6, "0") + ".png"), exif=exif_bytes)
@@ -73,7 +74,7 @@ class ImageService:
         }
         return piexif.dump(exif_dict)
 
-    def setup_pipeline(self, model, type, loras, controlnet_model=None):
+    def setup_pipeline(self, model, type, loras = [], controlnet_model=None):
         if controlnet_model:
             controlnet = ControlNetModel.from_pretrained(controlnet_model)
         else:
