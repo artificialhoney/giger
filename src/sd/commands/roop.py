@@ -37,7 +37,7 @@ class RoopCommand:
         self.parser.add_argument(
             '-s', '--source', help='select an source image', dest='source_path')
         self.parser.add_argument(
-            '-t', '--target', help='select an target image or video', dest='target_path')
+            '-t', '--input', help='select an target image or video', dest='target_path')
         self.parser.add_argument(
             '-o', '--output', help='select output file or directory', dest='output_path')
         self.parser.add_argument('--frame-processor', help='frame processors (choices: face_swapper, face_enhancer, ...)',
