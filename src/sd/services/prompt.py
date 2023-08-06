@@ -430,7 +430,7 @@ class PromptService:
             segments = []
             lead = []
             if len(context) > 0:
-                lead += " ".join(context)
+                lead += [" ".join(context)]
             if len(description) > 0:
                 lead += description
             if len(style) > 0:

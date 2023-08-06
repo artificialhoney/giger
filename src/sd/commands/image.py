@@ -62,7 +62,6 @@ class ImageCommand:
             args.prompt.extend(sys.stdin.read().splitlines())
 
         prompt = ", ".join(args.prompt)
-        print(prompt)
 
         loras = []
         for index, lora_model in enumerate(args.lora_model):
