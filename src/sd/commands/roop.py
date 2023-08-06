@@ -16,7 +16,7 @@ class RoopCommand:
         self.parser.add_argument(
             "-o", "--output", help="The output file", required=True)
         self.parser.add_argument(
-            "-m", "--model", help="The model", choices=self.service.models(), required=True, default="inswapper_128.onnx")
+            "-m", "--model", help="The model", choices=self.service.models(), default="inswapper_128.onnx")
 
     def run(self, args):
         _logger.info("Running Roop for '{0}' with '{1}'".format(

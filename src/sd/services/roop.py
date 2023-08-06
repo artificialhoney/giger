@@ -5,10 +5,12 @@ import os
 import glob
 from PIL import Image
 from pathlib import Path
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class RoopService:
-
     def models(self):
         models_path = os.path.join(self.roop_dir, "*")
         models = glob.glob(models_path)
@@ -30,8 +32,10 @@ class RoopService:
         if len(face) == 0 and det_size[0] > 320 and det_size[1] > 320:
             det_size_half = (det_size[0] // 2, det_size[1] // 2)
             return self.get_face(source, det_size=det_size_half)
-
-        return sorted(face, key=lambda x: x.bbox[0])[0]
+        try:
+            return sorted(face, key=lambda x: x.bbox[0])[0]
+        except:
+            return None
 
     def swap(self, source, input, output, model_name):
         source_image = Image.open(source).convert("RGB")
@@ -39,6 +43,12 @@ class RoopService:
         exif = input_image.info['exif']
         input_face = self.get_face(numpy.array(input_image))
         source_face = self.get_face(numpy.array(source_image))
+        if input_face == None:
+            _logger.warn("Cannot find face for input '{0}'. Exiting.".format(input))
+            return
+        if source_face == None:
+            _logger.warn("Cannot find face for source '{0}'. Exiting.".format(source))
+            return
         model = insightface.model_zoo.get_model(os.path.join(
             self.roop_dir, model_name), providers=["CPUExecutionProvider"])
         result = model.get(numpy.array(input_image),
