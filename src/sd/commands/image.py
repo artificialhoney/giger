@@ -20,8 +20,10 @@ class ImageCommand:
             "--model", help="The Stable Diffusion model to use", default="Lykon/DreamShaper")
         self.parser.add_argument(
             "--negative_prompt", help="The negative text prompt")
-        self.parser.add_argument(
-            "--output", help="The output image folder", required=True)
+        self.parser.add_argument("-i", "--input",
+                                 help="The input image")
+        self.parser.add_argument("-o",
+                                 "--output", help="The output image folder", required=True)
         self.parser.add_argument(
             "--name", help="The name of the generated image", default="image")
         self.parser.add_argument("--width", default=768, type=int)
@@ -30,7 +32,6 @@ class ImageCommand:
         self.parser.add_argument("--batch_count", default=1, type=int)
         self.parser.add_argument("--inference_steps", default=50, type=int)
         self.parser.add_argument("--seed", type=int)
-        self.parser.add_argument("--input", help="The input image")
         self.parser.add_argument(
             "--controlnet_model", help="The ControlNet model to use")
         self.parser.add_argument(
@@ -73,16 +74,17 @@ class ImageCommand:
         for x in range(args.batch_count):
             path = os.path.join(args.output, args.name)
             pathlib.Path(path).mkdir(parents=True, exist_ok=True)
+            s = seed + x * args.batch_size
             if args.input != None:
                 if args.controlnet_model != None:
                     self.service.controlnet(args.model, prompt, args.negative_prompt, path, args.width, args.height, args.controlnet_model, args.controlnet_conditioning_scale, args.control_guidance_start, args.control_guidance_end,
-                                            args.input, loras, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
+                                            args.input, loras, s, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
                 elif args.variations:
                     self.service.variations(path, args.width, args.height,
-                                                            args.input, loras, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
+                                            args.input, loras, s, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
                 else:
                     self.service.img2img(args.model, prompt, args.negative_prompt, path, args.width, args.height,
-                                         args.input, loras, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
+                                         args.input, loras, s, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
             else:
                 self.service.txt2img(args.model, prompt, args.negative_prompt, path, args.width, args.height,
-                                     loras, seed + x, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))
+                                     loras, s, args.batch_size, args.inference_steps, args.name + "-" + str(x).rjust(3, "0"))

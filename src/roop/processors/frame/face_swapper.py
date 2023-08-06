@@ -22,7 +22,8 @@ def get_face_swapper() -> Any:
     with THREAD_LOCK:
         if FACE_SWAPPER is None:
             model_path = resolve_relative_path('../models/inswapper_128.onnx')
-            FACE_SWAPPER = insightface.model_zoo.get_model(model_path, providers=roop.globals.execution_providers)
+            FACE_SWAPPER = insightface.model_zoo.get_model(
+                model_path, providers=roop.globals.execution_providers)
     return FACE_SWAPPER
 
 
@@ -34,7 +35,8 @@ def clear_face_swapper() -> None:
 
 def pre_check() -> bool:
     download_directory_path = resolve_relative_path('../models')
-    conditional_download(download_directory_path, ['https://huggingface.co/henryruhs/roop/resolve/main/inswapper_128.onnx'])
+    conditional_download(download_directory_path, [
+                         'https://huggingface.co/henryruhs/roop/resolve/main/inswapper_128.onnx'])
     return True
 
 
@@ -87,14 +89,18 @@ def process_frames(source_path: str, temp_frame_paths: List[str], update: Callab
 def process_image(source_path: str, target_path: str, output_path: str) -> None:
     source_face = get_one_face(cv2.imread(source_path))
     target_frame = cv2.imread(target_path)
-    reference_face = None if roop.globals.many_faces else get_one_face(target_frame, roop.globals.reference_face_position)
+    reference_face = None if roop.globals.many_faces else get_one_face(
+        target_frame, roop.globals.reference_face_position)
     result = process_frame(source_face, reference_face, target_frame)
     cv2.imwrite(output_path, result)
 
 
 def process_video(source_path: str, temp_frame_paths: List[str]) -> None:
     if not roop.globals.many_faces and not get_face_reference():
-        reference_frame = cv2.imread(temp_frame_paths[roop.globals.reference_frame_number])
-        reference_face = get_one_face(reference_frame, roop.globals.reference_face_position)
+        reference_frame = cv2.imread(
+            temp_frame_paths[roop.globals.reference_frame_number])
+        reference_face = get_one_face(
+            reference_frame, roop.globals.reference_face_position)
         set_face_reference(reference_face)
-    roop.processors.frame.core.process_video(source_path, temp_frame_paths, process_frames)
+    roop.processors.frame.core.process_video(
+        source_path, temp_frame_paths, process_frames)

@@ -42,10 +42,10 @@ class ImageService:
 
     def variations(self, output, width, height, image, loras, seed=0, count=1, steps=50, name="img2img"):
         pipeline = self.setup_pipeline(
-                "lambdalabs/sd-image-variations-diffusers", StableDiffusionImageVariationPipeline, loras)
+            "lambdalabs/sd-image-variations-diffusers", StableDiffusionImageVariationPipeline, loras)
         generator = self.create_generator(seed, count)
         images = pipeline(generator=generator, width=width, height=height,
-                            num_images_per_prompt=count, num_inference_steps=steps, image=Image.open(image).convert("RGB"))
+                          num_images_per_prompt=count, num_inference_steps=steps, image=Image.open(image).convert("RGB"))
         self.save_images(images, output, name, seed)
 
     def img2img(self, model, prompt, negative_prompt, output, width, height, image, loras, seed=0, count=1, steps=50, name="img2img"):
@@ -55,7 +55,7 @@ class ImageService:
         generator = self.create_generator(seed, count)
         conditioning = self.add_compel(pipeline, prompt)
         images = pipeline(prompt_embeds=conditioning, generator=generator,
-                            num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=Image.open(image).convert("RGB").resize((width, height)))
+                          num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=Image.open(image).convert("RGB").resize((width, height)))
         self.save_images(images, output, name, seed, exif_bytes)
 
     def save_images(self, images, output, name, seed, exif_bytes=None):
@@ -74,7 +74,7 @@ class ImageService:
         }
         return piexif.dump(exif_dict)
 
-    def setup_pipeline(self, model, type, loras = [], controlnet_model=None):
+    def setup_pipeline(self, model, type, loras=[], controlnet_model=None):
         if controlnet_model:
             controlnet = ControlNetModel.from_pretrained(controlnet_model)
         else:
