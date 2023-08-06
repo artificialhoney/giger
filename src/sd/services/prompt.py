@@ -396,11 +396,7 @@ class PromptService:
         if args.type != None:
             context.append(args.type)
 
-        if isinstance(args.description, io.TextIOWrapper):
-            description = args.description.read()
-        else:
-            description = args.description
-        description = [x.strip() for x in description.split(',')]
+        description = [x.strip() for x in args.description.split(',')]
 
         if args.background_color != None:
             style.append("with background " + args.background_color)
@@ -432,7 +428,13 @@ class PromptService:
 
         if args.compel_style == "subtle":
             segments = []
-            lead = [" ".join(context)] + description + style
+            lead = []
+            if len(context) > 0:
+                lead += " ".join(context)
+            if len(description) > 0:
+                lead += description
+            if len(style) > 0:
+                lead += style
             if len(lead) > 0:
                 segments.append("\"" + separator.join(lead) + "\"")
             if len(image) > 0:

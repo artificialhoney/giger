@@ -47,10 +47,8 @@ echo "$prompt" | sd image --output $(pwd)/out/batch --name graffiti
 
 ### roop
 
-All work is done in the [roop](https://github.com/s0md3v/roop) repository!
-
 ```bash
-sd roop -s face.jpg -t target.png -o output.png
+sd roop --source face.jpg --input target.png --output output.png
 ```
 
 ## Templates

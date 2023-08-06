@@ -14,7 +14,7 @@ class ImageCommand:
         self.parser = parser.add_parser(
             "image", help="Generate generate image from prompt")
         self.parser.add_argument(
-            "prompt", help="The text prompt", nargs="?", default=(None if sys.stdin.isatty() else sys.stdin))
+            "prompt", help="The text prompt", nargs="*")
 
         self.parser.add_argument(
             "--model", help="The Stable Diffusion model to use", default="Lykon/DreamShaper")
@@ -58,10 +58,11 @@ class ImageCommand:
         else:
             seed = args.seed
 
-        if isinstance(args.prompt, io.TextIOWrapper):
-            prompt = args.prompt.read()
-        else:
-            prompt = args.prompt
+        if not sys.stdin.isatty():
+            args.prompt.extend(sys.stdin.read().splitlines())
+
+        prompt = ", ".join(args.prompt)
+        print(prompt)
 
         loras = []
         for index, lora_model in enumerate(args.lora_model):

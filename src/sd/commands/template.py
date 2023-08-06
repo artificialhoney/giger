@@ -10,8 +10,7 @@ _logger = logging.getLogger(__name__)
 class TemplateCommand:
     def __init__(self, parser):
         self.parser = parser.add_parser("template", help="Template prompts")
-        self.parser.add_argument("template", help="The prompt template", nargs="?", default=(
-            None if sys.stdin.isatty() else sys.stdin))
+        self.parser.add_argument("template", help="The prompt template", nargs="*")
         self.parser.add_argument(
             "-c", "--config", help="The prompt data in the format 'key=value'", nargs="*")
         self.parser.add_argument("-d", "--data", help="The prompt data")
@@ -19,6 +18,9 @@ class TemplateCommand:
         self.service = TemplateService()
 
     def run(self, args):
+        if not sys.stdin.isatty():
+            args.template.extend(sys.stdin.read().splitlines())
+
         if args.data != None:
             f = open(args.data, "r")
             data = yaml.safe_load(f)
@@ -39,7 +41,7 @@ class TemplateCommand:
         else:
             template = args.template
 
-        result = self.service.render(template, data)
+        result = self.service.render("\n".join(args.template), data)
 
         if args.out:
             f = open(args.out, "w")
