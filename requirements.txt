@@ -10,17 +10,8 @@ argcomplete
 compel
 safetensors
 
-numpy
-opencv-python
+insightface
 onnx
 onnxruntime
-insightface
-psutil
-tk
-customtkinter
-pillow
-tensorflow
-opennsfw2
-protobuf
-tqdm
-gfpgan
+huggingface_hub
+numpy

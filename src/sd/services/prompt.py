@@ -436,20 +436,20 @@ class PromptService:
             if len(style) > 0:
                 lead += style
             if len(lead) > 0:
-                segments.append("\"" + separator.join(lead) + "\"")
+                segments.append("'" + separator.join(lead) + "'")
             if len(image) > 0:
-                segments.append("\"" + separator.join(image) + "\"")
+                segments.append("'" + separator.join(image) + "'")
             return "({0}).and()".format(separator.join(segments))
         if args.compel_style == "full":
             segments = []
             if len(context) > 0:
-                segments.append("\"" + " ".join(context) + "\"")
+                segments.append("'" + " ".join(context) + "'")
             if len(description) > 0:
-                segments.append(separator.join(["\"" + x + "\"" for x in description]))
+                segments.append(separator.join(["'" + x + "'" for x in description]))
             if len(style) > 0:
-                segments.append("\"" + separator.join(style) + "\"")
+                segments.append("'" + separator.join(style) + "'")
             if len(image) > 0:
-                segments.append("\"" + separator.join(image) + "\"")
+                segments.append("'" + separator.join(image) + "'")
             return "({0}).and()".format(separator.join(segments))
         else:
             return separator.join(context + description + style + image)
