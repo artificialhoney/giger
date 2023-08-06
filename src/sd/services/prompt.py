@@ -440,10 +440,10 @@ class PromptService:
             return "({0}).and()".format(separator.join(segments))
         if args.compel_style == "full":
             segments = []
-            if len(description) > 0:
-                segments.append(separator.join(["\"" + x + "\"" for x in description]))
             if len(context) > 0:
                 segments.append("\"" + " ".join(context) + "\"")
+            if len(description) > 0:
+                segments.append(separator.join(["\"" + x + "\"" for x in description]))
             if len(style) > 0:
                 segments.append("\"" + separator.join(style) + "\"")
             if len(image) > 0:
