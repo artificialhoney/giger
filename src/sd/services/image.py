@@ -15,7 +15,7 @@ class ImageService:
     def __init__(self):
         if torch.cuda.is_available():
             self.cuda = True
-        else:
+        elif platform == "darwin":
             self.cuda = False
 
     def txt2img(self, model, prompt, negative_prompt, output, width, height, loras, seed=0, count=1, steps=50, name="txt2img"):
@@ -41,12 +41,12 @@ class ImageService:
                           num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=self.adjust_image(image, width, height), controlnet_conditioning_scale=controlnet_conditioning_scale, control_guidance_start=control_guidance_start, control_guidance_end=control_guidance_end)
         self.save_images(images, output, name, seed, exif_bytes)
 
-    def variations(self, output, width, height, image, loras, seed=0, count=1, steps=50, name="img2img"):
+    def variations(self, output, width, height, image, loras, seed=0, count=1, steps=50, name="variations"):
         pipeline = self.setup_pipeline(
             "lambdalabs/sd-image-variations-diffusers", StableDiffusionImageVariationPipeline, loras)
         generator = self.create_generator(seed, count)
         images = pipeline(generator=generator, width=width, height=height,
-                          num_images_per_prompt=count, num_inference_steps=steps, image=self.adjust_image(image, width, height))
+                          num_images_per_prompt=count, num_inference_steps=steps, image=self.adjust_image(image, width, height, Image.Resampling.BICUBIC))
         self.save_images(images, output, name, seed)
 
     def img2img(self, model, prompt, negative_prompt, output, width, height, image, loras, seed=0, count=1, steps=50, name="img2img"):
@@ -91,8 +91,6 @@ class ImageService:
                 pipeline.enable_xformers_memory_efficient_attention()
         else:
             if controlnet_model:
-                controlnet = ControlNetModel.from_pretrained(
-                    controlnet_model, torch_dtype=torch.float32)
                 pipeline = type.from_pretrained(
                     model, torch_dtype=torch.float32, controlnet=controlnet)
             else:
@@ -111,7 +109,7 @@ class ImageService:
                         text_encoder=pipeline.text_encoder)
         return compel.build_conditioning_tensor(prompt)
 
-    def adjust_image(self, image, width, height):
+    def adjust_image(self, image, width, height, resample=Image.Resampling.LANCZOS):
         im = Image.open(image).convert("RGB")
-        im.thumbnail((width, height), Image.Resampling.LANCZOS)
+        im.thumbnail((width, height), resample)
         return im
