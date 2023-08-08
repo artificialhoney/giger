@@ -27,23 +27,61 @@
     :alt: Project generated with PyScaffold
     :target: https://pyscaffold.org/
 
-|
 
-==========================
 sd
-==========================
+==
 
+CLI for Stable Diffusion tasks.
 
-    Add a short description here!
+Installation
+------------
 
+.. code:: bash
 
-A longer description of your project goes here...
+   pip install -r requirements.txt
+   activate-global-python-argcomplete
+   echo 'eval "$(register-python-argcomplete sd)"' >> ~./zshrc
 
+CLI
+---
 
-.. _pyscaffold-notes:
+template
+~~~~~~~~
 
-Note
-====
+.. code:: bash
 
-This project has been set up using PyScaffold 4.5. For details and usage
-information on PyScaffold see https://pyscaffold.org/.
+   sd template -c type=Viking  -d data/hero.yaml "$(cat templates/hero.j2)"
+
+prompt
+~~~~~~
+
+.. code:: bash
+
+   sd prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k" 
+
+image
+~~~~~
+
+.. code:: bash
+
+   sd image "Comic Book of Spawn in a battle, Concept art, Photorealistic, Octane render, Cinematic, Ultra-Wide-Angle Shot, 8k" --output $HOME/Desktop/ --name spawn
+
+or e.g.
+
+.. code:: bash
+
+   sd image "$(sd prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k")" --output $HOME/Desktop/ --name spawn
+
+.. code:: bash
+
+   prompt="a wall with graffiti on it, with text Seen, in the art of Seen, located in New York City"
+   echo "$prompt" | sd image --output $(pwd)/out/batch --name graffiti --input $(pwd)/assets/img/sketch.png --controlnet_model "lllyasviel/sd-controlnet-hed"
+   echo "$prompt" | sd image --output $(pwd)/out/batch --name graffiti --input $(pwd)/assets/img/sketch.png
+   echo "$prompt" | sd image --output $(pwd)/out/batch --name graffiti
+
+roop
+~~~~
+
+.. code:: bash
+
+   sd roop --source face.jpg --input target.png --output output.png
