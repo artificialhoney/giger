@@ -7,7 +7,6 @@ CLI for Stable Diffusion tasks.
 
 ```bash
 pip install -r requirements.txt
-pip install -e .
 activate-global-python-argcomplete
 echo 'eval "$(register-python-argcomplete sd)"' >> ~./zshrc
 ```
