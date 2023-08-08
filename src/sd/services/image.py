@@ -15,7 +15,7 @@ class ImageService:
     def __init__(self):
         if torch.cuda.is_available():
             self.cuda = True
-        elif platform == "darwin":
+        else:
             self.cuda = False
 
     def txt2img(self, model, prompt, negative_prompt, output, width, height, loras, seed=0, count=1, steps=50, name="txt2img"):
@@ -36,8 +36,9 @@ class ImageService:
         pipeline.scheduler = UniPCMultistepScheduler.from_config(
             pipeline.scheduler.config)
         conditioning = self.add_compel(pipeline, prompt)
+
         images = pipeline(prompt_embeds=conditioning, generator=generator, width=width, height=height,
-                          num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=Image.open(image).convert("RGB"), controlnet_conditioning_scale=controlnet_conditioning_scale, control_guidance_start=control_guidance_start, control_guidance_end=control_guidance_end)
+                          num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=self.adjust_image(image, width, height), controlnet_conditioning_scale=controlnet_conditioning_scale, control_guidance_start=control_guidance_start, control_guidance_end=control_guidance_end)
         self.save_images(images, output, name, seed, exif_bytes)
 
     def variations(self, output, width, height, image, loras, seed=0, count=1, steps=50, name="img2img"):
@@ -45,7 +46,7 @@ class ImageService:
             "lambdalabs/sd-image-variations-diffusers", StableDiffusionImageVariationPipeline, loras)
         generator = self.create_generator(seed, count)
         images = pipeline(generator=generator, width=width, height=height,
-                          num_images_per_prompt=count, num_inference_steps=steps, image=Image.open(image).convert("RGB"))
+                          num_images_per_prompt=count, num_inference_steps=steps, image=self.adjust_image(image, width, height))
         self.save_images(images, output, name, seed)
 
     def img2img(self, model, prompt, negative_prompt, output, width, height, image, loras, seed=0, count=1, steps=50, name="img2img"):
@@ -55,7 +56,7 @@ class ImageService:
         generator = self.create_generator(seed, count)
         conditioning = self.add_compel(pipeline, prompt)
         images = pipeline(prompt_embeds=conditioning, generator=generator,
-                          num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=Image.open(image).convert("RGB").resize((width, height)))
+                          num_images_per_prompt=count, negative_prompt=negative_prompt, num_inference_steps=steps, image=self.adjust_image(image, width, height))
         self.save_images(images, output, name, seed, exif_bytes)
 
     def save_images(self, images, output, name, seed, exif_bytes=None):
@@ -75,13 +76,10 @@ class ImageService:
         return piexif.dump(exif_dict)
 
     def setup_pipeline(self, model, type, loras=[], controlnet_model=None):
-        if controlnet_model:
-            controlnet = ControlNetModel.from_pretrained(controlnet_model)
-        else:
-            controlnet = None
-
         if self.cuda:
-            if controlnet:
+            if controlnet_model:
+                controlnet = ControlNetModel.from_pretrained(
+                    controlnet_model, torch_dtype=torch.float16)
                 pipeline = type.from_pretrained(
                     model, torch_dtype=torch.float16, controlnet=controlnet)
             else:
@@ -92,7 +90,9 @@ class ImageService:
                 pipeline.enable_model_cpu_offload()
                 pipeline.enable_xformers_memory_efficient_attention()
         else:
-            if controlnet:
+            if controlnet_model:
+                controlnet = ControlNetModel.from_pretrained(
+                    controlnet_model, torch_dtype=torch.float32)
                 pipeline = type.from_pretrained(
                     model, torch_dtype=torch.float32, controlnet=controlnet)
             else:
@@ -110,3 +110,8 @@ class ImageService:
         compel = Compel(tokenizer=pipeline.tokenizer,
                         text_encoder=pipeline.text_encoder)
         return compel.build_conditioning_tensor(prompt)
+
+    def adjust_image(self, image, width, height):
+        im = Image.open(image).convert("RGB")
+        im.thumbnail((width, height), Image.Resampling.LANCZOS)
+        return im
