@@ -11,18 +11,6 @@ _logger = logging.getLogger(__name__)
 
 
 class RoopService:
-    def models(self):
-        models_path = os.path.join(self.roop_dir, "*")
-        models = glob.glob(models_path)
-        models = [os.path.basename(x) for x in models if x.endswith(
-            ".onnx") or x.endswith(".pth")]
-        return models
-
-    def __init__(self):
-        self.roop_dir = os.path.join(str(Path.home()), "roop")
-        if not os.path.isdir(self.roop_dir):
-            Repository(self.roop_dir, clone_from="henryruhs/roop")
-
     def get_face(self, source, det_size=(640, 640)):
         face_analyser = insightface.app.FaceAnalysis(
             name="buffalo_l", providers=["CPUExecutionProvider"])
@@ -37,7 +25,13 @@ class RoopService:
         except:
             return None
 
-    def swap(self, source, input, output, model_name):
+    def swap(self, source, input, output, model_name=None):
+        if not model_name:
+            roop_dir = os.path.join(str(Path.home()), "roop")
+            if not os.path.isdir(roop_dir):
+                Repository(roop_dir, clone_from="henryruhs/roop")
+            model_name = os.path.join(
+                roop_dir, "inswapper_128.onnx")
         source_image = Image.open(source).convert("RGB")
         input_image = Image.open(input).convert("RGB")
         exif = input_image.info['exif']
@@ -49,8 +43,8 @@ class RoopService:
         if source_face == None:
             _logger.warn("Cannot find face for source '{0}'. Exiting.".format(source))
             return
-        model = insightface.model_zoo.get_model(os.path.join(
-            self.roop_dir, model_name), providers=["CPUExecutionProvider"])
+        model = insightface.model_zoo.get_model(
+            model_name, providers=["CPUExecutionProvider"])
         result = model.get(numpy.array(input_image),
                            input_face,
                            source_face)
