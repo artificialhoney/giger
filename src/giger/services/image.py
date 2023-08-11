@@ -43,7 +43,7 @@ class ImageService:
 
     def variations(self, output, width, height, image, loras, seed=0, count=1, steps=50, name="variations"):
         pipeline = self.setup_pipeline(
-            "lambdalabs/sd-image-variations-diffusers", StableDiffusionImageVariationPipeline, loras)
+            "lambdalabs/giger-image-variations-diffusers", StableDiffusionImageVariationPipeline, loras)
         generator = self.create_generator(seed, count)
         images = pipeline(generator=generator, width=width, height=height,
                           num_images_per_prompt=count, num_inference_steps=steps, image=self.adjust_image(image, width, height, Image.Resampling.BICUBIC))

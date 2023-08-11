@@ -7,7 +7,7 @@ console script. To run this script uncomment the following lines in the
 ``[options.entry_points]`` section in ``setup.cfg``::
 
     console_scripts =
-         fibonacci = sd.skeleton:run
+         fibonacci = giger.skeleton:run
 
 Then run ``pip install .`` (or ``pip install -e .`` for editable mode)
 which will install the command ``fibonacci`` inside your current environment.
@@ -29,7 +29,7 @@ from .commands.roop import RoopCommand
 from .commands.image import ImageCommand
 from .commands.prompt import PromptCommand
 from .commands.template import TemplateCommand
-from sd import __version__
+from giger import __version__
 import sys
 import logging
 import warnings
@@ -60,12 +60,12 @@ class CLI():
         :obj:`argparse.Namespace`: command line parameters namespace
         """
         parser = argparse.ArgumentParser(
-            prog="sd", description="Tools for Stable Diffusion")
+            prog="giger", description="Tools for Stable Diffusion")
 
         parser.add_argument(
             "--version",
             action="version",
-            version=f"sd {__version__}",
+            version=f"giger {__version__}",
         )
         parser.add_argument(
             "-v",
@@ -145,6 +145,6 @@ if __name__ == "__main__":
     # After installing your project with pip, users can also run your Python
     # modules as scripts via the ``-m`` flag, as defined in PEP 338::
     #
-    #     python -m sd.skeleton 42
+    #     python -m giger.skeleton 42
     #
     run()

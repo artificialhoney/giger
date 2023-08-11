@@ -34,7 +34,7 @@ except ImportError:
     from sphinx import apidoc
 
 output_dir = os.path.join(__location__, "api")
-module_dir = os.path.join(__location__, "../src/sd")
+module_dir = os.path.join(__location__, "../src/giger")
 try:
     shutil.rmtree(output_dir)
 except FileNotFoundError:
@@ -87,7 +87,7 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = "sd"
+project = "giger"
 copyright = "2023, Sebastian Krüger"
 
 # The version info for the project you're documenting, acts as replacement for
@@ -99,7 +99,7 @@ copyright = "2023, Sebastian Krüger"
 # If you don’t need the separation provided between version and release,
 # just set them both to the same value.
 try:
-    from sd import __version__ as version
+    from giger import __version__ as version
 except ImportError:
     version = ""
 
@@ -235,7 +235,7 @@ html_static_path = ["_static"]
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "sd-doc"
+htmlhelp_basename = "giger-doc"
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -252,7 +252,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    ("index", "user_guide.tex", "sd Documentation", "Sebastian Krüger", "manual")
+    ("index", "user_guide.tex", "giger Documentation", "Sebastian Krüger", "manual")
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

@@ -1,5 +1,5 @@
 """
-    Setup file for sd.
+    Setup file for giger.
     Use setup.cfg to configure your project.
 
     This file was generated with PyScaffold 4.5.

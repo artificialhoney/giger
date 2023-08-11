@@ -25,28 +25,28 @@ mkdir -p $DIR
 
 render() {
     echo "$1"
-    echo "$1" | sd image --output $DIR/$TYPE --name $NAME --seed $SEED --negative_prompt "$NEGATIVE_PROMPT" --batch_count $COUNT --width $IMAGE_WIDTH --height $IMAGE_HEIGHT --lora_model "OedoSoldier/detail-tweaker-lora" --lora_filename "add_detail.safetensors" --lora_scale $LORA_SCALE $2
+    echo "$1" | giger image --output $DIR/$TYPE --name $NAME --seed $SEED --negative_prompt "$NEGATIVE_PROMPT" --batch_count $COUNT --width $IMAGE_WIDTH --height $IMAGE_HEIGHT --lora_model "OedoSoldier/detail-tweaker-lora" --lora_filename "add_detail.safetensors" --lora_scale $LORA_SCALE $2
     SEED=$(($SEED + $COUNT))
 }
 
 for j in "${!SPLIT_LINES[@]}"; do
     case $TYPE in
     graffiti)
-        PROMPT=$(sd prompt "${SPLIT_LINES[$j]}" --rendering_engine "Octane Render" --lightning_style "Cinematic" --resolution "8k" --compel_style "subtle")
+        PROMPT=$(giger prompt "${SPLIT_LINES[$j]}" --rendering_engine "Octane Render" --lightning_style "Cinematic" --resolution "8k" --compel_style "subtle")
         ARGS="--input $WORKING_DIR/$IMAGE --controlnet_model "artificialhoney/graffiti" --controlnet_conditioning_scale $CONTROLNET_CONDITIONING_SCALE"
         ;;
     spawn)
-        PROMPT=$(sd prompt "Spawn in a battle, ${SPLIT_LINES[$j]}" --time "Modern" --type "Comic Book" --artist "H.R. Giger" --art_style "Concept Art" --realism "Photorealistic" --rendering_engine "Octane Render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k")
+        PROMPT=$(giger prompt "Spawn in a battle, ${SPLIT_LINES[$j]}" --time "Modern" --type "Comic Book" --artist "H.R. Giger" --art_style "Concept Art" --realism "Photorealistic" --rendering_engine "Octane Render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k")
         ;;
     gravedigger)
-        PROMPT=$(sd prompt "${SPLIT_LINES[$j]}" --time Modern --type "Comic Book" --art_style "Concept Art" --artist "William Blake" --realism "Photorealistic" --rendering_engine "Octane Render" --lightning_angle "Back Light" --lightning_style "Cinematic" --camera_position "Full-Body Shot" --style "Long Exposure" --resolution "8k" --compel_style "subtle")
+        PROMPT=$(giger prompt "${SPLIT_LINES[$j]}" --time Modern --type "Comic Book" --art_style "Concept Art" --artist "William Blake" --realism "Photorealistic" --rendering_engine "Octane Render" --lightning_angle "Back Light" --lightning_style "Cinematic" --camera_position "Full-Body Shot" --style "Long Exposure" --resolution "8k" --compel_style "subtle")
         ;;
     vampire)
-        # PROMPT=$(sd prompt "${SPLIT_LINES[$j]}" --time Ancient --type "Comic Book" --background_color "#000000" --art_style "Concept Art" --artist "H.R. Giger" --realism "Photorealistic" --rendering_engine "Octane Render" --lightning_angle "Front Light" --lightning_style "Cinematic" --camera_position "Full-Body Shot" --style "Long Exposure" --resolution "8k")
-        PROMPT=$(sd prompt "${SPLIT_LINES[$j]}" --time Modern --type "Comic Book" --art_style "Concept Art" --artist "Banksy" --realism "Photorealistic" --rendering_engine "Octane Render" --lightning_angle "Front Light" --lightning_style "Cinematic" --camera_position "Full-Body Shot" --style "Long Exposure" --resolution "8k")
+        # PROMPT=$(giger prompt "${SPLIT_LINES[$j]}" --time Ancient --type "Comic Book" --background_color "#000000" --art_style "Concept Art" --artist "H.R. Giger" --realism "Photorealistic" --rendering_engine "Octane Render" --lightning_angle "Front Light" --lightning_style "Cinematic" --camera_position "Full-Body Shot" --style "Long Exposure" --resolution "8k")
+        PROMPT=$(giger prompt "${SPLIT_LINES[$j]}" --time Modern --type "Comic Book" --art_style "Concept Art" --artist "Banksy" --realism "Photorealistic" --rendering_engine "Octane Render" --lightning_angle "Front Light" --lightning_style "Cinematic" --camera_position "Full-Body Shot" --style "Long Exposure" --resolution "8k")
         ;;
     viking)
-        PROMPT=$(sd prompt "${SPLIT_LINES[$j]}" --time Ancient --type "Comic Book" --art_style "Concept Art" "Dieselpunk" --artist "Frank Miller" --realism "Photorealistic" --rendering_engine "Octane Render" --lightning_angle "Back Light" --lightning_style "Cinematic" --camera_position "Full-Body Shot" --style "Long Exposure" --resolution "8k" --compel_style "subtle")
+        PROMPT=$(giger prompt "${SPLIT_LINES[$j]}" --time Ancient --type "Comic Book" --art_style "Concept Art" "Dieselpunk" --artist "Frank Miller" --realism "Photorealistic" --rendering_engine "Octane Render" --lightning_angle "Back Light" --lightning_style "Cinematic" --camera_position "Full-Body Shot" --style "Long Exposure" --resolution "8k" --compel_style "subtle")
         ;;
     *)
         echo "No type specified. Exiting!"

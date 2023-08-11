@@ -12,6 +12,6 @@ for FILE in *; do
     if [[ ! -f $FILE ]]; then
         continue
     fi
-    sd image --input $FILE --output . --name $FILE-variations --variations True --seed $SEED --batch_count $COUNT --width $IMAGE_WIDTH --height $IMAGE_HEIGHT
+    giger image --input $FILE --output . --name $FILE-variations --variations True --seed $SEED --batch_count $COUNT --width $IMAGE_WIDTH --height $IMAGE_HEIGHT
 done
 cd -

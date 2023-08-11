@@ -1,6 +1,6 @@
 import pytest
 
-from sd.skeleton import fib, main
+from giger.skeleton import fib, main
 
 __author__ = "Sebastian Krüger"
 __copyright__ = "Sebastian Krüger"

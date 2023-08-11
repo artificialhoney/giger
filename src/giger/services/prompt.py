@@ -237,7 +237,7 @@ class PromptService:
             "Rembrandt",
             "Renato Mucillo",
             "Richard Dadd",
-            "Rossdraws",
+            "Rosgigerraws",
             "Salvador Dalí",
             "Sam Does Arts",
             "Sandro Botticelli",

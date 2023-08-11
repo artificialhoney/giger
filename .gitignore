@@ -41,7 +41,7 @@ coverage.xml
 # Build and docs folder/files
 build/*
 dist/*
-sdist/*
+gigerist/*
 docs/api/*
 docs/_rst/*
 docs/_build/*

@@ -1,8 +1,8 @@
 ==========================
-sd
+giger
 ==========================
 
-This is the documentation of **sd**.
+This is the documentation of **giger**.
 
 .. note::
 
