@@ -29,7 +29,7 @@
 
 
 giger
-==
+=====
 
 CLI for Stable Diffusion tasks.
 
@@ -57,7 +57,7 @@ prompt
 
 .. code:: bash
 
-   giger prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k" 
+   giger prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k"
 
 image
 ~~~~~
@@ -75,7 +75,7 @@ or e.g.
 .. code:: bash
 
    prompt="a wall with graffiti on it, with text Seen, in the art of Seen, located in New York City"
-   echo "$prompt" | giger image --output $(pwd)/out/batch --name graffiti --input $(pwd)/assets/img/sketch.png --controlnet_model "lllyasviel/giger-controlnet-hed"
+   echo "$prompt" | giger image --output $(pwd)/out/batch --name graffiti --input $(pwd)/assets/img/sketch.png --controlnet_model "lllyasviel/sd-controlnet-hed"
    echo "$prompt" | giger image --output $(pwd)/out/batch --name graffiti --input $(pwd)/assets/img/sketch.png
    echo "$prompt" | giger image --output $(pwd)/out/batch --name graffiti
 
