@@ -8,8 +8,8 @@
 # serve to show the default.
 
 import os
-import sys
 import shutil
+import sys
 
 # -- Path setup --------------------------------------------------------------
 
@@ -34,7 +34,7 @@ except ImportError:
     from sphinx import apidoc
 
 output_dir = os.path.join(__location__, "api")
-module_dir = os.path.join(__location__, "../src/stable_diffusion_templates")
+module_dir = os.path.join(__location__, "../src/sd")
 try:
     shutil.rmtree(output_dir)
 except FileNotFoundError:
@@ -99,7 +99,7 @@ copyright = "2023, Sebastian Krüger"
 # If you don’t need the separation provided between version and release,
 # just set them both to the same value.
 try:
-    from stable_diffusion_templates import __version__ as version
+    from sd import __version__ as version
 except ImportError:
     version = ""
 
@@ -153,15 +153,21 @@ todo_emit_warnings = True
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = "alabaster"
+html_theme = "furo"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-html_theme_options = {
-    "sidebar_width": "300px",
-    "page_width": "1200px"
-}
+# html_theme_options = {
+#     "light_css_variables": {
+#         "color-brand-primary": "crimson",
+#         "color-brand-content": "crimson",
+#     },
+#     "dark_css_variables": {
+#         "color-brand-primary": "crimson",
+#         "color-brand-content": "crimson",
+#     }
+# }
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
