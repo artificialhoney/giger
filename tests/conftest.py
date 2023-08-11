@@ -1,5 +1,5 @@
 """
-    Dummy conftest.py for stable_diffusion_templates.
+    Dummy conftest.py for sd.
 
     If you don't know what this is for, just leave it empty.
     Read more about conftest.py under:

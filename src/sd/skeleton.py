@@ -7,7 +7,7 @@ console script. To run this script uncomment the following lines in the
 ``[options.entry_points]`` section in ``setup.cfg``::
 
     console_scripts =
-         fibonacci = stable_diffusion_templates.skeleton:run
+         fibonacci = sd.skeleton:run
 
 Then run ``pip install .`` (or ``pip install -e .`` for editable mode)
 which will install the command ``fibonacci`` inside your current environment.
@@ -145,6 +145,6 @@ if __name__ == "__main__":
     # After installing your project with pip, users can also run your Python
     # modules as scripts via the ``-m`` flag, as defined in PEP 338::
     #
-    #     python -m stable_diffusion_templates.skeleton 42
+    #     python -m sd.skeleton 42
     #
     run()

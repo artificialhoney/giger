@@ -38,7 +38,7 @@ Installation
 
 .. code:: bash
 
-   pip install -r requirements.txt
+   pip install sd
    activate-global-python-argcomplete
    echo 'eval "$(register-python-argcomplete sd)"' >> ~./zshrc
 

@@ -1,6 +1,6 @@
 import pytest
 
-from stable_diffusion_templates.skeleton import fib, main
+from sd.skeleton import fib, main
 
 __author__ = "Sebastian Krüger"
 __copyright__ = "Sebastian Krüger"
