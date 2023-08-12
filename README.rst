@@ -17,6 +17,9 @@
         :alt: Twitter
         :target: https://twitter.com/giger
 
+giger
+=====
+
 .. image:: https://img.shields.io/pypi/v/giger.svg
     :alt: PyPI-Server
     :target: https://pypi.org/project/giger/
@@ -26,10 +29,6 @@
 .. image:: https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold
     :alt: Project generated with PyScaffold
     :target: https://pyscaffold.org/
-
-
-giger
-=====
 
 CLI for Stable Diffusion tasks.
 
