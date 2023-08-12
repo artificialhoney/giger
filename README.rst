@@ -10,19 +10,19 @@
     .. image:: https://img.shields.io/coveralls/github/<USER>/giger/main.svg
         :alt: Coveralls
         :target: https://coveralls.io/r/<USER>/giger
-    .. image:: https://img.shields.io/pypi/v/giger.svg
-        :alt: PyPI-Server
-        :target: https://pypi.org/project/giger/
     .. image:: https://img.shields.io/conda/vn/conda-forge/giger.svg
         :alt: Conda-Forge
         :target: https://anaconda.org/conda-forge/giger
-    .. image:: https://pepy.tech/badge/giger/month
-        :alt: Monthly Downloads
-        :target: https://pepy.tech/project/giger
     .. image:: https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Twitter
         :alt: Twitter
         :target: https://twitter.com/giger
 
+.. image:: https://img.shields.io/pypi/v/giger.svg
+    :alt: PyPI-Server
+    :target: https://pypi.org/project/giger/
+.. image:: https://pepy.tech/badge/giger/month
+    :alt: Monthly Downloads
+    :target: https://pepy.tech/project/giger
 .. image:: https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold
     :alt: Project generated with PyScaffold
     :target: https://pyscaffold.org/
