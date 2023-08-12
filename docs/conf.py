@@ -165,10 +165,12 @@ html_theme_options = {
     "light_css_variables": {
         "color-brand-primary": "#ff5555",
         "color-brand-content": "#ff5555",
+        "color-highlight-on-target": "#f1fa8c",
     },
     "dark_css_variables": {
         "color-brand-primary": "#ff5555",
         "color-brand-content": "#ff5555",
+        "color-highlight-on-target": "#282a36",
     },
     "footer_icons": [
         {
