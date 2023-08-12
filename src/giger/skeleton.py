@@ -24,15 +24,19 @@ References:
 """
 
 import argparse
+import logging
+import sys
+import warnings
+
 import argcomplete
-from .commands.roop import RoopCommand
+
+from giger import __version__
+
 from .commands.image import ImageCommand
 from .commands.prompt import PromptCommand
+from .commands.roop import RoopCommand
 from .commands.template import TemplateCommand
-from giger import __version__
-import sys
-import logging
-import warnings
+
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 
@@ -48,19 +52,16 @@ _logger = logging.getLogger(__name__)
 # API allowing them to be called directly from the terminal as a CLI
 # executable/script.
 
-class CLI():
+
+class CLI:
     def parse_args(self, args):
-        """Parse command line parameters
-
-        Args:
-        args (List[str]): command line parameters as list of strings
-            (for example  ``["--help"]``).
-
-        Returns:
-        :obj:`argparse.Namespace`: command line parameters namespace
         """
+        Parse command line parameters
+        """
+
         parser = argparse.ArgumentParser(
-            prog="giger", description="Tools for Stable Diffusion")
+            prog="giger", description="Tools for Stable Diffusion"
+        )
 
         parser.add_argument(
             "--version",
@@ -96,55 +97,42 @@ class CLI():
         return parser.parse_args(args)
 
     def setup_logging(self, loglevel):
-        """Setup basic logging
+        """
+        Setup basic logging
 
         Args:
-        loglevel (int): minimum loglevel for emitting messages
+            loglevel (int): minimum loglevel for emitting messages
         """
         logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
         logging.basicConfig(
-            level=loglevel, stream=sys.stdout, format=logformat, datefmt="%Y-%m-%d %H:%M:%S"
+            level=loglevel,
+            stream=sys.stdout,
+            format=logformat,
+            datefmt="%Y-%m-%d %H:%M:%S",
         )
 
     def run(self, args):
-        """Wrapper allowing :func:`fib` to be called with string arguments in a CLI fashion
-
-        Instead of returning the value from :func:`fib`, it prints the result to the
-        ``stdout`` in a nicely formatted message.
-
-        Args:
-        args (List[str]): command line parameters as list of strings
-            (for example  ``["--verbose", "42"]``).
+        """
+        Wrapper allowing :func:`fib` to be called with string arguments in a CLI fashion
         """
         args = self.parse_args(args)
         self.setup_logging(args.loglevel)
-        if args.command == 'template':
+        if args.command == "template":
             self.template.run(args)
-        elif args.command == 'prompt':
+        elif args.command == "prompt":
             self.prompt.run(args)
-        elif args.command == 'image':
+        elif args.command == "image":
             self.image.run(args)
-        elif args.command == 'roop':
+        elif args.command == "roop":
             self.roop.run(args)
 
 
 def run():
-    """Calls :func:`main` passing the CLI arguments extracted from :obj:`sys.argv`
-
-    This function can be used as entry point to create console scripts with setuptools.
+    """
+    Calls :func:`main` passing the CLI arguments extracted from :obj:`sys.argv`
     """
     CLI().run(sys.argv[1:])
 
 
 if __name__ == "__main__":
-    # ^  This is a guard statement that will prevent the following code from
-    #    being executed in the case someone imports this file instead of
-    #    executing it as a script.
-    #    https://docs.python.org/3/library/__main__.html
-
-    # After installing your project with pip, users can also run your Python
-    # modules as scripts via the ``-m`` flag, as defined in PEP 338::
-    #
-    #     python -m giger.skeleton 42
-    #
     run()
