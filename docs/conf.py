@@ -177,7 +177,7 @@ html_theme_options = {
         "color-highlight-on-target": "#282a36",
         "color-api-name": "#ff7b7b",
         "color-api-pre-name": "#ff7b7b",
-        "color-background-primary": "#44475a",
+        "color-background-primary": "#282a36",
         "color-background-secondary": "#282a36",
         "color-sidebar-item-background--hover": "#44475a",
         "color-sidebar-item-expander-background--hover": "#44475a",
@@ -199,8 +199,8 @@ html_theme_options = {
 html_show_sphinx = False
 html_title = "giger"
 
-pygments_style = "dracula"
-pygments_dark_style = "dracula"
+pygments_style = "one-dark"
+pygments_dark_style = "one-dark"
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
