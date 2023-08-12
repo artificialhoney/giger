@@ -1,6 +1,7 @@
 pre-commit
 isort
 black
+gitchangelog
 
 transformers
 jinja2
