@@ -1,0 +1,6 @@
+exclude .*
+recursive-exclude .github *
+recursive-exclude docs *
+recursive-exclude examples *
+recursive-exclude requirements *
+recursive-exclude tests *
