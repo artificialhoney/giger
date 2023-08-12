@@ -166,11 +166,21 @@ html_theme_options = {
         "color-brand-primary": "#ff5555",
         "color-brand-content": "#ff5555",
         "color-highlight-on-target": "#f1fa8c",
+        "color-api-name": "#ff5555",
+        "color-api-pre-name": "#ff5555",
+        "color-background-primary": "#f8f8f2",
+        "color-background-secondary": "#f8f8f2",
     },
     "dark_css_variables": {
         "color-brand-primary": "#ff5555",
         "color-brand-content": "#ff5555",
         "color-highlight-on-target": "#282a36",
+        "color-api-name": "#ff5555",
+        "color-api-pre-name": "#ff5555",
+        "color-background-primary": "#44475a",
+        "color-background-secondary": "#282a36",
+        "color-sidebar-item-background--hover": "#44475a",
+        "color-sidebar-item-expander-background--hover": "#44475a",
     },
     "footer_icons": [
         {
