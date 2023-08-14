@@ -1,28 +1,6 @@
 #!/usr/bin/env python
 # PYTHON_ARGCOMPLETE_OK
 
-"""
-This is a skeleton file that can serve as a starting point for a Python
-console script. To run this script uncomment the following lines in the
-``[options.entry_points]`` section in ``setup.cfg``::
-
-    console_scripts =
-         fibonacci = giger.skeleton:run
-
-Then run ``pip install .`` (or ``pip install -e .`` for editable mode)
-which will install the command ``fibonacci`` inside your current environment.
-
-Besides console scripts, the header (i.e. until ``_logger``...) of this file can
-also be used as template for Python modules.
-
-Note:
-    This file can be renamed depending on your needs or safely removed if not needed.
-
-References:
-    - https://setuptools.pypa.io/en/latest/userguide/entry_point.html
-    - https://pip.pypa.io/en/stable/reference/pip_install
-"""
-
 import argparse
 import logging
 import sys
@@ -112,9 +90,6 @@ class CLI:
         )
 
     def run(self, args):
-        """
-        Wrapper allowing :func:`fib` to be called with string arguments in a CLI fashion
-        """
         args = self.parse_args(args)
         self.setup_logging(args.loglevel)
         if args.command == "template":
@@ -128,9 +103,6 @@ class CLI:
 
 
 def run():
-    """
-    Calls :func:`main` passing the CLI arguments extracted from :obj:`sys.argv`
-    """
     CLI().run(sys.argv[1:])
 
 

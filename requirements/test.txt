@@ -5,9 +5,9 @@ jinja2
 pyyaml
 diffusers
 torch
+torchvision
 piexif
 accelerate
-xformers
 argcomplete
 compel
 safetensors
