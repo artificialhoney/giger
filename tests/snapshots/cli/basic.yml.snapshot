@@ -1,0 +1,22 @@
+!!python/tuple
+- !!python/object:argparse.Namespace
+  art_style: null
+  artist: null
+  background_color: null
+  camera: null
+  camera_position: null
+  command: prompt
+  compel_style: null
+  composition: null
+  description:
+  - This is a test
+  iso: null
+  lightning_angle: null
+  lightning_style: null
+  loglevel: null
+  realism: null
+  rendering_engine: null
+  resolution: null
+  style: null
+  time: null
+  type: null

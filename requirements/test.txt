@@ -1,4 +1,5 @@
-pytest-mock
+pytest-snapshot
+mock
 
 transformers
 jinja2
