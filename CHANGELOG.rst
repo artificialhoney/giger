@@ -2,6 +2,30 @@ Changelog
 =========
 
 
+0.1.3 (2023-08-14)
+------------------
+
+Fix
+~~~
+- Script name. [Sebastian Krüger]
+
+Changes
+~~~~~~~
+- Add lint task. [Sebastian Krüger]
+- Pygments theme. [Sebastian Krüger]
+- Docs styling. [Sebastian Krüger]
+- Styling docs theme. [Sebastian Krüger]
+- Salmon primary color. [Sebastian Krüger]
+- Theme colors. [Sebastian Krüger]
+- Docs theme colors. [Sebastian Krüger]
+- Changelog. [Sebastian Krüger]
+
+Other
+~~~~~
+- CHANGELOG. [Sebastian Krüger]
+- README. [Sebastian Krüger]
+
+
 0.1.2 (2023-08-12)
 ------------------
 
