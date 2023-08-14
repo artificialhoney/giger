@@ -199,8 +199,8 @@ html_theme_options = {
 html_show_sphinx = False
 html_title = "giger"
 
-pygments_style = "dracula"
-pygments_dark_style = "dracula"
+pygments_style = "one-dark"
+pygments_dark_style = "one-dark"
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
