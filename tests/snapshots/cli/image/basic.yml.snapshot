@@ -1,0 +1,24 @@
+!!python/tuple
+- !!python/object:argparse.Namespace
+  batch_count: 1
+  batch_size: 1
+  command: image
+  control_guidance_end: 1.0
+  control_guidance_start: 0.0
+  controlnet_conditioning_scale: 1.0
+  controlnet_model: null
+  height: 432
+  inference_steps: 50
+  input: null
+  loglevel: null
+  lora_filename: []
+  lora_model: []
+  lora_scale: []
+  model: Lykon/DreamShaper
+  name: graffiti
+  negative_prompt: null
+  output: out
+  prompt: []
+  seed: null
+  variations: false
+  width: 768

@@ -2,10 +2,10 @@ import io
 
 
 class PromptService:
-    def compel_styles(self):
+    def compel_styles():
         return ["subtle", "full"]
 
-    def times(self):
+    def times():
         return [
             "Ancient",
             "Antique",
@@ -16,7 +16,7 @@ class PromptService:
             "Youthful" "{{time}}",
         ]
 
-    def types(self):
+    def types():
         return [
             "3D Render",
             "Abstract Painting",
@@ -142,7 +142,7 @@ class PromptService:
             "{{type}}",
         ]
 
-    def art_styles(self):
+    def art_styles():
         return [
             "Art Deco",
             "Art Nouveau",
@@ -166,7 +166,7 @@ class PromptService:
             "{{art_style}}",
         ]
 
-    def artists(self):
+    def artists():
         return [
             "Agnes Lawrence Pelton",
             "Akihito Yoshida",
@@ -248,7 +248,7 @@ class PromptService:
             "{{artist}}",
         ]
 
-    def realisms(self):
+    def realisms():
         return [
             "Ambient Occlusion",
             "Atmospheric",
@@ -263,7 +263,7 @@ class PromptService:
             "{{realism}}",
         ]
 
-    def rendering_engines(self):
+    def rendering_engines():
         return [
             "Octane Render",
             "Ray Tracing",
@@ -271,7 +271,7 @@ class PromptService:
             "V-Ray" "{{rendering_engine}}",
         ]
 
-    def lightning_angles(self):
+    def lightning_angles():
         return [
             "Back Light",
             "Front Light",
@@ -281,7 +281,7 @@ class PromptService:
             "{{lightning_angle}}",
         ]
 
-    def lightning_styles(self):
+    def lightning_styles():
         return [
             "Cinematic",
             "Fairy Lights",
@@ -300,7 +300,7 @@ class PromptService:
             "{{lightning_style}}",
         ]
 
-    def camera_positions(self):
+    def camera_positions():
         return [
             "Birds-eye",
             "Cinematic Still Shot",
@@ -321,7 +321,7 @@ class PromptService:
             "{{camera_position}}",
         ]
 
-    def cameras(self):
+    def cameras():
         return [
             "Canon",
             "Leica M",
@@ -330,7 +330,7 @@ class PromptService:
             "{{camera}}",
         ]
 
-    def styles(self):
+    def styles():
         return [
             "Early Wet Plate",
             "Fisheye",
@@ -343,7 +343,7 @@ class PromptService:
             "{{style}}",
         ]
 
-    def compositions(self):
+    def compositions():
         return [
             "Asymetric",
             "Centered",
@@ -353,7 +353,7 @@ class PromptService:
             "{{composition}}",
         ]
 
-    def isos(self):
+    def isos():
         return [
             "ISO50",
             "ISO100",
@@ -366,7 +366,7 @@ class PromptService:
             "ISO12800",
         ]
 
-    def resolutions(self):
+    def resolutions():
         return [
             "{{resolution}}",
             "8k",

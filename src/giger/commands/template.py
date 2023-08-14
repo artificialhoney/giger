@@ -21,7 +21,6 @@ class TemplateCommand:
         )
         self.parser.add_argument("-d", "--data", help="The prompt data")
         self.parser.add_argument("-o", "--out", help="The txt file to generate")
-        self.service = TemplateService()
 
     def run(self, args):
         if not sys.stdin.isatty():
@@ -50,7 +49,7 @@ class TemplateCommand:
         else:
             template = args.template
 
-        result = self.service.render("\n".join(args.template), data)
+        result = TemplateService().render("\n".join(template), data)
 
         if args.out:
             f = open(args.out, "w")

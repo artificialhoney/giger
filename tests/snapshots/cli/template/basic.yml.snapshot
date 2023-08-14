@@ -1,0 +1,10 @@
+!!python/tuple
+- !!python/object:argparse.Namespace
+  command: template
+  config:
+  - type=Viking
+  data: data/hero.yaml
+  loglevel: null
+  out: null
+  template:
+  - This is a {{type}}

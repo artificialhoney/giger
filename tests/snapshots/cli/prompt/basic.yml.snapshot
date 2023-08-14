@@ -9,7 +9,8 @@
   compel_style: null
   composition: null
   description:
-  - This is a test
+  - Spawn in a battle
+  - --time Ancient
   iso: null
   lightning_angle: null
   lightning_style: null
@@ -19,4 +20,4 @@
   resolution: null
   style: null
   time: null
-  type: null
+  type: Comic Book
