@@ -1,8 +1,10 @@
-from ..services.template import TemplateService
-import yaml
+import io
 import logging
 import sys
-import io
+
+import yaml
+
+from ..services.template import TemplateService
 
 _logger = logging.getLogger(__name__)
 
@@ -12,7 +14,11 @@ class TemplateCommand:
         self.parser = parser.add_parser("template", help="Template prompts")
         self.parser.add_argument("template", help="The prompt template", nargs="*")
         self.parser.add_argument(
-            "-c", "--config", help="The prompt data in the format 'key=value'", nargs="*")
+            "-c",
+            "--config",
+            help="The prompt data in the format 'key=value'",
+            nargs="*",
+        )
         self.parser.add_argument("-d", "--data", help="The prompt data")
         self.parser.add_argument("-o", "--out", help="The txt file to generate")
         self.service = TemplateService()
@@ -33,8 +39,11 @@ class TemplateCommand:
                 split = c.split("=")
                 data[split[0]] = split[1]
 
-        _logger.info("Running template with input from {0} and data {1}".format(
-            args.template, data))
+        _logger.info(
+            "Running template with input from {0} and data {1}".format(
+                args.template, data
+            )
+        )
 
         if isinstance(args.template, io.TextIOWrapper):
             template = args.template.read()

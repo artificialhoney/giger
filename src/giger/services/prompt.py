@@ -3,10 +3,7 @@ import io
 
 class PromptService:
     def compel_styles(self):
-        return [
-            "subtle",
-            "full"
-        ]
+        return ["subtle", "full"]
 
     def times(self):
         return [
@@ -16,8 +13,7 @@ class PromptService:
             "Modern",
             "Old-fashioned",
             "Retro",
-            "Youthful"
-            "{{time}}",
+            "Youthful" "{{time}}",
         ]
 
     def types(self):
@@ -133,8 +129,7 @@ class PromptService:
             "Stained Glass",
             "Sticker",
             "Still Life Painting",
-            "Stone Cut"
-            "Street Art",
+            "Stone Cut" "Street Art",
             "Studio Ghibli Style",
             "Surrealism Painting",
             "Tanjore Painting",
@@ -168,8 +163,7 @@ class PromptService:
             "Standard",
             "Steam Punk",
             "Surreal",
-            "{{art_style}}"
-
+            "{{art_style}}",
         ]
 
     def artists(self):
@@ -250,8 +244,7 @@ class PromptService:
             "Vincent van Gogh",
             "Wes Anderson",
             "William Blake",
-            "Yoshitaka Amano"
-            "Édouard Manet",
+            "Yoshitaka Amano" "Édouard Manet",
             "{{artist}}",
         ]
 
@@ -275,8 +268,7 @@ class PromptService:
             "Octane Render",
             "Ray Tracing",
             "Unreal Engine",
-            "V-Ray"
-            "{{rendering_engine}}",
+            "V-Ray" "{{rendering_engine}}",
         ]
 
     def lightning_angles(self):
@@ -333,8 +325,7 @@ class PromptService:
         return [
             "Canon",
             "Leica M",
-            "Leica"
-            "Nikon",
+            "Leica" "Nikon",
             "Sony alpha",
             "{{camera}}",
         ]
@@ -396,7 +387,7 @@ class PromptService:
         if args.type != None:
             context.append(args.type)
 
-        description = [x.strip() for x in args.description.split(',')]
+        description = [x.strip() for x in args.description.split(",")]
 
         if args.background_color != None:
             style.append("with background " + args.background_color)

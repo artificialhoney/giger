@@ -1,6 +1,7 @@
-from ..services.prompt import PromptService
 import logging
 import sys
+
+from ..services.prompt import PromptService
 
 _logger = logging.getLogger(__name__)
 
@@ -14,25 +15,33 @@ class PromptCommand:
         self.parser.add_argument("--type", choices=self.service.types())
         self.parser.add_argument("--background_color")
         self.parser.add_argument(
-            "--art_style", choices=self.service.art_styles(), nargs="*")
+            "--art_style", choices=self.service.art_styles(), nargs="*"
+        )
         self.parser.add_argument("--artist", choices=self.service.artists(), nargs="*")
         self.parser.add_argument(
-            "--realism", choices=self.service.realisms(), nargs="*")
-        self.parser.add_argument("--rendering_engine",
-                                 choices=self.service.rendering_engines(), nargs="*")
+            "--realism", choices=self.service.realisms(), nargs="*"
+        )
         self.parser.add_argument(
-            "--lightning_angle", choices=self.service.lightning_angles(), nargs="*")
+            "--rendering_engine", choices=self.service.rendering_engines(), nargs="*"
+        )
         self.parser.add_argument(
-            "--lightning_style", choices=self.service.lightning_styles(), nargs="*")
+            "--lightning_angle", choices=self.service.lightning_angles(), nargs="*"
+        )
         self.parser.add_argument(
-            "--camera_position", choices=self.service.camera_positions(), nargs="*")
+            "--lightning_style", choices=self.service.lightning_styles(), nargs="*"
+        )
+        self.parser.add_argument(
+            "--camera_position", choices=self.service.camera_positions(), nargs="*"
+        )
         self.parser.add_argument("--camera", choices=self.service.cameras(), nargs="*")
         self.parser.add_argument("--style", choices=self.service.styles(), nargs="*")
         self.parser.add_argument(
-            "--composition", choices=self.service.compositions(), nargs="*")
+            "--composition", choices=self.service.compositions(), nargs="*"
+        )
         self.parser.add_argument("--iso", choices=self.service.isos())
         self.parser.add_argument(
-            "--resolution", choices=self.service.resolutions(), nargs="*")
+            "--resolution", choices=self.service.resolutions(), nargs="*"
+        )
         self.parser.add_argument("--compel_style", choices=self.service.compel_styles())
 
     def run(self, args):

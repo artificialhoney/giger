@@ -1,25 +1,15 @@
 import pytest
 
-from giger.skeleton import fib, main
+from giger.commands import PromptCommand
+from giger.skeleton import main
 
 __author__ = "Sebastian Krüger"
 __copyright__ = "Sebastian Krüger"
 __license__ = "MIT"
 
 
-def test_fib():
-    """API Tests"""
-    assert fib(1) == 1
-    assert fib(2) == 1
-    assert fib(7) == 13
-    with pytest.raises(AssertionError):
-        fib(-10)
-
-
-def test_main(capsys):
-    """CLI Tests"""
-    # capsys is a pytest fixture that allows asserts against stdout/stderr
-    # https://docs.pytest.org/en/stable/capture.html
-    main(["7"])
-    captured = capsys.readouterr()
-    assert "The 7-th Fibonacci number is 13" in captured.out
+def test_prompt(mocker):
+    """Prompt Tests"""
+    spy = mocker.spy(PromptCommand, "run")
+    main(["prompt", '"Spawn in a battle"'])
+    spy.assert_called_once_with(21)

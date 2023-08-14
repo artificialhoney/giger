@@ -1,22 +1,4 @@
-.. These are examples of badges you might want to add to your README:
-   please update the URLs accordingly
-
-    .. image:: https://api.cirrus-ci.com/github/<USER>/giger.svg?branch=main
-        :alt: Built Status
-        :target: https://cirrus-ci.com/github/<USER>/giger
-    .. image:: https://readthedocs.org/projects/giger/badge/?version=latest
-        :alt: ReadTheDocs
-        :target: https://giger.readthedocs.io/en/stable/
-    .. image:: https://img.shields.io/coveralls/github/<USER>/giger/main.svg
-        :alt: Coveralls
-        :target: https://coveralls.io/r/<USER>/giger
-    .. image:: https://img.shields.io/conda/vn/conda-forge/giger.svg
-        :alt: Conda-Forge
-        :target: https://anaconda.org/conda-forge/giger
-    .. image:: https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Twitter
-        :alt: Twitter
-        :target: https://twitter.com/giger
-
+=====
 giger
 =====
 
@@ -26,12 +8,22 @@ giger
 .. image:: https://pepy.tech/badge/giger/month
     :alt: Monthly Downloads
     :target: https://pepy.tech/project/giger
+.. image:: https://github.com/artificialhoney/giger/actions/workflows/test.yml/badge.svg
+   :alt: Test
+   :target: https://github.com/artificialhoney/giger/actions/workflows/test.yml
+.. image:: https://img.shields.io/coveralls/github/artificialhoney/giger/main.svg
+    :alt: Coveralls
+    :target: https://coveralls.io/r/artificialhoney/giger
+.. image:: https://img.shields.io/badge/License-MIT-yellow.svg
+    :alt: License MIT
+    :target: https://opensource.org/licenses/MIT
 .. image:: https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold
     :alt: Project generated with PyScaffold
     :target: https://pyscaffold.org/
 
 CLI for Stable Diffusion tasks.
 
+------------
 Installation
 ------------
 
@@ -41,25 +33,27 @@ Installation
    activate-global-python-argcomplete
    echo 'eval "$(register-python-argcomplete giger)"' >> ~./zshrc
 
-CLI
----
+
+-----
+Usage
+-----
 
 template
-~~~~~~~~
+--------
 
 .. code:: bash
 
    giger template -c type=Viking  -d data/hero.yaml "$(cat templates/hero.j2)"
 
 prompt
-~~~~~~
+------
 
 .. code:: bash
 
    giger prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k"
 
 image
-~~~~~
+-----
 
 .. code:: bash
 
@@ -79,7 +73,7 @@ or e.g.
    echo "$prompt" | giger image --output $(pwd)/out/batch --name graffiti
 
 roop
-~~~~
+----
 
 .. code:: bash
 
