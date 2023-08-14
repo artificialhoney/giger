@@ -41,31 +41,31 @@ Usage
 template
 --------
 
-.. code::
+.. code:: bash
 
    giger template -c type=Viking  -d data/hero.yaml "$(cat templates/hero.j2)"
 
 prompt
 ------
 
-.. code::
+.. code:: bash
 
    giger prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k"
 
 image
 -----
 
-.. code::
+.. code:: bash
 
    giger image "Comic Book of Spawn in a battle, Concept art, Photorealistic, Octane render, Cinematic, Ultra-Wide-Angle Shot, 8k" --output $HOME/Desktop/ --name spawn
 
 or e.g.
 
-.. code::
+.. code:: bash
 
    giger image "$(giger prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --background_color "#000000" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k")" --output $HOME/Desktop/ --name spawn
 
-.. code::
+.. code:: bash
 
    prompt="a wall with graffiti on it, with text Seen, in the art of Seen, located in New York City"
    echo "$prompt" | giger image --output $(pwd)/out/batch --name graffiti --input $(pwd)/assets/img/sketch.png --controlnet_model "lllyasviel/sd-controlnet-hed"
@@ -75,6 +75,6 @@ or e.g.
 roop
 ----
 
-.. code::
+.. code:: bash
 
    giger roop --source face.jpg --input target.png --output output.png
