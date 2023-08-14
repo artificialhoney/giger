@@ -2,6 +2,24 @@ Changelog
 =========
 
 
+0.1.4 (2023-08-14)
+------------------
+
+Fix
+~~~
+- More tests and minor bugs. [Sebastian Krüger]
+
+Changes
+~~~~~~~
+- Publish workflow. [Sebastian Krüger]
+- Use mock. [Sebastian Krüger]
+
+Other
+~~~~~
+- README. [Sebastian Krüger]
+- README. [Sebastian Krüger]
+
+
 0.1.3 (2023-08-14)
 ------------------
 
