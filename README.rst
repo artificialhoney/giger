@@ -5,7 +5,7 @@ giger
 .. image:: https://img.shields.io/pypi/v/giger.svg
     :alt: PyPI-Server
     :target: https://pypi.org/project/giger/
-.. image:: https://pepy.tech/badge/giger/month
+.. image:: https://static.pepy.tech/badge/giger/month
     :alt: Monthly Downloads
     :target: https://pepy.tech/project/giger
 .. image:: https://github.com/artificialhoney/giger/actions/workflows/test.yml/badge.svg
