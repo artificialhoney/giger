@@ -2,6 +2,22 @@ Changelog
 =========
 
 
+0.1.5 (2023-08-15)
+------------------
+
+Fix
+~~~
+- Cli loading time. [Sebastian Krüger]
+
+Changes
+~~~~~~~
+- Cleanup. [Sebastian Krüger]
+
+Other
+~~~~~
+- README. [Sebastian Krüger]
+
+
 0.1.4 (2023-08-14)
 ------------------
 
@@ -16,6 +32,7 @@ Changes
 
 Other
 ~~~~~
+- CHANGELOG. [Sebastian Krüger]
 - README. [Sebastian Krüger]
 - README. [Sebastian Krüger]
 
