@@ -1,12 +1,9 @@
 #!/usr/bin/env python
-# PYTHON_ARGCOMPLETE_OK
 
 import argparse
 import logging
 import sys
 import warnings
-
-import argcomplete
 
 from giger import __version__
 
@@ -70,8 +67,6 @@ class CLI:
         self.image = ImageCommand(subparsers)
         self.roop = RoopCommand(subparsers)
 
-        argcomplete.autocomplete(parser)
-
         return parser.parse_args(args)
 
     def setup_logging(self, loglevel):
@@ -81,7 +76,7 @@ class CLI:
         Args:
             loglevel (int): minimum loglevel for emitting messages
         """
-        logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
+        logformat = "[%(asctime)s] %(levelname)s - %(name)s - %(message)s"
         logging.basicConfig(
             level=loglevel,
             stream=sys.stdout,

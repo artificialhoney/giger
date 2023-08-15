@@ -44,10 +44,18 @@ class PromptCommand:
         self.parser.add_argument(
             "--compel_style", choices=PromptService.compel_styles()
         )
+        self.parser.add_argument("-o", "--out", help="The txt file to generate")
 
     def run(self, args):
         if not sys.stdin.isatty():
-            args.description.extend(sys.stdin.read().splitlines())
+            args.description = sys.stdin.read().splitlines() + args.description
         args.description = ", ".join(args.description)
-        _logger.info("Creating prompt for '{0}'".format(args.description))
-        print(PromptService().generate(args))
+        _logger.info('Creating prompt for "{0}"'.format(args.description))
+        result = PromptService().generate(args)
+
+        if args.out:
+            f = open(args.out, "w")
+            f.write(result)
+            f.close()
+        else:
+            print(result)

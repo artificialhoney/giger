@@ -15,6 +15,7 @@
   lightning_angle: null
   lightning_style: null
   loglevel: null
+  out: null
   realism: null
   rendering_engine: null
   resolution: null

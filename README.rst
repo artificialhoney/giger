@@ -30,9 +30,6 @@ Installation
 .. code:: bash
 
    pip install giger
-   activate-global-python-argcomplete
-   echo 'eval "$(register-python-argcomplete giger)"' >> ~./zshrc
-
 
 -----
 Usage

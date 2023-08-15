@@ -1,11 +1,8 @@
-import io
 import logging
 import os
 import pathlib
 import random
 import sys
-
-from ..services.image import ImageService
 
 _logger = logging.getLogger(__name__)
 
@@ -71,17 +68,13 @@ class ImageCommand:
         )
 
     def run(self, args):
-        _logger.info("Creating image for '{0}'".format(args.prompt))
-        self.service = ImageService()
-
         if args.seed == None:
             seed = random.randint(0, 1000000)
         else:
             seed = args.seed
 
         if not sys.stdin.isatty():
-            args.prompt.extend(sys.stdin.read().splitlines())
-
+            args.prompt = sys.stdin.read().splitlines() + args.prompt
         prompt = ", ".join(args.prompt)
 
         loras = []
@@ -97,6 +90,11 @@ class ImageCommand:
                     else 1.0,
                 }
             )
+
+        _logger.info('Creating image for "{0}"'.format(prompt))
+        from ..services.image import ImageService
+
+        self.service = ImageService()
 
         for x in range(args.batch_count):
             path = os.path.join(args.output, args.name)

@@ -1,10 +1,7 @@
-import io
 import logging
 import sys
 
 import yaml
-
-from ..services.template import TemplateService
 
 _logger = logging.getLogger(__name__)
 
@@ -23,9 +20,6 @@ class TemplateCommand:
         self.parser.add_argument("-o", "--out", help="The txt file to generate")
 
     def run(self, args):
-        if not sys.stdin.isatty():
-            args.template.extend(sys.stdin.read().splitlines())
-
         if args.data != None:
             f = open(args.data, "r")
             data = yaml.safe_load(f)
@@ -38,18 +32,16 @@ class TemplateCommand:
                 split = c.split("=")
                 data[split[0]] = split[1]
 
+        if not sys.stdin.isatty():
+            args.template = sys.stdin.read().splitlines() + args.template
+        template = "\n".join(args.template)
+
         _logger.info(
-            "Running template with input from {0} and data {1}".format(
-                args.template, data
-            )
+            'Running template with input from "{0}" and data {1}'.format(template, data)
         )
+        from ..services.template import TemplateService
 
-        if isinstance(args.template, io.TextIOWrapper):
-            template = args.template.read()
-        else:
-            template = args.template
-
-        result = TemplateService().render("\n".join(template), data)
+        result = TemplateService().render(template, data)
 
         if args.out:
             f = open(args.out, "w")

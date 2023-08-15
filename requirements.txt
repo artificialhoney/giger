@@ -7,7 +7,6 @@ torchvision
 piexif
 accelerate
 xformers
-argcomplete
 compel
 safetensors
 
