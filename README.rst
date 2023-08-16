@@ -35,15 +35,45 @@ Installation
 Usage
 -----
 
+Please check first of all the help function.
+
+.. code-block:: bash
+
+    giger --help
+
+Also make sure to always obtain the latest version.
+
+.. code-block:: bash
+
+    giger --version
+
+Increase verbosity to also output the ``diffusers`` logging.
+
+.. code-block:: bash
+
+    giger -vv
+
+
 template
 --------
 
+Use a ``jinja2`` template file and supply data from file. Overwrite variables and print out to console.
+
 .. code:: bash
 
-   giger template -c type=Viking  -d data/hero.yaml "$(cat templates/hero.j2)"
+   giger template --config hero=viking --data hero.yml "$(cat hero.txt.j2)"
+
+Use an inline ``jinja2`` template file and supply data. Write out to file
+
+.. code:: bash
+
+   giger template --config hero=viking "A {{hero}} with long hair and sword" --output viking.txt
+
 
 prompt
 ------
+
+Generate a prompt with multiple well-known input keywords to choose.
 
 .. code:: bash
 
@@ -72,6 +102,8 @@ or e.g.
 roop
 ----
 
+Simply change the face in an input image and render the result to disc.
+
 .. code:: bash
 
-   giger roop --source face.jpg --input target.png --output output.png
+   giger roop --face face.jpg --input target.png --output output.png

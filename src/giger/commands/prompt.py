@@ -1,4 +1,5 @@
 import logging
+import os
 import sys
 
 from ..services.prompt import PromptService
@@ -44,17 +45,17 @@ class PromptCommand:
         self.parser.add_argument(
             "--compel_style", choices=PromptService.compel_styles()
         )
-        self.parser.add_argument("-o", "--out", help="The txt file to generate")
+        self.parser.add_argument("-o", "--output", help="The txt file to generate")
 
-    def run(self, args):
+    def execute(self, args):
         if not sys.stdin.isatty():
-            args.description = sys.stdin.read().splitlines() + args.description
-        args.description = ", ".join(args.description)
+            args.description = sys.stdin.read().strip().splitlines() + args.description
         _logger.info('Creating prompt for "{0}"'.format(args.description))
-        result = PromptService().generate(args)
+        result = PromptService().generate(**vars(args))
 
-        if args.out:
-            f = open(args.out, "w")
+        if args.output != None:
+            os.makedirs(os.path.dirname(args.output), exist_ok=True)
+            f = open(args.output, "w")
             f.write(result)
             f.close()
         else:

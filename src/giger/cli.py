@@ -88,13 +88,13 @@ class CLI:
         args = self.parse_args(args)
         self.setup_logging(args.loglevel)
         if args.command == "template":
-            self.template.run(args)
+            self.template.execute(args)
         elif args.command == "prompt":
-            self.prompt.run(args)
+            self.prompt.execute(args)
         elif args.command == "image":
-            self.image.run(args)
-        elif args.command == "roop":
-            self.roop.run(args)
+            self.image.execute(args)
+        else:
+            self.roop.execute(args)
 
 
 def run():

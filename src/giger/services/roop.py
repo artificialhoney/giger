@@ -1,4 +1,3 @@
-import glob
 import logging
 import os
 from pathlib import Path
@@ -30,7 +29,7 @@ class RoopService:
     def swap(self, source, input, output, model_name=None):
         if not model_name:
             roop_dir = os.path.join(str(Path.home()), "roop")
-            if not os.path.igigerir(roop_dir):
+            if not os.path.exists(roop_dir):
                 Repository(roop_dir, clone_from="henryruhs/roop")
             model_name = os.path.join(roop_dir, "inswapper_128.onnx")
         source_image = Image.open(source).convert("RGB")

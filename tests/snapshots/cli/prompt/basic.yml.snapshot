@@ -9,16 +9,15 @@
   compel_style: null
   composition: null
   description:
-  - Spawn in a battle
-  - --time Ancient
+  - A viking with long hair and sword
   iso: null
   lightning_angle: null
   lightning_style: null
   loglevel: null
-  out: null
+  output: null
   realism: null
   rendering_engine: null
   resolution: null
   style: null
   time: null
-  type: Comic Book
+  type: null

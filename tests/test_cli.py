@@ -1,10 +1,11 @@
 import os
+import sys
 from unittest.mock import MagicMock
 
 import pytest
 import yaml
 
-from giger.cli import CLI
+from giger.cli import run
 from giger.commands.image import ImageCommand
 from giger.commands.prompt import PromptCommand
 from giger.commands.roop import RoopCommand
@@ -27,21 +28,24 @@ def test_template(snapshot):
             "basic",
             [
                 "--config",
-                "type=Viking",
+                "hero=Viking",
                 "--data",
-                "data/hero.yaml",
-                "This is a {{type}}",
+                "hero.yml",
+                "A {{hero}} with long hair and sword",
             ],
         )
     ]
+    execute = TemplateCommand.execute
+    TemplateCommand.execute = MagicMock()
     for test_name, fixture in fixtures:
-        TemplateCommand.run = MagicMock()
-        CLI().run(["template"] + fixture)
+        sys.argv = ["giger", "template"] + fixture
+        run()
 
         snapshot.assert_match(
-            yaml.dump(TemplateCommand.run.call_args.args),
+            yaml.dump(TemplateCommand.execute.call_args.args),
             os.path.join(snapshots_dir, test_name + ".yml.snapshot"),
         )
+    TemplateCommand.execute = execute
 
 
 def test_prompt(snapshot):
@@ -52,32 +56,25 @@ def test_prompt(snapshot):
     snapshot.snapshot_dir = snapshots_dir
 
     fixtures = [
-        ("basic", ["Spawn in a battle", "--time Ancient", "--type", "Comic Book"])
+        (
+            "basic",
+            [
+                "A viking with long hair and sword",
+            ],
+        )
     ]
+    execute = PromptCommand.execute
+    PromptCommand.execute = MagicMock()
     for test_name, fixture in fixtures:
-        PromptCommand.run = MagicMock()
-        CLI().run(["prompt"] + fixture)
+        sys.argv = ["giger", "prompt"] + fixture
+        PromptCommand.execute = MagicMock()
+        run()
 
         snapshot.assert_match(
-            yaml.dump(PromptCommand.run.call_args.args),
+            yaml.dump(PromptCommand.execute.call_args.args),
             os.path.join(snapshots_dir, test_name + ".yml.snapshot"),
         )
-
-
-def test_image(snapshot):
-    """CLI Image Tests"""
-    snapshots_dir = os.path.join(os.path.dirname(__file__), "snapshots", "cli", "image")
-    snapshot.snapshot_dir = snapshots_dir
-
-    fixtures = [("basic", ["--output", "out", "--name", "graffiti"])]
-    for test_name, fixture in fixtures:
-        ImageCommand.run = MagicMock()
-        CLI().run(["image"] + fixture)
-
-        snapshot.assert_match(
-            yaml.dump(ImageCommand.run.call_args.args),
-            os.path.join(snapshots_dir, test_name + ".yml.snapshot"),
-        )
+    PromptCommand.execute = execute
 
 
 def test_roop(snapshot):
@@ -88,14 +85,43 @@ def test_roop(snapshot):
     fixtures = [
         (
             "basic",
-            ["--source", "face.jpg", "--input", "target.png", "--output", "output.png"],
+            ["--input", "image.png", "--face", "face.png", "--output", "output.png"],
         )
     ]
+    execute = RoopCommand.execute
+    RoopCommand.execute = MagicMock()
     for test_name, fixture in fixtures:
-        RoopCommand.run = MagicMock()
-        CLI().run(["roop"] + fixture)
+        sys.argv = ["giger", "roop"] + fixture
+        RoopCommand.execute = MagicMock()
+        run()
 
         snapshot.assert_match(
-            yaml.dump(RoopCommand.run.call_args.args),
+            yaml.dump(RoopCommand.execute.call_args.args),
             os.path.join(snapshots_dir, test_name + ".yml.snapshot"),
         )
+    RoopCommand.execute = execute
+
+
+def test_image(snapshot):
+    """CLI Image Tests"""
+    snapshots_dir = os.path.join(os.path.dirname(__file__), "snapshots", "cli", "image")
+    snapshot.snapshot_dir = snapshots_dir
+
+    fixtures = [
+        (
+            "basic",
+            ["--output", "output.png"],
+        )
+    ]
+    execute = ImageCommand.execute
+    ImageCommand.execute = MagicMock()
+    for test_name, fixture in fixtures:
+        sys.argv = ["giger", "image"] + fixture
+        ImageCommand.execute = MagicMock()
+        run()
+
+        snapshot.assert_match(
+            yaml.dump(ImageCommand.execute.call_args.args),
+            os.path.join(snapshots_dir, test_name + ".yml.snapshot"),
+        )
+    ImageCommand.execute = execute

@@ -2,9 +2,9 @@
 - !!python/object:argparse.Namespace
   command: template
   config:
-  - type=Viking
-  data: data/hero.yaml
+  - hero=Viking
+  data: hero.yml
   loglevel: null
-  out: null
+  output: null
   template:
-  - This is a {{type}}
+  - A {{hero}} with long hair and sword

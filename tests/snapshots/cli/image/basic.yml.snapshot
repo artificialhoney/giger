@@ -15,9 +15,9 @@
   lora_model: []
   lora_scale: []
   model: Lykon/DreamShaper
-  name: graffiti
+  name: image
   negative_prompt: null
-  output: out
+  output: output.png
   prompt: []
   seed: null
   variations: false

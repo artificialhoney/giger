@@ -374,56 +374,74 @@ class PromptService:
             "Full HD",
         ]
 
-    def generate(self, args):
+    def generate(
+        self,
+        time=None,
+        type=None,
+        description=None,
+        background_color=None,
+        art_style=None,
+        artist=None,
+        realism=None,
+        rendering_engine=None,
+        lightning_angle=None,
+        lightning_style=None,
+        camera_position=None,
+        camera=None,
+        composition=None,
+        iso=None,
+        resolution=None,
+        compel_style=None,
+    ):
         separator = ", "
 
         context = []
-        description = []
+        prompt = []
         style = []
         image = []
 
-        if args.time != None:
-            context.append(args.time)
-        if args.type != None:
-            context.append(args.type)
+        if time != None:
+            context.append(time)
+        if type != None:
+            context.append(type)
 
-        description = [x.strip() for x in args.description.split(",")]
+        prompt = [x.strip() for x in description] if description != None else []
 
-        if args.background_color != None:
-            style.append("with background " + args.background_color)
-        if args.art_style != None and len(args.art_style) > 0:
-            style.append(separator.join(args.art_style))
-        if args.artist != None and len(args.artist) > 0:
-            style.append("by " + separator.join(args.artist))
+        if background_color != None:
+            style.append("with background " + background_color)
+        if art_style != None and len(art_style) > 0:
+            style.append(separator.join(art_style))
+        if artist != None and len(artist) > 0:
+            style.append("by " + separator.join(artist))
 
-        if args.realism != None and len(args.realism) > 0:
-            image.append(separator.join(args.realism))
-        if args.rendering_engine != None and len(args.rendering_engine) > 0:
-            image.append(separator.join(args.rendering_engine))
-        if args.lightning_angle != None and len(args.lightning_angle) > 0:
-            image.append(separator.join(args.lightning_angle))
-        if args.lightning_style != None and len(args.lightning_style) > 0:
-            image.append(separator.join(args.lightning_style))
-        if args.camera_position != None and len(args.camera_position) > 0:
-            image.append(separator.join(args.camera_position))
-        if args.camera != None and len(args.camera) > 0:
-            image.append(separator.join(args.camera))
-        if args.style != None and len(args.style) > 0:
-            image.append(separator.join(args.style))
-        if args.composition != None and len(args.composition) > 0:
-            image.append(separator.join(args.composition))
-        if args.iso != None:
-            image.append(args.iso)
-        if args.resolution != None and len(args.resolution) > 0:
-            image.append(separator.join(args.resolution))
+        if realism != None and len(realism) > 0:
+            image.append(separator.join(realism))
+        if rendering_engine != None and len(rendering_engine) > 0:
+            image.append(separator.join(rendering_engine))
+        if lightning_angle != None and len(lightning_angle) > 0:
+            image.append(separator.join(lightning_angle))
+        if lightning_style != None and len(lightning_style) > 0:
+            image.append(separator.join(lightning_style))
+        if camera_position != None and len(camera_position) > 0:
+            image.append(separator.join(camera_position))
+        if camera != None and len(camera) > 0:
+            image.append(separator.join(camera))
+        if style != None and len(style) > 0:
+            image.append(separator.join(style))
+        if composition != None and len(composition) > 0:
+            image.append(separator.join(composition))
+        if iso != None:
+            image.append(iso)
+        if resolution != None and len(resolution) > 0:
+            image.append(separator.join(resolution))
 
-        if args.compel_style == "subtle":
+        if compel_style == "subtle":
             segments = []
             lead = []
             if len(context) > 0:
                 lead += [" ".join(context)]
-            if len(description) > 0:
-                lead += description
+            if len(prompt) > 0:
+                lead += prompt
             if len(style) > 0:
                 lead += style
             if len(lead) > 0:
@@ -431,16 +449,16 @@ class PromptService:
             if len(image) > 0:
                 segments.append("'" + separator.join(image) + "'")
             return "({0}).and()".format(separator.join(segments))
-        if args.compel_style == "full":
+        if compel_style == "full":
             segments = []
             if len(context) > 0:
                 segments.append("'" + " ".join(context) + "'")
-            if len(description) > 0:
-                segments.append(separator.join(["'" + x + "'" for x in description]))
+            if len(prompt) > 0:
+                segments.append(separator.join(["'" + x + "'" for x in prompt]))
             if len(style) > 0:
                 segments.append("'" + separator.join(style) + "'")
             if len(image) > 0:
                 segments.append("'" + separator.join(image) + "'")
             return "({0}).and()".format(separator.join(segments))
         else:
-            return separator.join(context + description + style + image)
+            return separator.join(context + prompt + style + image)

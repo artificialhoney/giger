@@ -67,7 +67,7 @@ class ImageCommand:
             "--variations", help="Create image variations", default=False, type=bool
         )
 
-    def run(self, args):
+    def execute(self, args):
         if args.seed == None:
             seed = random.randint(0, 1000000)
         else:

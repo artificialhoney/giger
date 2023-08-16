@@ -1,4 +1,5 @@
 import logging
+import os
 import sys
 
 import yaml
@@ -17,9 +18,9 @@ class TemplateCommand:
             nargs="*",
         )
         self.parser.add_argument("-d", "--data", help="The prompt data")
-        self.parser.add_argument("-o", "--out", help="The txt file to generate")
+        self.parser.add_argument("-o", "--output", help="The txt file to generate")
 
-    def run(self, args):
+    def execute(self, args):
         if args.data != None:
             f = open(args.data, "r")
             data = yaml.safe_load(f)
@@ -33,8 +34,8 @@ class TemplateCommand:
                 data[split[0]] = split[1]
 
         if not sys.stdin.isatty():
-            args.template = sys.stdin.read().splitlines() + args.template
-        template = "\n".join(args.template)
+            args.template = sys.stdin.read().strip().splitlines() + args.template
+        template = ", ".join(args.template)
 
         _logger.info(
             'Running template with input from "{0}" and data {1}'.format(template, data)
@@ -43,8 +44,9 @@ class TemplateCommand:
 
         result = TemplateService().render(template, data)
 
-        if args.out:
-            f = open(args.out, "w")
+        if args.output != None:
+            os.makedirs(os.path.dirname(args.output), exist_ok=True)
+            f = open(args.output, "w")
             f.write(result)
             f.close()
         else:

@@ -1,8 +1,8 @@
 !!python/tuple
 - !!python/object:argparse.Namespace
   command: roop
-  input: target.png
+  face: face.png
+  input: image.png
   loglevel: null
   model: null
   output: output.png
-  source: face.jpg
