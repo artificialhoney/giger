@@ -4,6 +4,7 @@ from unittest.mock import MagicMock
 
 import pytest
 import yaml
+from diffusers.utils import logging
 
 from giger.cli import run
 from giger.commands.image import ImageCommand
@@ -14,6 +15,19 @@ from giger.commands.template import TemplateCommand
 __author__ = "Sebastian Krüger"
 __copyright__ = "Sebastian Krüger"
 __license__ = "MIT"
+
+
+def test_loglevel():
+    """CLI Loglevel Tests"""
+    fixtures = [(logging.INFO, "-v"), (logging.DEBUG, "-vv")]
+    execute = TemplateCommand.execute
+    TemplateCommand.execute = MagicMock()
+
+    for loglevel, fixture in fixtures:
+        sys.argv = ["giger", fixture, "template"]
+        run()
+        assert logging.get_verbosity() == loglevel
+    TemplateCommand.execute = execute
 
 
 def test_template(snapshot):
@@ -33,7 +47,7 @@ def test_template(snapshot):
                 "hero.yml",
                 "A {{hero}} with long hair and sword",
             ],
-        )
+        ),
     ]
     execute = TemplateCommand.execute
     TemplateCommand.execute = MagicMock()

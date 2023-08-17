@@ -1,0 +1,14 @@
+!!python/tuple
+- test
+- A viking with long hair and sword, and a beautiful wife
+- null
+- images/viking
+- 512
+- 512
+- - filename: lora_filename
+    model: lora_model
+    scale: 1.0
+- 0
+- 1
+- 30
+- viking-000
