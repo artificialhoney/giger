@@ -2,6 +2,18 @@ Changelog
 =========
 
 
+0.1.7 (2023-08-17)
+------------------
+
+Fix
+~~~
+- Dtype for non cuda devices. [Sebastian Krüger]
+
+Changes
+~~~~~~~
+- Improve workflows. [Sebastian Krüger]
+
+
 0.1.6 (2023-08-17)
 ------------------
 
@@ -19,6 +31,7 @@ Changes
 
 Other
 ~~~~~
+- CHANGELOG. [Sebastian Krüger]
 - README. [Sebastian Krüger]
 - README. [Sebastian Krüger]
 
