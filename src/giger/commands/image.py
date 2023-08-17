@@ -89,6 +89,7 @@ class ImageCommand:
             )
 
         _logger.info('Creating image for "{0}"'.format(prompt))
+
         from ..services.image import ImageService
 
         self.service = ImageService()

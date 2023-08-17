@@ -5,6 +5,8 @@ import logging
 import sys
 import warnings
 
+from diffusers import utils
+
 from giger import __version__
 
 from .commands.image import ImageCommand
@@ -18,8 +20,6 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 __author__ = "Sebastian Krüger"
 __copyright__ = "Sebastian Krüger"
 __license__ = "MIT"
-
-_logger = logging.getLogger(__name__)
 
 
 # ---- CLI ----
@@ -83,6 +83,13 @@ class CLI:
             format=logformat,
             datefmt="%Y-%m-%d %H:%M:%S",
         )
+
+        if loglevel == logging.DEBUG:
+            utils.logging.set_verbosity_debug()
+        elif loglevel == logging.INFO:
+            utils.logging.set_verbosity_info()
+        else:
+            utils.logging.set_verbosity_error()
 
     def run(self, args):
         args = self.parse_args(args)

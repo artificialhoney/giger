@@ -47,7 +47,7 @@ Also make sure to always obtain the latest version.
 
     giger --version
 
-Increase verbosity.
+Increase verbosity to also output the ``diffusers`` logging.
 
 .. code-block:: bash
 

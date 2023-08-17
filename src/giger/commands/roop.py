@@ -17,6 +17,7 @@ class RoopCommand:
 
     def execute(self, args):
         _logger.info('Running Roop for "{0}" with "{1}"'.format(args.input, args.face))
+
         from ..services.roop import RoopService
 
         RoopService().swap(args.face, args.input, args.output, args.model)
