@@ -227,7 +227,7 @@ pygments_dark_style = "one-dark"
 html_static_path = ["_static"]
 
 html_css_files = [
-    "css/custom.css",
+    "styles/custom.css",
 ]
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
