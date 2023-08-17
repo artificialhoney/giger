@@ -12,6 +12,6 @@ for FILE in *; do
     if [[ ! -f $FILE ]]; then
         continue
     fi
-    giger roop --source $FACE --input $FILE --output "$FILE.swapped.png"
+    giger roop --face $FACE --input $FILE --output "$FILE.swapped.png"
 done
 cd -

@@ -35,7 +35,7 @@ Installation
 Usage
 -----
 
-Please check first of all the help function.
+Please check first of all the help function and the `examples <https://github.com/artificialhoney/giger/tree/main/examples/scripts/>`_.
 
 .. code-block:: bash
 
