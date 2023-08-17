@@ -8,7 +8,6 @@ from compel import Compel
 from diffusers import (
     ControlNetModel,
     StableDiffusionControlNetPipeline,
-    StableDiffusionImageVariationPipeline,
     StableDiffusionImg2ImgPipeline,
     StableDiffusionPipeline,
     UniPCMultistepScheduler,
@@ -31,16 +30,16 @@ class ImageService:
         output,
         width,
         height,
-        loras,
+        loras=[],
         seed=0,
         count=1,
         steps=50,
         name="txt2img",
     ):
-        pipeline = self.setup_pipeline(model, StableDiffusionPipeline, loras)
-        exif_bytes = self.get_exif_bytes(prompt)
-        generator = self.create_generator(seed, count)
-        conditioning = self.add_compel(pipeline, prompt)
+        pipeline = self._setup_pipeline(model, StableDiffusionPipeline, loras)
+        exif_bytes = self._get_exif_bytes(prompt)
+        generator = self._create_generator(seed, count)
+        conditioning = self._add_compel(pipeline, prompt)
         images = pipeline(
             prompt_embeds=conditioning,
             generator=generator,
@@ -50,7 +49,36 @@ class ImageService:
             negative_prompt=negative_prompt,
             num_inference_steps=steps,
         )
-        self.save_images(images, output, name, seed, exif_bytes)
+        self._save_images(images, output, name, seed, exif_bytes)
+
+    def img2img(
+        self,
+        model,
+        prompt,
+        negative_prompt,
+        output,
+        width,
+        height,
+        image,
+        loras=[],
+        seed=0,
+        count=1,
+        steps=50,
+        name="img2img",
+    ):
+        pipeline = self._setup_pipeline(model, StableDiffusionImg2ImgPipeline, loras)
+        exif_bytes = self._get_exif_bytes(prompt)
+        generator = self._create_generator(seed, count)
+        conditioning = self._add_compel(pipeline, prompt)
+        images = pipeline(
+            prompt_embeds=conditioning,
+            generator=generator,
+            num_images_per_prompt=count,
+            negative_prompt=negative_prompt,
+            num_inference_steps=steps,
+            image=self._adjust_image(image, width, height),
+        )
+        self._save_images(images, output, name, seed, exif_bytes)
 
     def controlnet(
         self,
@@ -65,22 +93,22 @@ class ImageService:
         control_guidance_start,
         control_guidance_end,
         image,
-        loras,
+        loras=[],
         seed=0,
         count=1,
         steps=50,
         name="controlnet",
     ):
-        pipeline = self.setup_pipeline(
+        pipeline = self._setup_pipeline(
             model, StableDiffusionControlNetPipeline, loras, controlnet_model
         )
-        exif_bytes = self.get_exif_bytes(prompt)
-        generator = self.create_generator(seed, count)
+        exif_bytes = self._get_exif_bytes(prompt)
+        generator = self._create_generator(seed, count)
         # speed up diffusion process with faster scheduler and memory optimization
         pipeline.scheduler = UniPCMultistepScheduler.from_config(
             pipeline.scheduler.config
         )
-        conditioning = self.add_compel(pipeline, prompt)
+        conditioning = self._add_compel(pipeline, prompt)
 
         images = pipeline(
             prompt_embeds=conditioning,
@@ -90,43 +118,14 @@ class ImageService:
             num_images_per_prompt=count,
             negative_prompt=negative_prompt,
             num_inference_steps=steps,
-            image=self.adjust_image(image, width, height),
+            image=self._adjust_image(image, width, height),
             controlnet_conditioning_scale=controlnet_conditioning_scale,
             control_guidance_start=control_guidance_start,
             control_guidance_end=control_guidance_end,
         )
-        self.save_images(images, output, name, seed, exif_bytes)
+        self._save_images(images, output, name, seed, exif_bytes)
 
-    def img2img(
-        self,
-        model,
-        prompt,
-        negative_prompt,
-        output,
-        width,
-        height,
-        image,
-        loras,
-        seed=0,
-        count=1,
-        steps=50,
-        name="img2img",
-    ):
-        pipeline = self.setup_pipeline(model, StableDiffusionImg2ImgPipeline, loras)
-        exif_bytes = self.get_exif_bytes(prompt)
-        generator = self.create_generator(seed, count)
-        conditioning = self.add_compel(pipeline, prompt)
-        images = pipeline(
-            prompt_embeds=conditioning,
-            generator=generator,
-            num_images_per_prompt=count,
-            negative_prompt=negative_prompt,
-            num_inference_steps=steps,
-            image=self.adjust_image(image, width, height),
-        )
-        self.save_images(images, output, name, seed, exif_bytes)
-
-    def save_images(self, images, output, name, seed, exif_bytes=None):
+    def _save_images(self, images, output, name, seed, exif_bytes=None):
         for x in range(len(list(images[0]))):
             images[0][x].save(
                 os.path.join(
@@ -141,10 +140,10 @@ class ImageService:
                 exif=exif_bytes,
             )
 
-    def create_generator(self, seed, count):
+    def _create_generator(self, seed, count):
         return [torch.Generator().manual_seed(i + seed) for i in range(count)]
 
-    def get_exif_bytes(self, prompt):
+    def _get_exif_bytes(self, prompt):
         exif_ifd = {piexif.ImageIFD.ImageDescription: prompt.encode()}
         exif_dict = {
             "0th": exif_ifd,
@@ -155,23 +154,25 @@ class ImageService:
         }
         return piexif.dump(exif_dict)
 
-    def setup_pipeline(self, model, type, loras=[], controlnet_model=None):
+    def _setup_pipeline(self, model, type, loras=[], controlnet_model=None):
+        if controlnet_model:
+            controlnet = ControlNetModel.from_pretrained(
+                controlnet_model, torch_dtype=torch.float16
+            )
+        else:
+            controlnet = None
         if self.cuda:
-            if controlnet_model:
-                controlnet = ControlNetModel.from_pretrained(
-                    controlnet_model, torch_dtype=torch.float16
-                )
+            if controlnet:
                 pipeline = type.from_pretrained(
                     model, torch_dtype=torch.float16, controlnet=controlnet
                 )
             else:
                 pipeline = type.from_pretrained(model, torch_dtype=torch.float16)
             pipeline.to("cuda")
-            if type != StableDiffusionImageVariationPipeline:
-                pipeline.enable_model_cpu_offload()
-                pipeline.enable_xformers_memory_efficient_attention()
+            pipeline.enable_model_cpu_offload()
+            pipeline.enable_xformers_memory_efficient_attention()
         else:
-            if controlnet_model:
+            if controlnet:
                 pipeline = type.from_pretrained(
                     model, torch_dtype=torch.float32, controlnet=controlnet
                 )
@@ -186,13 +187,13 @@ class ImageService:
 
         return pipeline
 
-    def add_compel(self, pipeline, prompt):
+    def _add_compel(self, pipeline, prompt):
         compel = Compel(
             tokenizer=pipeline.tokenizer, text_encoder=pipeline.text_encoder
         )
         return compel.build_conditioning_tensor(prompt)
 
-    def adjust_image(self, image, width, height, resample=Image.Resampling.LANCZOS):
+    def _adjust_image(self, image, width, height, resample=Image.Resampling.LANCZOS):
         im = Image.open(image).convert("RGB")
         im.thumbnail((width, height), resample)
         return im

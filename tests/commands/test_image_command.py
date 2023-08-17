@@ -1,6 +1,7 @@
 import argparse
 import io
 import os
+import random
 from unittest.mock import MagicMock
 
 import yaml
@@ -46,7 +47,8 @@ def test_execute_txt2img(snapshot, monkeypatch):
     parser = argparse.ArgumentParser().add_subparsers()
     txt2img = ImageService.txt2img
     ImageService.txt2img = MagicMock()
-
+    random.randint = MagicMock()
+    random.randint.return_value = 0
     for test_name, fixture, stdin in fixtures:
         if stdin:
             monkeypatch.setattr("sys.stdin", io.StringIO(stdin))
@@ -92,7 +94,8 @@ def test_execute_img2img(snapshot):
     parser = argparse.ArgumentParser().add_subparsers()
     img2img = ImageService.img2img
     ImageService.img2img = MagicMock()
-
+    random.randint = MagicMock()
+    random.randint.return_value = 0
     for test_name, fixture in fixtures:
         ImageCommand(parser).execute(argparse.Namespace(**fixture))
 
@@ -138,7 +141,8 @@ def test_execute_controlnet(snapshot):
     parser = argparse.ArgumentParser().add_subparsers()
     controlnet = ImageService.controlnet
     ImageService.controlnet = MagicMock()
-
+    random.randint = MagicMock()
+    random.randint.return_value = 0
     for test_name, fixture in fixtures:
         ImageCommand(parser).execute(argparse.Namespace(**fixture))
 
