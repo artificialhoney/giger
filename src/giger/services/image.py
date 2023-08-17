@@ -157,7 +157,8 @@ class ImageService:
     def _setup_pipeline(self, model, type, loras=[], controlnet_model=None):
         if controlnet_model:
             controlnet = ControlNetModel.from_pretrained(
-                controlnet_model, torch_dtype=torch.float16
+                controlnet_model,
+                torch_dtype=torch.float16 if self.cuda else torch.float32,
             )
         else:
             controlnet = None
