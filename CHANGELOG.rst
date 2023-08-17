@@ -2,6 +2,27 @@ Changelog
 =========
 
 
+0.1.6 (2023-08-17)
+------------------
+
+Fix
+~~~
+- Minor issues and add tests. [Sebastian Krüger]
+
+Changes
+~~~~~~~
+- Image command tests. [Sebastian Krüger]
+- Furo theme update. [Sebastian Krüger]
+- Remove roop snapshot. [Sebastian Krüger]
+- Roop testing. [Sebastian Krüger]
+- More tests. [Sebastian Krüger]
+
+Other
+~~~~~
+- README. [Sebastian Krüger]
+- README. [Sebastian Krüger]
+
+
 0.1.5 (2023-08-15)
 ------------------
 
@@ -15,6 +36,7 @@ Changes
 
 Other
 ~~~~~
+- CHANGELOG. [Sebastian Krüger]
 - README. [Sebastian Krüger]
 
 
