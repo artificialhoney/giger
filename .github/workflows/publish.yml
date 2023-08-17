@@ -18,7 +18,12 @@ jobs:
           pip install tox
       - name: Test with tox
         run: |
-          tox
+          tox -- --cov-report lcov
+      - name: Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          ormat: lcov
       - name: Build with tox
         run: |
           tox -e build
