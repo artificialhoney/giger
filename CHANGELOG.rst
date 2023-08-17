@@ -2,6 +2,14 @@ Changelog
 =========
 
 
+0.1.8 (2023-08-17)
+------------------
+
+Fix
+~~~
+- Runtime dependencies. [Sebastian Krüger]
+
+
 0.1.7 (2023-08-17)
 ------------------
 
@@ -12,6 +20,10 @@ Fix
 Changes
 ~~~~~~~
 - Improve workflows. [Sebastian Krüger]
+
+Other
+~~~~~
+- CHANGELOG. [Sebastian Krüger]
 
 
 0.1.6 (2023-08-17)
