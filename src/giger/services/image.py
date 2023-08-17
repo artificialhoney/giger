@@ -17,11 +17,10 @@ from PIL import Image
 
 
 class ImageService:
-    # see https://github.com/facebookresearch/fairseq/issues/2413#issuecomment-1387445867
     def __init__(self):
         if torch.cuda.is_available():
             self.cuda = True
-        elif platform == "darwin":
+        else:
             self.cuda = False
 
     def txt2img(
@@ -97,34 +96,6 @@ class ImageService:
             control_guidance_end=control_guidance_end,
         )
         self.save_images(images, output, name, seed, exif_bytes)
-
-    def variations(
-        self,
-        output,
-        width,
-        height,
-        image,
-        loras,
-        seed=0,
-        count=1,
-        steps=50,
-        name="variations",
-    ):
-        pipeline = self.setup_pipeline(
-            "lambdalabs/giger-image-variations-diffusers",
-            StableDiffusionImageVariationPipeline,
-            loras,
-        )
-        generator = self.create_generator(seed, count)
-        images = pipeline(
-            generator=generator,
-            width=width,
-            height=height,
-            num_images_per_prompt=count,
-            num_inference_steps=steps,
-            image=self.adjust_image(image, width, height, Image.Resampling.BICUBIC),
-        )
-        self.save_images(images, output, name, seed)
 
     def img2img(
         self,

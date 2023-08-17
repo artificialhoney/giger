@@ -47,7 +47,7 @@ Also make sure to always obtain the latest version.
 
     giger --version
 
-Increase verbosity to also output the ``diffusers`` logging.
+Increase verbosity.
 
 .. code-block:: bash
 
@@ -63,12 +63,17 @@ Use a ``jinja2`` template file and supply data from file. Overwrite variables an
 
    giger template --config hero=viking --data hero.yml "$(cat hero.txt.j2)"
 
-Use an inline ``jinja2`` template file and supply data. Write out to file
+Use an inline ``jinja2`` template file and supply data. Write out to file.
 
 .. code:: bash
 
    giger template --config hero=viking "A {{hero}} with long hair and sword" --output viking.txt
 
+You can also pipe from another command to the template task.
+
+.. code:: bash
+
+   echo "A {{hero}} with long hair and sword" | giger template --config hero=viking  --output viking.txt
 
 prompt
 ------
@@ -77,27 +82,41 @@ Generate a prompt with multiple well-known input keywords to choose.
 
 .. code:: bash
 
-   giger prompt "Spawn in a battle" --time "Ancient" --type "Comic Book" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k"
+   giger prompt "A viking with long hair and sword" --time "Ancient" --type "Comic Book" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k"
+
+You can also pipe from another command to the prompt task.
+
+.. code:: bash
+
+   echo "A viking with long hair and sword" | giger prompt --time "Ancient" --type "Comic Book" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k"
 
 image
 -----
 
-.. code:: bash
+The commands pull the chosen model from ``huggingface.co``. You choose one with the ``--model`` option. Also the batch and image sizes can be configured and one can pass the prompt via pipe.
 
-   giger image "Comic Book of Spawn in a battle, Concept art, Photorealistic, Octane render, Cinematic, Ultra-Wide-Angle Shot, 8k" --output $HOME/Desktop/ --name spawn
+Please see the help function for more information.
 
-or e.g.
-
-.. code:: bash
-
-   giger image "$(giger prompt "Spawn in a battle" --time "ancient" --type "Comic Book" --art_style "Concept art" --realism "Photorealistic" --rendering_engine "Octane render" --lightning_style "Cinematic" --camera_position "Ultra-Wide-Angle Shot" --resolution "8k")" --output $HOME/Desktop/ --name spawn
+txt2img
+^^^^^^^
 
 .. code:: bash
 
-   prompt="a wall with graffiti on it, with text Seen, in the art of Seen, located in New York City"
-   echo "$prompt" | giger image --output $(pwd)/out/batch --name graffiti --input $(pwd)/assets/img/sketch.png --controlnet_model "lllyasviel/sd-controlnet-hed"
-   echo "$prompt" | giger image --output $(pwd)/out/batch --name graffiti --input $(pwd)/assets/img/sketch.png
-   echo "$prompt" | giger image --output $(pwd)/out/batch --name graffiti
+   giger image "A viking with long hair and sword, Concept art, Photorealistic, Octane render, Cinematic, Ultra-Wide-Angle Shot, 8k" --output $HOME/Desktop/ --name viking
+
+img2img
+^^^^^^^
+
+.. code:: bash
+
+   giger image "A viking with long hair and sword, Concept art, Photorealistic, Octane render, Cinematic, Ultra-Wide-Angle Shot, 8k" --output $HOME/Desktop/ --name viking --input input.png
+
+controlnet
+^^^^^^^^^^
+
+.. code:: bash
+
+   giger image "A viking with long hair and sword, Concept art, Photorealistic, Octane render, Cinematic, Ultra-Wide-Angle Shot, 8k" --output $HOME/Desktop/ --name viking --input input.png --controlnet_model "lllyasviel/sd-controlnet-hed"
 
 roop
 ----

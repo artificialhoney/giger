@@ -20,5 +20,4 @@
   output: output.png
   prompt: []
   seed: null
-  variations: false
   width: 768

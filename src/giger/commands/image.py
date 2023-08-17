@@ -63,9 +63,6 @@ class ImageCommand:
         self.parser.add_argument(
             "--lora_scale", help="The LoRA scale", nargs="*", default=[], type=float
         )
-        self.parser.add_argument(
-            "--variations", help="Create image variations", default=False, type=bool
-        )
 
     def execute(self, args):
         if args.seed == None:
@@ -113,18 +110,6 @@ class ImageCommand:
                         args.controlnet_conditioning_scale,
                         args.control_guidance_start,
                         args.control_guidance_end,
-                        args.input,
-                        loras,
-                        s,
-                        args.batch_size,
-                        args.inference_steps,
-                        args.name + "-" + str(x).rjust(3, "0"),
-                    )
-                elif args.variations:
-                    self.service.variations(
-                        path,
-                        args.width,
-                        args.height,
                         args.input,
                         loras,
                         s,
