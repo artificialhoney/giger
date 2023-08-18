@@ -1,0 +1,5 @@
+streamlit
+watchdog
+pillow
+
+-e ../..
