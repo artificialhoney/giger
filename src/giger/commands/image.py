@@ -94,9 +94,10 @@ class ImageCommand:
 
         self.service = ImageService()
 
+        path = os.path.join(args.output, args.name)
+        pathlib.Path(path).mkdir(parents=True, exist_ok=True)
+
         for x in range(args.batch_count):
-            path = os.path.join(args.output, args.name)
-            pathlib.Path(path).mkdir(parents=True, exist_ok=True)
             s = seed + x * args.batch_size
             if args.input != None:
                 if args.controlnet_model != None:
