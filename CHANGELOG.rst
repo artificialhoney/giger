@@ -2,12 +2,36 @@ Changelog
 =========
 
 
+0.1.9 (2023-08-19)
+------------------
+
+Fix
+~~~
+- Image seed generator cuda switch. [Sebastian Krüger]
+- Prompt camera style, improve startup time. [Sebastian Krüger]
+
+Changes
+~~~~~~~
+- Remove cuda from tests. [Sebastian Krüger]
+- Fix batch seed. [Sebastian Krüger]
+- Fix batch. [Sebastian Krüger]
+- Bash batch scripts to python. [Sebastian Krüger]
+- Remove docs hint. [Sebastian Krüger]
+- Pre-commit conventional-commit. [Sebastian Krüger]
+- Graffiti example with streamlit. [Sebastian Krüger]
+- Docs workflow. [Sebastian Krüger]
+
+
 0.1.8 (2023-08-17)
 ------------------
 
 Fix
 ~~~
 - Runtime dependencies. [Sebastian Krüger]
+
+Other
+~~~~~
+- CHANGELOG. [Sebastian Krüger]
 
 
 0.1.7 (2023-08-17)
