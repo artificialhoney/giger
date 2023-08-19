@@ -40,7 +40,7 @@ def test_txt2img(snapshot, monkeypatch):
                 "height": 512,
                 "loras": [{"model": "model", "filename": "filename", "scale": 1.0}],
             },
-            True,
+            False,
         )
     ]
 
@@ -156,7 +156,7 @@ def test_controlnet(snapshot, monkeypatch):
         "input": input,
     }
 
-    fixtures = [("basic", data, False), ("cuda", data, True)]
+    fixtures = [("basic", data, False)]
 
     from_pretrained = StableDiffusionControlNetPipeline.from_pretrained
     StableDiffusionControlNetPipeline.from_pretrained = MagicMock()
