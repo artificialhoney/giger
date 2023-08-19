@@ -141,7 +141,13 @@ class ImageService:
             )
 
     def _create_generator(self, seed, count):
-        return [torch.Generator().manual_seed(i + seed) for i in range(count)]
+        if self.cuda:
+            return [
+                torch.Generator(device="cuda").manual_seed(i + seed)
+                for i in range(count)
+            ]
+        else:
+            return [torch.Generator().manual_seed(i + seed) for i in range(count)]
 
     def _get_exif_bytes(self, prompt):
         exif_ifd = {piexif.ImageIFD.ImageDescription: prompt.encode()}
