@@ -34,7 +34,9 @@ class PromptCommand:
             "--camera_position", choices=PromptService.camera_positions(), nargs="*"
         )
         self.parser.add_argument("--camera", choices=PromptService.cameras(), nargs="*")
-        self.parser.add_argument("--style", choices=PromptService.styles(), nargs="*")
+        self.parser.add_argument(
+            "--camera_style", choices=PromptService.camera_styles(), nargs="*"
+        )
         self.parser.add_argument(
             "--composition", choices=PromptService.compositions(), nargs="*"
         )

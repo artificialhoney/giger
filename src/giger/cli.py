@@ -5,8 +5,6 @@ import logging
 import sys
 import warnings
 
-from diffusers import utils
-
 from giger import __version__
 
 from .commands.image import ImageCommand
@@ -84,13 +82,6 @@ class CLI:
             datefmt="%Y-%m-%d %H:%M:%S",
         )
 
-        if loglevel == logging.DEBUG:
-            utils.logging.set_verbosity_debug()
-        elif loglevel == logging.INFO:
-            utils.logging.set_verbosity_info()
-        else:
-            utils.logging.set_verbosity_error()
-
     def run(self, args):
         args = self.parse_args(args)
         self.setup_logging(args.loglevel)
@@ -99,6 +90,14 @@ class CLI:
         elif args.command == "prompt":
             self.prompt.execute(args)
         elif args.command == "image":
+            from diffusers import utils
+
+            if args.loglevel == logging.DEBUG:
+                utils.logging.set_verbosity_debug()
+            elif args.loglevel == logging.INFO:
+                utils.logging.set_verbosity_info()
+            else:
+                utils.logging.set_verbosity_error()
             self.image.execute(args)
         else:
             self.roop.execute(args)

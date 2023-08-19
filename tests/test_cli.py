@@ -20,14 +20,21 @@ __license__ = "MIT"
 def test_loglevel():
     """CLI Loglevel Tests"""
     fixtures = [(logging.INFO, "-v"), (logging.DEBUG, "-vv")]
-    execute = TemplateCommand.execute
-    TemplateCommand.execute = MagicMock()
+    execute = ImageCommand.execute
+    ImageCommand.execute = MagicMock()
 
     for loglevel, fixture in fixtures:
-        sys.argv = ["giger", fixture, "template"]
+        sys.argv = [
+            "giger",
+            fixture,
+            "image",
+            "A viking with long hair and sword",
+            "--output",
+            "viking",
+        ]
         run()
         assert logging.get_verbosity() == loglevel
-    TemplateCommand.execute = execute
+    ImageCommand.execute = execute
 
 
 def test_template(snapshot):

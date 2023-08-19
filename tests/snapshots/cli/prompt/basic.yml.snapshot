@@ -5,6 +5,7 @@
   background_color: null
   camera: null
   camera_position: null
+  camera_style: null
   command: prompt
   compel_style: null
   composition: null
@@ -18,6 +19,5 @@
   realism: null
   rendering_engine: null
   resolution: null
-  style: null
   time: null
   type: null
