@@ -128,6 +128,7 @@ class CharacterCLI:
         image_service = ImageService()
         path = os.path.join(args.output, args.batch_name)
         Path(path).mkdir(parents=True, exist_ok=True)
+        seed = args.seed
         for description in args.prompts:
             _logger.info(f'Generating prompt for "{description}"')
             prompt = prompt_service.generate(
@@ -160,11 +161,12 @@ class CharacterCLI:
                         "scale": args.lora,
                     }
                 ],
-                args.seed,
+                seed,
                 args.count,
                 50,
                 args.batch_name,
             )
+            seed += args.count
 
         if args.face:
             _logger.info(
