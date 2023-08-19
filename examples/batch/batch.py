@@ -20,6 +20,12 @@ def is_valid_file(parser, arg):
         return open(arg, "r")  # return an open file handle
 
 
+def tuple_type(strings):
+    strings = strings.replace("(", "").replace(")", "")
+    mapped_int = map(int, strings.split(","))
+    return tuple(mapped_int)
+
+
 class CharacterCLI:
     def parse_args(self, args):
         """
@@ -78,7 +84,11 @@ class CharacterCLI:
         parser.add_argument("-s", "--seed", help="Batch seed", type=int, default=0)
 
         parser.add_argument(
-            "-d", "--dimension", help="Image dimension", type=tuple, default=(768, 432)
+            "-d",
+            "--dimension",
+            help="Image dimension",
+            type=tuple_type,
+            default=(768, 432),
         )
         parser.add_argument("-l", "--lora", help="LoRa scale", type=float, default=0.75)
         parser.add_argument(
