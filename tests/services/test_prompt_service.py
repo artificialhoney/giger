@@ -25,6 +25,7 @@ def test_generate(snapshot):
         "lightning_style": ["LightningStyle"],
         "camera_position": ["CameraPosition"],
         "camera": ["Camera"],
+        "camera_style": ["Infrared"],
         "composition": ["Composition"],
         "iso": "Iso",
         "resolution": ["Resolution"],

@@ -330,7 +330,7 @@ class PromptService:
             "{{camera}}",
         ]
 
-    def styles():
+    def camera_styles():
         return [
             "Early Wet Plate",
             "Fisheye",
@@ -388,6 +388,7 @@ class PromptService:
         lightning_style=None,
         camera_position=None,
         camera=None,
+        camera_style=None,
         composition=None,
         iso=None,
         resolution=None,
@@ -426,8 +427,8 @@ class PromptService:
             image.append(separator.join(camera_position))
         if camera != None and len(camera) > 0:
             image.append(separator.join(camera))
-        if style != None and len(style) > 0:
-            image.append(separator.join(style))
+        if camera_style != None and len(camera_style) > 0:
+            image.append(separator.join(camera_style))
         if composition != None and len(composition) > 0:
             image.append(separator.join(composition))
         if iso != None:
