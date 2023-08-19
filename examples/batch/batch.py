@@ -128,8 +128,7 @@ class CharacterCLI:
         image_service = ImageService()
         path = os.path.join(args.output, args.batch_name)
         Path(path).mkdir(parents=True, exist_ok=True)
-        prompts = args.prompts.read().splitlines()
-        for description in prompts:
+        for description in args.prompts:
             _logger.info(f'Generating prompt for "{description}"')
             prompt = prompt_service.generate(
                 description=[description],
