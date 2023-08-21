@@ -2,6 +2,20 @@ Changelog
 =========
 
 
+0.1.10 (2023-08-21)
+-------------------
+
+Fix
+~~~
+- Inswapper repo. [Sebastian Krüger]
+- Prompt command and service args passing. [Sebastian Krüger]
+
+Changes
+~~~~~~~
+- Remove stable diffusion link. [Sebastian Krüger]
+- Batch tuple dimension fix. [Sebastian Krüger]
+
+
 0.1.9 (2023-08-19)
 ------------------
 
@@ -12,6 +26,8 @@ Fix
 
 Changes
 ~~~~~~~
+- Publish workflow manual dispatch. [Sebastian Krüger]
+- CHANGELOG. [Sebastian Krüger]
 - Remove cuda from tests. [Sebastian Krüger]
 - Fix batch seed. [Sebastian Krüger]
 - Fix batch. [Sebastian Krüger]
