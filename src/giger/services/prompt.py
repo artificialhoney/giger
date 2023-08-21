@@ -374,26 +374,35 @@ class PromptService:
             "Full HD",
         ]
 
-    def generate(
-        self,
-        time=None,
-        type=None,
-        description=None,
-        background_color=None,
-        art_style=None,
-        artist=None,
-        realism=None,
-        rendering_engine=None,
-        lightning_angle=None,
-        lightning_style=None,
-        camera_position=None,
-        camera=None,
-        camera_style=None,
-        composition=None,
-        iso=None,
-        resolution=None,
-        compel_style=None,
-    ):
+    def generate(self, **kwargs):
+        description = kwargs["description"] if "description" in kwargs else None
+        time = kwargs["time"] if "time" in kwargs else None
+        type = kwargs["type"] if "type" in kwargs else None
+        background_color = (
+            kwargs["background_color"] if "background_color" in kwargs else None
+        )
+        art_style = kwargs["art_style"] if "art_style" in kwargs else None
+        artist = kwargs["artist"] if "artist" in kwargs else None
+        realism = kwargs["realism"] if "realism" in kwargs else None
+        rendering_engine = (
+            kwargs["rendering_engine"] if "rendering_engine" in kwargs else None
+        )
+        lightning_angle = (
+            kwargs["lightning_angle"] if "lightning_angle" in kwargs else None
+        )
+        lightning_style = (
+            kwargs["lightning_style"] if "lightning_style" in kwargs else None
+        )
+        camera_position = (
+            kwargs["camera_position"] if "camera_position" in kwargs else None
+        )
+        camera = kwargs["camera"] if "camera" in kwargs else None
+        camera_style = kwargs["camera_style"] if "camera_style" in kwargs else None
+        composition = kwargs["composition"] if "composition" in kwargs else None
+        iso = kwargs["iso"] if "iso" in kwargs else None
+        resolution = kwargs["resolution"] if "resolution" in kwargs else None
+        compel_style = kwargs["compel_style"] if "compel_style" in kwargs else None
+
         separator = ", "
 
         context = []
