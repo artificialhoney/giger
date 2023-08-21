@@ -87,7 +87,7 @@ def render():
             WIDTH,
             HEIGHT,
             "artificialhoney/graffiti",
-            0.75,
+            0.45,
             0,
             1,
             tag_path,
