@@ -7,6 +7,7 @@ import torch
 from compel import Compel, ReturnedEmbeddingsType
 from diffusers import (
     ControlNetModel,
+    DiffusionPipeline,
     StableDiffusionControlNetPipeline,
     StableDiffusionImg2ImgPipeline,
     StableDiffusionPipeline,
@@ -37,7 +38,13 @@ class ImageService:
         steps=50,
         name="txt2img",
     ):
-        pipeline = self._setup_pipeline(model, StableDiffusionPipeline, loras)
+        pipeline = self._setup_pipeline(
+            model,
+            DiffusionPipeline
+            if model == "stabilityai/stable-diffusion-xl-base-1.0"
+            else StableDiffusionPipeline,
+            loras,
+        )
         exif_bytes = self._get_exif_bytes(prompt)
         generator = self._create_generator(seed, count)
         c = self._add_compel(pipeline, prompt)
@@ -169,10 +176,18 @@ class ImageService:
             )
         else:
             controlnet = None
+
         if self.cuda:
             if controlnet:
                 pipeline = type.from_pretrained(
                     model, torch_dtype=torch.float16, controlnet=controlnet
+                )
+            elif type == DiffusionPipeline:
+                pipeline = type.from_pretrained(
+                    model,
+                    torch_dtype=torch.float16,
+                    use_safetensors=True,
+                    variant="fp16",
                 )
             else:
                 pipeline = type.from_pretrained(model, torch_dtype=torch.float16)
@@ -183,6 +198,13 @@ class ImageService:
             if controlnet:
                 pipeline = type.from_pretrained(
                     model, torch_dtype=torch.float32, controlnet=controlnet
+                )
+            elif type == DiffusionPipeline:
+                pipeline = type.from_pretrained(
+                    model,
+                    torch_dtype=torch.float32,
+                    use_safetensors=True,
+                    variant="fp32",
                 )
             else:
                 pipeline = type.from_pretrained(model, torch_dtype=torch.float32)
