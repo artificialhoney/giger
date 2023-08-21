@@ -4,7 +4,7 @@ from sys import platform
 
 import piexif
 import torch
-from compel import Compel
+from compel import Compel, ReturnedEmbeddingsType
 from diffusers import (
     ControlNetModel,
     StableDiffusionControlNetPipeline,
@@ -13,6 +13,7 @@ from diffusers import (
     UniPCMultistepScheduler,
 )
 from PIL import Image
+from transformers import CLIPTokenizer
 
 
 class ImageService:
@@ -39,15 +40,15 @@ class ImageService:
         pipeline = self._setup_pipeline(model, StableDiffusionPipeline, loras)
         exif_bytes = self._get_exif_bytes(prompt)
         generator = self._create_generator(seed, count)
-        conditioning = self._add_compel(pipeline, prompt)
+        c = self._add_compel(pipeline, prompt)
         images = pipeline(
-            prompt_embeds=conditioning,
             generator=generator,
             width=width,
             height=height,
             num_images_per_prompt=count,
             negative_prompt=negative_prompt,
             num_inference_steps=steps,
+            **c
         )
         self._save_images(images, output, name, seed, exif_bytes)
 
@@ -69,14 +70,14 @@ class ImageService:
         pipeline = self._setup_pipeline(model, StableDiffusionImg2ImgPipeline, loras)
         exif_bytes = self._get_exif_bytes(prompt)
         generator = self._create_generator(seed, count)
-        conditioning = self._add_compel(pipeline, prompt)
+        c = self._add_compel(pipeline, prompt)
         images = pipeline(
-            prompt_embeds=conditioning,
             generator=generator,
             num_images_per_prompt=count,
             negative_prompt=negative_prompt,
             num_inference_steps=steps,
             image=self._adjust_image(image, width, height),
+            **c
         )
         self._save_images(images, output, name, seed, exif_bytes)
 
@@ -108,10 +109,9 @@ class ImageService:
         pipeline.scheduler = UniPCMultistepScheduler.from_config(
             pipeline.scheduler.config
         )
-        conditioning = self._add_compel(pipeline, prompt)
+        c = self._add_compel(pipeline, prompt)
 
         images = pipeline(
-            prompt_embeds=conditioning,
             generator=generator,
             width=width,
             height=height,
@@ -122,6 +122,7 @@ class ImageService:
             controlnet_conditioning_scale=controlnet_conditioning_scale,
             control_guidance_start=control_guidance_start,
             control_guidance_end=control_guidance_end,
+            **c
         )
         self._save_images(images, output, name, seed, exif_bytes)
 
@@ -195,10 +196,26 @@ class ImageService:
         return pipeline
 
     def _add_compel(self, pipeline, prompt):
-        compel = Compel(
-            tokenizer=pipeline.tokenizer, text_encoder=pipeline.text_encoder
-        )
-        return compel.build_conditioning_tensor(prompt)
+        if (
+            hasattr(pipeline, "tokenizer_2")
+            and type(pipeline.tokenizer_2) == CLIPTokenizer
+        ):
+            compel = Compel(
+                tokenizer=[pipeline.tokenizer, pipeline.tokenizer_2],
+                text_encoder=[pipeline.text_encoder, pipeline.text_encoder_2],
+                returned_embeddings_type=ReturnedEmbeddingsType.PENULTIMATE_HIDDEN_STATES_NON_NORMALIZED,
+                requires_pooled=[False, True],
+            )
+            prompt_embeds, pooled_prompt_embeds = compel(prompt)
+            return {
+                "prompt_embeds": prompt_embeds,
+                "pooled_prompt_embeds": pooled_prompt_embeds,
+            }
+        else:
+            compel = Compel(
+                tokenizer=pipeline.tokenizer, text_encoder=pipeline.text_encoder
+            )
+            return {"prompt_embeds": compel.build_conditioning_tensor(prompt)}
 
     def _adjust_image(self, image, width, height, resample=Image.Resampling.LANCZOS):
         im = Image.open(image).convert("RGB")
