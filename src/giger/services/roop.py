@@ -30,7 +30,9 @@ class RoopService:
         if not model_name:
             roop_dir = os.path.join(str(Path.home()), "roop")
             if not os.path.exists(roop_dir):
-                Repository(roop_dir, clone_from="henryruhs/roop", revision="main")
+                Repository(
+                    roop_dir, clone_from="deepinsight/inswapper", revision="main"
+                )
             model_name = os.path.join(roop_dir, "inswapper_128.onnx")
         source_image = Image.open(source).convert("RGB")
         input_image = Image.open(input).convert("RGB")
