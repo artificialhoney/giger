@@ -64,11 +64,11 @@ def prompt():
         text.append("by {0}".format(artist))
 
     return PromptService().generate(
-        " ".join(text),
+        description=[" ".join(text)],
         rendering_engine="Octane Render",
         lightning_style="Cinematic",
         resolution="8k",
-        compel_style="subtle",
+        compel_style="full",
     )
 
 
@@ -107,6 +107,8 @@ def render():
             os.path.join(tmp_dir, "controlnet-000-" + str(seed).rjust(6, "0") + ".png")
         )
 
+
+st.set_page_config(layout="wide")
 
 st.header("Graffiti")
 
