@@ -23,6 +23,8 @@ giger
 
 CLI for Stable Diffusion tasks.
 
+Read more: `https://artificialhoney.github.io/giger <https://artificialhoney.github.io/giger>`_
+
 ------------
 Installation
 ------------
