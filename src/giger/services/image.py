@@ -132,9 +132,9 @@ class ImageService:
                     Path(output).resolve(),
                     name
                     + "-"
-                    + str(x).rjust(3, "0")
-                    + "-"
                     + str(seed + x).rjust(6, "0")
+                    + "-"
+                    + str(x).rjust(3, "0")
                     + ".png",
                 ),
                 exif=exif_bytes,
