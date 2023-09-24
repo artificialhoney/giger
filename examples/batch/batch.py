@@ -53,20 +53,6 @@ class CharacterCLI:
             const=logging.DEBUG,
         )
         parser.add_argument(
-            "-a",
-            "--artist",
-            help="Artist name",
-            type=str,
-            default="H.R. Giger",
-        )
-        parser.add_argument(
-            "-t",
-            "--time",
-            help="Time description",
-            type=str,
-            default="Ancient",
-        )
-        parser.add_argument(
             "-m",
             "--model",
             help="The Stable Diffusion model to use",
@@ -92,7 +78,7 @@ class CharacterCLI:
             type=tuple_type,
             default=(768, 432),
         )
-        parser.add_argument("-l", "--lora", help="LoRa scale", type=float, default=0.75)
+        parser.add_argument("-l", "--lora", help="LoRa scale", type=float, default=1.0)
         parser.add_argument(
             "-p",
             "--prompts",
@@ -151,18 +137,11 @@ class CharacterCLI:
             _logger.info(f'Generating prompt for "{description}"')
             prompt = prompt_service.generate(
                 description=[description],
-                time=args.time,
-                type="Comic Book",
-                art_style=["Concept Art"],
-                artist=[args.artist],
                 realism=["Photorealistic"],
                 rendering_engine=["Octane Render"],
-                lightning_angle=["Back Light"],
                 lightning_style=["Cinematic"],
-                camera_position=["Full-Body Shot"],
-                camera_style=["Long Exposure"],
                 resolution=["8k"],
-                compel_style="subtle",
+                compel_style="full",
             )
             _logger.info(f'Running batch for "{prompt}"')
             image_service.txt2img(

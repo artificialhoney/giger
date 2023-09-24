@@ -11,4 +11,4 @@ Installation
 Usage
 -----
 
-``./batch.py --prompts ../assets/txt/prompts/vampire/ancient.txt --negative_prompt "$(cat ../assets/txt/prompts/_negative.txt)" --batch_name vampire --output $HOME/Desktop --face ../assets/img/faces/palina.jpg``
+``./batch.py --prompts ../assets/txt/prompts/vampire/ancient.txt --negative_prompt "$(cat ../assets/txt/prompts/_negative.txt)" --batch_name vampire --output $HOME/Desktop``
