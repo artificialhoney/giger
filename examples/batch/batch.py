@@ -12,6 +12,8 @@ from giger.services.roop import RoopService
 
 _logger = logging.getLogger(__name__)
 
+_negative_prompt = "deformed, missing limbs, amputated, pants, shorts, cat ears, bad anatomy, naked, no clothes, disfigured, poorly drawn face, mutation, mutated, ugly, disgusting, blurry, watermark, watermarked, oversaturated, obese, doubled face, b&w, black and white, sepia, nude, frekles, no masks, duplicate image, blur, paintings, sketches, lowres, monochrome, grayscale, bad anatomy, fat, facing away, looking away, tilted head, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, username, blurry, bad feet, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, easy negative, glasses"
+
 
 def is_valid_file(parser, arg):
     if not os.path.exists(arg):
@@ -100,7 +102,13 @@ class CharacterCLI:
             type=lambda x: is_valid_file(parser, x),
         )
 
-        parser.add_argument("-n", "--negative_prompt", help="Negative prompt", type=str)
+        parser.add_argument(
+            "-n",
+            "--negative_prompt",
+            help="Negative prompt",
+            type=str,
+            default=_negative_prompt,
+        )
         parser.add_argument("-f", "--face", help="Face input image", required=False)
 
         return parser.parse_args(args)

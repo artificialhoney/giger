@@ -33,8 +33,6 @@ def controlnet_image():
     ttf = ImageFont.truetype(
         os.path.join(
             os.path.dirname(__file__),
-            "..",
-            "assets",
             "fonts",
             "{0}.ttf".format(font.replace(" ", "")),
         ),

@@ -13,7 +13,8 @@ class PromptService:
             "Modern",
             "Old-fashioned",
             "Retro",
-            "Youthful" "{{time}}",
+            "Youthful",
+            "{{time}}",
         ]
 
     def types():
@@ -129,7 +130,8 @@ class PromptService:
             "Stained Glass",
             "Sticker",
             "Still Life Painting",
-            "Stone Cut" "Street Art",
+            "Stone Cut",
+            "Street Art",
             "Studio Ghibli Style",
             "Surrealism Painting",
             "Tanjore Painting",
@@ -244,7 +246,8 @@ class PromptService:
             "Vincent van Gogh",
             "Wes Anderson",
             "William Blake",
-            "Yoshitaka Amano" "Édouard Manet",
+            "Yoshitaka Amano",
+            "Édouard Manet",
             "{{artist}}",
         ]
 
@@ -268,7 +271,8 @@ class PromptService:
             "Octane Render",
             "Ray Tracing",
             "Unreal Engine",
-            "V-Ray" "{{rendering_engine}}",
+            "V-Ray",
+            "{{rendering_engine}}",
         ]
 
     def lightning_angles():
@@ -340,7 +344,7 @@ class PromptService:
             "Long Exposure",
             "Macro",
             "Polaroid",
-            "{{style}}",
+            "{{camera_style}}",
         ]
 
     def compositions():
