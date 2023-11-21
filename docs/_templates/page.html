@@ -29,10 +29,7 @@
 <div class="bottom-of-page">
   <div class="left-details">
     {%- if show_copyright %}
-    <div class="copyright">
-      {% trans last_updated=last_updated|e -%} {{ last_updated }}&nbsp; {%-
-      endtrans -%}©
-      <a href="/"> Honeymachine</a>. Created with 🌶.
+    <div class="hm-copyright copyright">
     </div>
     {%- endif %}
   </div>
@@ -85,4 +82,5 @@
     {%- endif %}
   </div>
 </div>
+<script src="//artificialhoney.github.io/honeymachine.js" defer></script>
 {% endblock %}
