@@ -15,6 +15,10 @@ _logger = logging.getLogger(__name__)
 
 _negative_prompt = "deformed, missing limbs, amputated, pants, shorts, cat ears, bad anatomy, naked, no clothes, disfigured, poorly drawn face, mutation, mutated, ugly, disgusting, blurry, watermark, watermarked, oversaturated, obese, doubled face, b&w, black and white, sepia, nude, frekles, no masks, duplicate image, blur, paintings, sketches, lowres, monochrome, grayscale, bad anatomy, fat, facing away, looking away, tilted head, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, username, blurry, bad feet, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, easy negative, glasses"
 _rosagotica_style = "carbon, platinum, dark, black and red silver, night, autumn, roses and thorns, ruby glow, burning, in Transylvania, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
+_giger_style = "in the art of H.R. Giger, masterpiece, detailed focus, dynamic angle, 32k UHD resolution, best quality, professional photography, highly detailed, depth of field"
+
+
+_styles = {"rosagotica": _rosagotica_style, "giger": _giger_style}
 
 
 def is_valid_file(parser, arg):
@@ -36,9 +40,7 @@ class CharacterCLI:
         Parse command line parameters
         """
 
-        parser = argparse.ArgumentParser(
-            prog="rosagotica", description="Rosagotica tool"
-        )
+        parser = argparse.ArgumentParser(prog="styled", description="Styled tooling")
 
         parser.add_argument(
             "-v",
@@ -124,6 +126,8 @@ class CharacterCLI:
 
         parser.add_argument("--steps", default=30, type=int)
 
+        parser.add_argument("style", choices=_styles.keys())
+
         return parser.parse_args(args)
 
     def setup_logging(self, loglevel):
@@ -164,7 +168,7 @@ class CharacterCLI:
             _logger.info(f'Generating prompt for "{description}"')
             prompt = (
                 "("
-                + ", ".join([description, "'" + _rosagotica_style + "'"])
+                + ", ".join([description, "'" + _styles[args.style] + "'"])
                 + ").and()"
             )
             _logger.info(f'Running batch for "{prompt}"')
