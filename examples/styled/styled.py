@@ -17,14 +17,13 @@ _negative_prompt = "deformed, missing limbs, amputated, pants, shorts, cat ears,
 _rosagotica_style = "carbon, platinum, dark, black and red silver, night, autumn, roses and thorns, ruby glow, burning, in Transylvania, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
 _giger_style = "in the art of H.R. Giger, masterpiece, detailed focus, dynamic angle, 32k UHD resolution, best quality, professional photography, highly detailed, depth of field"
 _spawn_style = "in the art of Spawn, comic, masterpiece, detailed focus, 32k UHD resolution, best quality, professional photography, highly detailed"
-_greek_style = "fabric, metal, titan, light, red, sun dawn, spring, flowers, sun glow, in Ancient Greece, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
-
+_mongol_style = "freedom, steel, normad, light, children, sun, spring, flowers, asian, plains, in Mongolia, buddha, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
 
 _styles = {
     "rosagotica": _rosagotica_style,
     "giger": _giger_style,
     "spawn": _spawn_style,
-    "greek": _greek_style,
+    "mongol": _mongol_style,
 }
 
 
