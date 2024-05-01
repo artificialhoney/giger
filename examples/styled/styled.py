@@ -21,7 +21,7 @@ _giger_style = "in the art of H.R. Giger, masterpiece, detailed focus, dynamic a
 _spawn_style = "in the art of Spawn, comic, masterpiece, detailed focus, 32k UHD resolution, best quality, professional photography, highly detailed"
 _mongol_style = "freedom, steel, normad, light, children, sun, spring, flowers, asian, plains, in Mongolia, buddha, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
 _ripart = "epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
-_riskart = "masterpiece, concept art, centered, wide shot, front view, 1girl, wet, rain, night, body tattoo, cute, stylish, sexy pose, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
+_riskart = "masterpiece, concept art, centered, wide shot, front view, wet, rain, night, body tattoo, cute, stylish, sexy pose, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
 
 _blank_style = ""
 
