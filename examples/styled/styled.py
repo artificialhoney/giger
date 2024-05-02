@@ -90,7 +90,8 @@ class CharacterCLI:
             type=str,
             default="batch",
         )
-        parser.add_argument("-c", "--count", help="Batch count", default=10, type=int)
+        parser.add_argument("-c", "--count", help="Batch count", default=4, type=int)
+        parser.add_argument("--mod", nargs="*", action="append")
         parser.add_argument("-s", "--seed", help="Batch seed", type=int, default=0)
 
         parser.add_argument(
@@ -180,11 +181,13 @@ class CharacterCLI:
         path = os.path.join(args.output, args.batch_name)
         Path(path).mkdir(parents=True, exist_ok=True)
         seed = args.seed
+        mods = [item for sublist in args.mod for item in sublist]
+        mods = ", ".join(map(lambda x: "'" + x + "'", mods))
         for description in args.prompts:
             _logger.info(f'Generating prompt for "{description}"')
             prompt = (
                 "("
-                + ", ".join([description, "'" + _styles[args.style] + "'"])
+                + ", ".join([description, mods, "'" + _styles[args.style] + "'"])
                 + ").and()"
             )
             _logger.info(f'Running batch for "{prompt}"')
