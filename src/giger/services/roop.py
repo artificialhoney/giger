@@ -22,7 +22,7 @@ class RoopService:
             det_size_half = (det_size[0] // 2, det_size[1] // 2)
             return self._get_face(source, det_size=det_size_half)
         try:
-            return sorted(face, key=lambda x: x.bbox[0])[0]
+            return sorted(face, key=lambda x: x.bbox[0])
         except:
             return None
 
@@ -54,7 +54,9 @@ class RoopService:
         if model == None:
             _logger.warn('Cannot load model "{0}". Exiting.'.format(model_name))
             return
-        result = model.get(numpy.array(input_image), input_face, source_face)
+        result = numpy.array(input_image)
+        for f in list(input_face):
+            result = model.get(result, f, source_face[0])
         result_image = Image.fromarray(result)
         result_image.save(output, exif=exif) if exif != None else result_image.save(
             output
