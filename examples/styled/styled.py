@@ -16,11 +16,11 @@ _logger = logging.getLogger(__name__)
 _negative_prompt = "deformed, missing limbs, amputated, pants, shorts, cat ears, bad anatomy, naked, no clothes, disfigured, poorly drawn face, mutation, mutated, ugly, disgusting, blurry, watermark, watermarked, oversaturated, obese, doubled face, b&w, black and white, sepia, nude, frekles, no masks, duplicate image, blur, paintings, sketches, lowres, monochrome, grayscale, bad anatomy, fat, facing away, looking away, tilted head, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, username, blurry, bad feet, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, easy negative, glasses"
 
 _rosagotica_style = "carbon, platinum, dark, black and red silver, night, autumn, roses and thorns, ruby glow, burning, in Transylvania, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
+_demonic_style = "dark, black, japanese, oni, demonic, in the art of Hideki Kamiya, masterpiece, concept art, centered, wide shot, front view, stylish, epic composition, epic proportion, volumetric lighting, HD"
 _gothfunk_style = "steel, dark, black, silver, night, spring, gothic and funky, beautiful light, burning, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
 _giger_style = "in the art of H.R. Giger, masterpiece, detailed focus, dynamic angle, 32k UHD resolution, best quality, professional photography, highly detailed, depth of field"
 _spawn_style = "in the art of Spawn, comic, masterpiece, detailed focus, 32k UHD resolution, best quality, professional photography, highly detailed"
 _mongol_style = "freedom, steel, normad, light, children, sun, spring, flowers, asian, plains, in Mongolia, buddha, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
-_ripart = "epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
 _riskart = "masterpiece, concept art, centered, wide shot, front view, wet, rain, night, body tattoo, cute, stylish, sexy pose, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
 
 _blank_style = ""
@@ -31,7 +31,7 @@ _styles = {
     "giger": _giger_style,
     "spawn": _spawn_style,
     "mongol": _mongol_style,
-    "ripart": _ripart,
+    "demonic": _demonic_style,
     "riskart": _riskart,
     "blank": _blank_style,
 }
@@ -91,7 +91,7 @@ class CharacterCLI:
             default="batch",
         )
         parser.add_argument("-c", "--count", help="Batch count", default=4, type=int)
-        parser.add_argument("--mod", nargs="*", action="append")
+        parser.add_argument("--mod", nargs="*", action="append", default=[])
         parser.add_argument("-s", "--seed", help="Batch seed", type=int, default=0)
 
         parser.add_argument(
@@ -176,7 +176,6 @@ class CharacterCLI:
         else:
             utils.logging.set_verbosity_error()
 
-        # prompt_service = PromptService()
         image_service = ImageService()
         path = os.path.join(args.output, args.batch_name)
         Path(path).mkdir(parents=True, exist_ok=True)
