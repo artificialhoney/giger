@@ -12,6 +12,7 @@ from diffusers import (
     StableDiffusionPipeline,
     UniPCMultistepScheduler,
 )
+from huggingface_hub import Repository
 from PIL import Image
 
 
@@ -213,11 +214,10 @@ class ImageService:
             else:
                 pipeline = type.from_pretrained(model, torch_dtype=torch.float32)
         for lora_index in range(len(loras)):
-            pipeline._lora_scale = loras[lora_index]["scale"]
             pipeline.load_lora_weights(
                 loras[lora_index]["model"], weight_name=loras[lora_index]["filename"]
             )
-            pipeline._lora_scale = 1.0
+            pipeline.fuse_lora(lora_scale=loras[lora_index]["scale"])
 
         return pipeline
 
