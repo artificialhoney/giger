@@ -89,7 +89,8 @@ class CharacterCLI:
             type=str,
             default="batch",
         )
-        parser.add_argument("-c", "--count", help="Batch count", default=4, type=int)
+        parser.add_argument("--count", help="Batch count", default=4, type=int)
+        parser.add_argument("--size", help="Batch size", default=10, type=int)
         parser.add_argument("--mod", nargs="*", action="append", default=[])
         parser.add_argument("-s", "--seed", help="Batch seed", type=int, default=0)
 
@@ -102,12 +103,7 @@ class CharacterCLI:
         )
         parser.add_argument("-l", "--lora", help="LoRa scale", type=float, default=1.0)
         parser.add_argument(
-            "-p",
-            "--prompts",
-            help="Prompts txt file",
-            required=True,
-            metavar="FILE",
-            type=lambda x: is_valid_file(parser, x),
+            "-p", "--prompt", help="Prompts txt file or string", required=True, type=str
         )
 
         parser.add_argument(
@@ -189,7 +185,15 @@ class CharacterCLI:
         seed = args.seed
         mods = [item for sublist in args.mod for item in sublist]
         mods = ", ".join(map(lambda x: "'" + x + "'", mods))
-        for description in args.prompts:
+
+        # Check if the file exists
+        if os.path.exists(args.prompt):
+            text_file = open(args.prompt, "r")
+            prompts = text_file.readlines()
+        else:
+            prompts = [args.prompt] * args.size
+
+        for description in prompts:
             _logger.info(f'Generating prompt for "{description}"')
             prompt = (
                 "("
