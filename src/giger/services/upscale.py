@@ -17,6 +17,7 @@ class UpscaleService:
                 model_id, torch_dtype=torch.float16
             )
             pipeline = pipeline.to("cuda")
+            pipeline.enable_attention_slicing()
         else:
             pipeline = StableDiffusionUpscalePipeline.from_pretrained(
                 model_id, torch_dtype=torch.float32
