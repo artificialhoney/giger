@@ -63,6 +63,11 @@ class ImageCommand:
         self.parser.add_argument(
             "--lora_scale", help="The LoRA scale", nargs="*", default=[], type=float
         )
+        self.parser.add_argument(
+            "--bypass_safety",
+            help="Bypass Safety (NSFW)",
+            action="store_true",
+        )
 
     def execute(self, args):
         if args.seed == None:
@@ -118,6 +123,7 @@ class ImageCommand:
                         args.batch_size,
                         args.inference_steps,
                         args.name + "-" + str(x).rjust(3, "0"),
+                        args.bypass_safety,
                     )
                 else:
                     self.service.img2img(
@@ -133,6 +139,7 @@ class ImageCommand:
                         args.batch_size,
                         args.inference_steps,
                         args.name + "-" + str(x).rjust(3, "0"),
+                        args.bypass_safety,
                     )
             else:
                 self.service.txt2img(
@@ -147,4 +154,5 @@ class ImageCommand:
                     args.batch_size,
                     args.inference_steps,
                     args.name + "-" + str(x).rjust(3, "0"),
+                    args.bypass_safety,
                 )

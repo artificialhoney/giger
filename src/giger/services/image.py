@@ -15,6 +15,14 @@ from diffusers import (
 from PIL import Image
 
 
+def _bypass_safety(images, clip_input):
+    if len(images.shape) == 4:
+        num_images = images.shape[0]
+        return images, [False] * num_images
+    else:
+        return images, False
+
+
 class ImageService:
     def __init__(self):
         if torch.cuda.is_available():
@@ -35,8 +43,13 @@ class ImageService:
         count=1,
         steps=50,
         name="txt2img",
+        bypass_safety=False,
     ):
         pipeline = self._setup_pipeline(model, StableDiffusionPipeline, loras)
+
+        if bypass_safety:
+            pipeline.safety_checker = _bypass_safety
+
         exif_bytes = self._get_exif_bytes(prompt)
         generator = self._create_generator(seed, count)
         conditioning = self._add_compel(pipeline, prompt)
@@ -65,8 +78,13 @@ class ImageService:
         count=1,
         steps=50,
         name="img2img",
+        bypass_safety=False,
     ):
         pipeline = self._setup_pipeline(model, StableDiffusionImg2ImgPipeline, loras)
+
+        if bypass_safety:
+            pipeline.safety_checker = _bypass_safety
+
         exif_bytes = self._get_exif_bytes(prompt)
         generator = self._create_generator(seed, count)
         conditioning = self._add_compel(pipeline, prompt)
@@ -98,10 +116,15 @@ class ImageService:
         count=1,
         steps=50,
         name="controlnet",
+        bypass_safety=False,
     ):
         pipeline = self._setup_pipeline(
             model, StableDiffusionControlNetPipeline, loras, controlnet_model
         )
+
+        if bypass_safety:
+            pipeline.safety_checker = _bypass_safety
+
         exif_bytes = self._get_exif_bytes(prompt)
         generator = self._create_generator(seed, count)
         # speed up diffusion process with faster scheduler and memory optimization

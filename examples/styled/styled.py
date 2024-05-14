@@ -143,6 +143,12 @@ class CharacterCLI:
 
         parser.add_argument("--steps", default=30, type=int)
 
+        parser.add_argument(
+            "--bypass_safety",
+            help="Bypass Safety (NSFW)",
+            action="store_true",
+        )
+
         parser.add_argument("style", choices=_styles.keys(), default="blank")
 
         return parser.parse_args(args)
@@ -215,6 +221,7 @@ class CharacterCLI:
                     args.count,
                     args.steps,
                     args.batch_name,
+                    args.bypass_safety,
                 )
             else:
                 image_service.txt2img(
@@ -235,6 +242,7 @@ class CharacterCLI:
                     args.count,
                     args.steps,
                     args.batch_name,
+                    args.bypass_safety,
                 )
             seed += args.count
 
