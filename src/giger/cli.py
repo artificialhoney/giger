@@ -11,6 +11,7 @@ from .commands.image import ImageCommand
 from .commands.prompt import PromptCommand
 from .commands.roop import RoopCommand
 from .commands.template import TemplateCommand
+from .commands.upscale import UpscaleCommand
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 
@@ -64,6 +65,7 @@ class CLI:
         self.prompt = PromptCommand(subparsers)
         self.image = ImageCommand(subparsers)
         self.roop = RoopCommand(subparsers)
+        self.upscale = UpscaleCommand(subparsers)
 
         return parser.parse_args(args)
 
@@ -99,6 +101,8 @@ class CLI:
             else:
                 utils.logging.set_verbosity_error()
             self.image.execute(args)
+        elif args.command == "upscale":
+            self.upscale.execute(args)
         else:
             self.roop.execute(args)
 

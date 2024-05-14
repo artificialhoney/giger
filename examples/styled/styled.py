@@ -7,9 +7,8 @@ import sys
 from pathlib import Path
 
 from giger.services.image import ImageService
-
-# from giger.services.prompt import PromptService
 from giger.services.roop import RoopService
+from giger.services.upscale import UpscaleService
 
 _logger = logging.getLogger(__name__)
 
@@ -223,7 +222,6 @@ class CharacterCLI:
                     args.count,
                     args.steps,
                     args.batch_name,
-                    args.upscale,
                     args.bypass_safety,
                 )
             else:
@@ -245,10 +243,15 @@ class CharacterCLI:
                     args.count,
                     args.steps,
                     args.batch_name,
-                    args.upscale,
                     args.bypass_safety,
                 )
             seed += args.count
+
+        if args.upscale:
+            _logger.info("Running upscale for generated images")
+            upscale_service = UpscaleService()
+            for input in Path(os.path.join(args.output, args.batch_name)).glob("*.png"):
+                upscale_service.upscale(input, str(input) + ".upscaled.png")
 
         if args.face:
             _logger.info(

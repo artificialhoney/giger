@@ -64,9 +64,6 @@ class ImageCommand:
             "--lora_scale", help="The LoRA scale", nargs="*", default=[], type=float
         )
         self.parser.add_argument(
-            "--upscale", help="Upcale image 4x", action="store_true"
-        )
-        self.parser.add_argument(
             "--bypass_safety", help="Bypass Safety (NSFW)", action="store_true"
         )
 
@@ -124,7 +121,6 @@ class ImageCommand:
                         args.batch_size,
                         args.inference_steps,
                         args.name + "-" + str(x).rjust(3, "0"),
-                        args.upscale,
                         args.bypass_safety,
                     )
                 else:
@@ -141,7 +137,6 @@ class ImageCommand:
                         args.batch_size,
                         args.inference_steps,
                         args.name + "-" + str(x).rjust(3, "0"),
-                        args.upscale,
                         args.bypass_safety,
                     )
             else:
@@ -157,6 +152,5 @@ class ImageCommand:
                     args.batch_size,
                     args.inference_steps,
                     args.name + "-" + str(x).rjust(3, "0"),
-                    args.upscale,
                     args.bypass_safety,
                 )
