@@ -10,6 +10,7 @@ from diffusers import (
     StableDiffusionControlNetPipeline,
     StableDiffusionImg2ImgPipeline,
     StableDiffusionPipeline,
+    StableDiffusionUpscalePipeline,
     UniPCMultistepScheduler,
 )
 from PIL import Image
@@ -43,6 +44,7 @@ class ImageService:
         count=1,
         steps=50,
         name="txt2img",
+        upscale=False,
         bypass_safety=False,
     ):
         pipeline = self._setup_pipeline(model, StableDiffusionPipeline, loras)
@@ -62,7 +64,7 @@ class ImageService:
             negative_prompt=negative_prompt,
             num_inference_steps=steps,
         )
-        self._save_images(images, output, name, seed, exif_bytes)
+        self._save_images(images, output, name, seed, exif_bytes, upscale, prompt)
 
     def img2img(
         self,
@@ -78,6 +80,7 @@ class ImageService:
         count=1,
         steps=50,
         name="img2img",
+        upscale=False,
         bypass_safety=False,
     ):
         pipeline = self._setup_pipeline(model, StableDiffusionImg2ImgPipeline, loras)
@@ -96,7 +99,7 @@ class ImageService:
             num_inference_steps=steps,
             image=self._adjust_image(image, width, height),
         )
-        self._save_images(images, output, name, seed, exif_bytes)
+        self._save_images(images, output, name, seed, exif_bytes, upscale, prompt)
 
     def controlnet(
         self,
@@ -116,6 +119,7 @@ class ImageService:
         count=1,
         steps=50,
         name="controlnet",
+        upscale=False,
         bypass_safety=False,
     ):
         pipeline = self._setup_pipeline(
@@ -146,22 +150,42 @@ class ImageService:
             control_guidance_start=control_guidance_start,
             control_guidance_end=control_guidance_end,
         )
-        self._save_images(images, output, name, seed, exif_bytes)
+        self._save_images(images, output, name, seed, exif_bytes, upscale, prompt)
 
-    def _save_images(self, images, output, name, seed, exif_bytes=None):
+    def _save_images(
+        self, images, output, name, seed, exif_bytes=None, upscale=False, prompt=None
+    ):
+        if upscale:
+            model_id = "stabilityai/stable-diffusion-x4-upscaler"
+            if self.cuda:
+                pipeline = StableDiffusionUpscalePipeline.from_pretrained(
+                    model_id, torch_dtype=torch.float16
+                )
+                pipeline = pipeline.to("cuda")
+            else:
+                pipeline = StableDiffusionUpscalePipeline.from_pretrained(
+                    model_id, torch_dtype=torch.float32
+                )
+
         for x in range(len(list(images[0]))):
+            p = os.path.join(
+                Path(output).resolve(),
+                name
+                + "-"
+                + str(seed + x).rjust(6, "0")
+                + "-"
+                + str(x).rjust(3, "0")
+                + ".png",
+            )
+
             images[0][x].save(
-                os.path.join(
-                    Path(output).resolve(),
-                    name
-                    + "-"
-                    + str(seed + x).rjust(6, "0")
-                    + "-"
-                    + str(x).rjust(3, "0")
-                    + ".png",
-                ),
+                p,
                 exif=exif_bytes,
             )
+
+            if upscale:
+                upscaled_image = pipeline(prompt=prompt, image=images[0][x]).images
+                upscaled_image[0].save(p.replace(".png", "@4x.png"), exif=exif_bytes)
 
     def _create_generator(self, seed, count):
         if self.cuda:

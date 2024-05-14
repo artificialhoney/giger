@@ -149,6 +149,8 @@ class CharacterCLI:
             action="store_true",
         )
 
+        parser.add_argument("--upscale", help="Upcale image 4x", action="store_true")
+
         parser.add_argument("style", choices=_styles.keys(), default="blank")
 
         return parser.parse_args(args)
@@ -221,6 +223,7 @@ class CharacterCLI:
                     args.count,
                     args.steps,
                     args.batch_name,
+                    args.upscale,
                     args.bypass_safety,
                 )
             else:
@@ -242,6 +245,7 @@ class CharacterCLI:
                     args.count,
                     args.steps,
                     args.batch_name,
+                    args.upscale,
                     args.bypass_safety,
                 )
             seed += args.count
