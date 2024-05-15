@@ -19,10 +19,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install tox
       - name: Test with tox
+        # TODO: Make tests for v0.2.0
         if: false
         run: |
           tox -- --cov-report lcov
       - name: Coveralls
+        if: false
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
