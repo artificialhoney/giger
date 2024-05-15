@@ -128,3 +128,12 @@ Simply change the face in an input image and render the result to disc.
 .. code:: bash
 
    giger roop --face face.jpg --input target.png --output output.png
+
+upscale
+-------
+
+Simply upscale an image and render the result to disc.
+
+.. code:: bash
+
+   giger upscale --input image.png --output image@4x.png --scale 4

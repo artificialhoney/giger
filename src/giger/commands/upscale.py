@@ -15,12 +15,16 @@ class UpscaleCommand:
             "-o", "--output", help="The output image folder", required=True
         )
 
+        self.parser.add_argument(
+            "-s", "--scale", help="The output image scale", required=True, default=4
+        )
+
     def execute(self, args):
         _logger.info(
-            'Upscaling image with input from "{0}" to "{1}"'.format(
-                args.input, args.output
+            'Upscaling image with input from "{0}" to "{1} scale"'.format(
+                args.input, args.scale
             )
         )
         from ..services.upscale import UpscaleService
 
-        UpscaleService().upscale(args.input, args.output)
+        UpscaleService().upscale(args.input, args.output, args.scale)

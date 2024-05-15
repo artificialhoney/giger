@@ -91,6 +91,9 @@ class CharacterCLI:
         )
         parser.add_argument("--count", help="Batch count", default=4, type=int)
         parser.add_argument("--size", help="Batch size", default=10, type=int)
+        parser.add_argument(
+            "--scale", help="Scale image factor", type=int, required=False
+        )
         parser.add_argument("--mod", nargs="*", action="append", default=[])
         parser.add_argument("-s", "--seed", help="Batch seed", type=int, default=0)
 
@@ -143,8 +146,6 @@ class CharacterCLI:
             help="Bypass Safety (NSFW)",
             action="store_true",
         )
-
-        parser.add_argument("--upscale", help="Upcale image 4x", action="store_true")
 
         parser.add_argument("style", choices=_styles.keys(), default="blank")
 
@@ -251,11 +252,11 @@ class CharacterCLI:
                 )
             seed += args.count
 
-        if args.upscale:
-            _logger.info("Running upscale for generated images")
+        if args.scale:
+            _logger.info(f'Running upscale for generated images with "{args.scale}"')
             upscale_service = UpscaleService()
             for input in Path(os.path.join(args.output, args.batch_name)).glob("*.png"):
-                upscale_service.upscale(input, str(input) + ".upscaled.png")
+                upscale_service.upscale(input, str(input) + ".upscaled.png", args.scale)
 
         if args.face:
             _logger.info(

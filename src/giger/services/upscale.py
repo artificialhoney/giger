@@ -1,6 +1,8 @@
+import numpy as np
 import torch
 from diffusers import StableDiffusionUpscalePipeline
 from PIL import Image
+from RealESRGAN import RealESRGAN
 
 
 class UpscaleService:
@@ -10,26 +12,18 @@ class UpscaleService:
         else:
             self.cuda = False
 
-    def upscale(self, input, output):
-        model_id = "stabilityai/stable-diffusion-x4-upscaler"
-        if self.cuda:
-            pipeline = StableDiffusionUpscalePipeline.from_pretrained(
-                model_id, torch_dtype=torch.float16
-            )
-            pipeline = pipeline.to("cuda")
-            pipeline.enable_attention_slicing()
-        else:
-            pipeline = StableDiffusionUpscalePipeline.from_pretrained(
-                model_id, torch_dtype=torch.float32
-            )
+    def upscale(self, input, output, scale=4):
+        device = torch.device("cuda" if self.cuda else "cpu")
 
-        input_image = Image.open(input).convert("RGB")
-        if "exif" in input_image.info:
-            exif = input_image.info["exif"]
+        model = RealESRGAN(device, scale=scale)
+        model.load_weights("weights/RealESRGAN_x4.pth", download=True)
+
+        image = Image.open(input).convert("RGB")
+        sr_image = model.predict(image)
+
+        if "exif" in image.info:
+            exif = image.info["exif"]
         else:
             exif = None
-        upscaled_image = pipeline(prompt="", image=input_image).images
 
-        upscaled_image[0].save(output, exif=exif) if exif != None else upscaled_image[
-            0
-        ].save(output)
+        sr_image.save(output, exif=exif) if exif != None else sr_image.save(output)
