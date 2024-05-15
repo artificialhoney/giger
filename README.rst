@@ -31,7 +31,7 @@ Installation
 
 .. code:: bash
 
-   pip install giger
+   pip install giger git+https://github.com/ai-forever/Real-ESRGAN.git
 
 -----
 Usage
