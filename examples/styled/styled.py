@@ -252,12 +252,6 @@ class CharacterCLI:
                 )
             seed += args.count
 
-        if args.scale:
-            _logger.info(f'Running upscale for generated images with "{args.scale}"')
-            upscale_service = UpscaleService()
-            for input in Path(os.path.join(args.output, args.batch_name)).glob("*.png"):
-                upscale_service.upscale(input, str(input) + ".upscaled.png", args.scale)
-
         if args.face:
             _logger.info(
                 f'Running roop for generated images with face from "{args.face}"'
@@ -265,6 +259,12 @@ class CharacterCLI:
             roop_service = RoopService()
             for input in Path(os.path.join(args.output, args.batch_name)).glob("*.png"):
                 roop_service.swap(args.face, input, str(input) + ".swapped.png")
+
+        if args.scale:
+            _logger.info(f'Running upscale for generated images with "{args.scale}"')
+            upscale_service = UpscaleService()
+            for input in Path(os.path.join(args.output, args.batch_name)).glob("*.png"):
+                upscale_service.upscale(input, str(input) + ".upscaled.png", args.scale)
 
 
 def run():
