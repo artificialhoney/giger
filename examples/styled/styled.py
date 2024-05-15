@@ -191,7 +191,7 @@ class CharacterCLI:
             text_file = open(args.prompt, "r")
             prompts = text_file.readlines()
         else:
-            prompts = [args.prompt] * args.size
+            prompts = ["'" + args.prompt + "'"] * args.size
 
         for description in prompts:
             _logger.info(f'Generating prompt for "{description}"')

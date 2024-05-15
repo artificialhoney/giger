@@ -213,11 +213,17 @@ class ImageService:
                 )
             else:
                 pipeline = type.from_pretrained(model, torch_dtype=torch.float32)
+        adapters = []
         for lora_index in range(len(loras)):
+            adapter = "lora" + str(lora_index)
+            adapters += [adapter]
             pipeline.load_lora_weights(
-                loras[lora_index]["model"], weight_name=loras[lora_index]["filename"]
+                loras[lora_index]["model"],
+                weight_name=loras[lora_index]["filename"],
+                adapter_name=adapter,
             )
-            pipeline.fuse_lora(lora_scale=loras[lora_index]["scale"])
+
+        pipeline.set_adapters(adapters, adapter_weights=[x["scale"] for x in loras])
 
         return pipeline
 
