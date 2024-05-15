@@ -97,7 +97,7 @@ class ImageService:
             num_inference_steps=steps,
             image=self._adjust_image(image, width, height),
         )
-        self._save_images(images, output, name, seed, exif_bytes, upscale, prompt)
+        self._save_images(images, output, name, seed, exif_bytes)
 
     def controlnet(
         self,
@@ -147,11 +147,9 @@ class ImageService:
             control_guidance_start=control_guidance_start,
             control_guidance_end=control_guidance_end,
         )
-        self._save_images(images, output, name, seed, exif_bytes, upscale, prompt)
+        self._save_images(images, output, name, seed, exif_bytes)
 
-    def _save_images(
-        self, images, output, name, seed, exif_bytes=None, upscale=False, prompt=None
-    ):
+    def _save_images(self, images, output, name, seed, exif_bytes=None):
         for x in range(len(list(images[0]))):
             p = os.path.join(
                 Path(output).resolve(),
