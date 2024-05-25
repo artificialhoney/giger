@@ -19,9 +19,8 @@ _demonic_style = "dark, black, japanese, oni, demonic, in the art of Hideki Kami
 _gothfunk_style = "steel, dark, black, silver, night, spring, gothic and funky, beautiful light, burning, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
 _giger_style = "in the art of H.R. Giger, masterpiece, detailed focus, dynamic angle, 32k UHD resolution, best quality, professional photography, highly detailed, depth of field"
 _spawn_style = "in the art of Spawn, comic, masterpiece, detailed focus, 32k UHD resolution, best quality, professional photography, highly detailed"
-_mongol_style = "freedom, steel, normad, light, children, sun, spring, flowers, asian, plains, in Mongolia, buddha, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
 _riskart = "masterpiece, concept art, centered, wide shot, front view, wet, rain, night, body tattoo, cute, stylish, sexy pose, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
-
+_magical = "particles of light, soft particles of fractal energy, depth of field, breath of wild, Lots of flowers around, masterpiece, perfect anatomy, 32k UHD resolution, best quality, highres, realistic photo, professional photography, cinematic angle, cinematic lights, vibrant, vivid color, highest detailed, whole body from far away, looking at viewer, cowboy shot"
 _blank_style = ""
 
 _styles = {
@@ -29,9 +28,9 @@ _styles = {
     "gothfunk": _gothfunk_style,
     "giger": _giger_style,
     "spawn": _spawn_style,
-    "mongol": _mongol_style,
     "demonic": _demonic_style,
     "riskart": _riskart,
+    "magical": _magical,
     "blank": _blank_style,
 }
 
