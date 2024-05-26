@@ -26,7 +26,7 @@ class RoopService:
         except:
             return None
 
-    def swap(self, source, input, output, model_name=None):
+    def swap(self, source, input, output, model_name=None, det_size=(640, 640)):
         if not model_name:
             roop_dir = os.path.join(str(Path.home()), "roop")
             if not os.path.exists(roop_dir):
@@ -40,8 +40,8 @@ class RoopService:
             exif = input_image.info["exif"]
         else:
             exif = None
-        input_face = self._get_face(numpy.array(input_image))
-        source_face = self._get_face(numpy.array(source_image))
+        input_face = self._get_face(numpy.array(input_image), det_size)
+        source_face = self._get_face(numpy.array(source_image), det_size)
         if input_face == None:
             _logger.warn('Cannot find face for input "{0}". Exiting.'.format(input))
             return

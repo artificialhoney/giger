@@ -116,6 +116,9 @@ class CharacterCLI:
             default=_negative_prompt,
         )
         parser.add_argument("-f", "--face", help="Face input image", required=False)
+        parser.add_argument("-dw", "--determined_width", default=640, type=int)
+        parser.add_argument("-dh", "--determined_height", default=640, type=int)
+
         parser.add_argument("--net", help="ControlNet input image", required=False)
         parser.add_argument(
             "--netmix",
@@ -257,7 +260,12 @@ class CharacterCLI:
             )
             roop_service = RoopService()
             for input in Path(os.path.join(args.output, args.batch_name)).glob("*.png"):
-                roop_service.swap(args.face, input, str(input) + ".swapped.png")
+                roop_service.swap(
+                    args.face,
+                    input,
+                    str(input) + ".swapped.png",
+                    det_size=(args.determined_width, args.determined_height),
+                )
 
         if args.scale:
             _logger.info(f'Running upscale for generated images with "{args.scale}"')
