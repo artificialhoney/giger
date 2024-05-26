@@ -116,8 +116,7 @@ class CharacterCLI:
             default=_negative_prompt,
         )
         parser.add_argument("-f", "--face", help="Face input image", required=False)
-        parser.add_argument("-dw", "--determined_width", default=640, type=int)
-        parser.add_argument("-dh", "--determined_height", default=640, type=int)
+        parser.add_argument("-ef", "--enhance_face", action="store_true")
 
         parser.add_argument("--net", help="ControlNet input image", required=False)
         parser.add_argument(
@@ -264,7 +263,7 @@ class CharacterCLI:
                     args.face,
                     input,
                     str(input) + ".swapped.png",
-                    det_size=(args.determined_width, args.determined_height),
+                    enhance=args.enhance_face,
                 )
 
         if args.scale:

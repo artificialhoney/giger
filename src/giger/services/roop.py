@@ -1,7 +1,9 @@
 import logging
 import os
+import urllib.request
 from pathlib import Path
 
+import gfpgan
 import insightface
 import numpy
 from huggingface_hub import Repository
@@ -26,14 +28,30 @@ class RoopService:
         except:
             return None
 
-    def swap(self, source, input, output, model_name=None, det_size=(640, 640)):
+    def swap(
+        self,
+        source,
+        input,
+        output,
+        model_name=None,
+        gfpgan_path=None,
+        enhance=False,
+        det_size=(640, 640),
+    ):
+        roop_dir = os.path.join(str(Path.home()), "roop")
         if not model_name:
-            roop_dir = os.path.join(str(Path.home()), "roop")
             if not os.path.exists(roop_dir):
                 Repository(
                     roop_dir, clone_from="ezioruan/inswapper_128.onnx", revision="main"
                 )
             model_name = os.path.join(roop_dir, "inswapper_128.onnx")
+        if enhance and not gfpgan_path:
+            gfpgan_path = os.path.join(roop_dir, "GFPGANv1.4.pth")
+            if not os.path.exists(gfpgan_path):
+                download_path = "https://github.com/TencentARC/GFPGAN/releases/download/v1.3.4/GFPGANv1.4.pth"
+                urllib.request.urlretrieve(download_path, gfpgan_path)
+            enhancer = gfpgan.GFPGANer(model_path=gfpgan_path, upscale=1)
+
         source_image = Image.open(source).convert("RGB")
         input_image = Image.open(input).convert("RGB")
         if "exif" in input_image.info:
@@ -54,9 +72,12 @@ class RoopService:
         if model == None:
             _logger.warn('Cannot load model "{0}". Exiting.'.format(model_name))
             return
+
         result = numpy.array(input_image)
         for f in list(input_face):
             result = model.get(result, f, source_face[0])
+        if enhance:
+            _, _, result = enhancer.enhance(result, paste_back=True)
         result_image = Image.fromarray(result)
         result_image.save(output, exif=exif) if exif != None else result_image.save(
             output
