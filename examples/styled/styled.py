@@ -20,7 +20,7 @@ _gothfunk_style = "steel, dark, black, silver, night, spring, gothic and funky, 
 _giger_style = "in the art of H.R. Giger, masterpiece, detailed focus, dynamic angle, 32k UHD resolution, best quality, professional photography, highly detailed, depth of field"
 _spawn_style = "in the art of Spawn, comic, masterpiece, detailed focus, 32k UHD resolution, best quality, professional photography, highly detailed"
 _riskart = "masterpiece, concept art, centered, wide shot, front view, wet, rain, night, body tattoo, cute, stylish, sexy pose, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
-_magical = "particles of light, soft particles of fractal energy, depth of field, breath of wild, Lots of flowers around, masterpiece, perfect anatomy, 32k UHD resolution, best quality, highres, realistic photo, professional photography, cinematic angle, cinematic lights, vibrant, vivid color, highest detailed, whole body from far away, looking at viewer, cowboy shot"
+_magical = "particles of light, soft particles of energy, depth of field, breath of wild, Lots of flowers around, masterpiece, perfect anatomy, 32k UHD resolution, best quality, highres, realistic photo, professional photography, cinematic angle, cinematic lights, vibrant, vivid color, highest detailed, whole body from far away, looking at viewer, cowboy shot"
 _blank_style = ""
 
 _styles = {
