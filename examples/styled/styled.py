@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 
 from giger.services.image import ImageService
+from giger.services.prompt import PromptService
 from giger.services.roop import RoopService
 from giger.services.upscale import UpscaleService
 
@@ -14,24 +15,18 @@ _logger = logging.getLogger(__name__)
 
 _negative_prompt = "deformed, missing limbs, amputated, pants, shorts, cat ears, bad anatomy, naked, no clothes, disfigured, poorly drawn face, mutation, mutated, ugly, disgusting, blurry, watermark, watermarked, oversaturated, obese, doubled face, b&w, black and white, sepia, nude, frekles, no masks, duplicate image, blur, paintings, sketches, lowres, monochrome, grayscale, bad anatomy, fat, facing away, looking away, tilted head, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, username, blurry, bad feet, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, easy negative, glasses"
 
-_rosagotica_style = "carbon, platinum, dark, black and red silver, night, autumn, roses and thorns, ruby glow, burning, in Transylvania, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
-_demonic_style = "dark, black, japanese, oni, demonic, in the art of Hideki Kamiya, masterpiece, concept art, centered, wide shot, front view, stylish, epic composition, epic proportion, volumetric lighting, HD"
-_gothfunk_style = "steel, dark, black, silver, night, spring, gothic and funky, beautiful light, burning, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
-_giger_style = "in the art of H.R. Giger, masterpiece, detailed focus, dynamic angle, 32k UHD resolution, best quality, professional photography, highly detailed, depth of field"
-_spawn_style = "in the art of Spawn, comic, masterpiece, detailed focus, 32k UHD resolution, best quality, professional photography, highly detailed"
-_riskart = "masterpiece, concept art, centered, wide shot, front view, wet, rain, night, body tattoo, cute, stylish, sexy pose, epic composition, epic proportion, contrast, vibrant color, volumetric lighting, HD"
-_magical = "soft particles of energy and light, depth of field, masterpiece, 32k, best quality, photorealistic, professional photography, cinematic angle, cinematic lights, vibrant, vivid color, highly detailed"
-_blank_style = ""
+_standard_style = {
+    "resolution": ["8K"],
+    "realism": ["Ultra Photoreal", "Ultra Detailed"],
+    "type": "Photograph",
+    "lightning_style": ["Cinematic", "Volumetric"],
+    "camera_position": ["Cinematic Still Shot"],
+    "compel_style": "subtle",
+}
 
 _styles = {
-    "rosagotica": _rosagotica_style,
-    "gothfunk": _gothfunk_style,
-    "giger": _giger_style,
-    "spawn": _spawn_style,
-    "demonic": _demonic_style,
-    "riskart": _riskart,
-    "magical": _magical,
-    "blank": _blank_style,
+    "standard": _standard_style,
+    "blank": {},
 }
 
 
@@ -182,6 +177,7 @@ class CharacterCLI:
             utils.logging.set_verbosity_error()
 
         image_service = ImageService()
+        prompt_service = PromptService()
         path = os.path.join(args.output, args.batch_name)
         Path(path).mkdir(parents=True, exist_ok=True)
         seed = args.seed
@@ -197,10 +193,8 @@ class CharacterCLI:
 
         for description in prompts:
             _logger.info(f'Generating prompt for "{description}"')
-            prompt = (
-                "("
-                + ", ".join([description, mods, "'" + _styles[args.style] + "'"])
-                + ").and()"
+            prompt = prompt_service.generate(
+                description=[description, mods], **_styles[args.style]
             )
             _logger.info(f'Running batch for "{prompt}"')
 
