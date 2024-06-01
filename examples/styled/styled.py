@@ -216,10 +216,15 @@ class CharacterCLI:
                     args.net,
                     [
                         {
+                            "model": "Xynon/noise-offset",
+                            "filename": "offset_noise_lora.safetensors",
+                            "scale": args.lora,
+                        },
+                        {
                             "model": "OedoSoldier/detail-tweaker-lora",
                             "filename": "add_detail.safetensors",
                             "scale": args.lora,
-                        }
+                        },
                     ],
                     seed,
                     args.count,
@@ -237,10 +242,15 @@ class CharacterCLI:
                     args.dimension[1],
                     [
                         {
+                            "model": "Xynon/noise-offset",
+                            "filename": "offset_noise_lora.safetensors",
+                            "scale": args.lora,
+                        },
+                        {
                             "model": "OedoSoldier/detail-tweaker-lora",
                             "filename": "add_detail.safetensors",
                             "scale": args.lora,
-                        }
+                        },
                     ],
                     seed,
                     args.count,
