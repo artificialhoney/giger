@@ -223,6 +223,12 @@ class ImageService:
 
         pipeline.set_adapters(adapters, adapter_weights=[x["scale"] for x in loras])
 
+        pipeline.load_textual_inversion(
+            "embed/EasyNegative",
+            weight_name="EasyNegative.safetensors",
+            token="EasyNegative",
+        )
+
         return pipeline
 
     def _add_compel(self, pipeline, prompt):
