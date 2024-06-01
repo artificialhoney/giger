@@ -453,17 +453,17 @@ class PromptService:
             segments = []
             lead = []
             if len(context) > 0:
-                lead += ["'" + " ".join(context) + "'"]
+                lead += [" ".join(context)]
             if len(prompt) > 0:
                 lead += prompt
             if len(style) > 0:
                 lead += style
             if len(lead) > 0:
-                segments.append("'" + separator.join(lead) + "'")
+                segments.append(separator.join(["'" + x + "'" for x in lead]))
             if len(image) > 0:
                 segments.append("'" + separator.join(image) + "'")
             return "({0}).and()".format(separator.join(segments))
-        if compel_style == "full":
+        elif compel_style == "full":
             segments = []
             if len(context) > 0:
                 segments.append("'" + " ".join(context) + "'")
