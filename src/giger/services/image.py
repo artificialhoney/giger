@@ -62,6 +62,7 @@ class ImageService:
             num_images_per_prompt=count,
             negative_prompt=negative_prompt,
             num_inference_steps=steps,
+            cross_attention_kwargs={"scale": 1.0},
         )
         self._save_images(images, output, name, seed, exif_bytes)
 
@@ -96,6 +97,7 @@ class ImageService:
             negative_prompt=negative_prompt,
             num_inference_steps=steps,
             image=self._adjust_image(image, width, height),
+            cross_attention_kwargs={"scale": 1.0},
         )
         self._save_images(images, output, name, seed, exif_bytes)
 
@@ -146,6 +148,7 @@ class ImageService:
             controlnet_conditioning_scale=controlnet_conditioning_scale,
             control_guidance_start=control_guidance_start,
             control_guidance_end=control_guidance_end,
+            cross_attention_kwargs={"scale": 1.0},
         )
         self._save_images(images, output, name, seed, exif_bytes)
 
