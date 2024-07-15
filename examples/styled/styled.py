@@ -14,9 +14,7 @@ from giger.services.upscale import UpscaleService
 _logger = logging.getLogger(__name__)
 
 # https://openaijourney.com/fix-hands-in-stable-diffusion/
-# _negative_prompt = "The artwork avoids the pitfalls of bad art, such as ugly and deformed eyes and faces, poorly drawn, blurry, and disfigured bodies with extra limbs and close-ups that look weird. It also avoids other common issues such as watermarking, text errors, missing fingers or digits, cropping, poor quality, and JPEG artifacts. The artwork is free of signature or watermark and avoids framing issues. The hands are not deformed, the eyes are not disfigured, and there are no extra bodies or limbs. The artwork is not blurry, out of focus, or poorly drawn, and the proportions are not bad or deformed. There are no mutations, missing limbs, or floating or disconnected limbs. The hands and neck are not malformed, and there are no extra heads or out-of-frame elements. The artwork is not low-res or disgusting and is a well-drawn, highly detailed, and beautiful rendering."
-_negative_prompt = "EasyNegative"
-
+_negative_prompt = "The artwork avoids the pitfalls of bad art, such as ugly and deformed eyes and faces, poorly drawn, blurry, and disfigured bodies with extra limbs and close-ups that look weird. It also avoids other common issues such as watermarking, text errors, missing fingers or digits, cropping, poor quality, and JPEG artifacts. The artwork is free of signature or watermark and avoids framing issues. The hands are not deformed, the eyes are not disfigured, and there are no extra bodies or limbs. The artwork is not blurry, out of focus, or poorly drawn, and the proportions are not bad or deformed. There are no mutations, missing limbs, or floating or disconnected limbs. The hands and neck are not malformed, and there are no extra heads or out-of-frame elements. The artwork is not low-res or disgusting and is a well-drawn, highly detailed, and beautiful rendering."
 
 _standard_style = {
     "resolution": ["8K"],
@@ -186,6 +184,7 @@ class CharacterCLI:
         seed = args.seed
         mods = [item for sublist in args.mod for item in sublist]
         mods = ", ".join(map(lambda x: "'" + x + "'", mods))
+        negative_prompt = args.negative_prompt + " EasyNegative"
 
         # Check if the file exists
         if os.path.exists(args.prompt):
@@ -205,7 +204,7 @@ class CharacterCLI:
                 image_service.controlnet(
                     args.model,
                     prompt,
-                    args.negative_prompt,
+                    negative_prompt,
                     path,
                     args.dimension[0],
                     args.dimension[1],
@@ -236,7 +235,7 @@ class CharacterCLI:
                 image_service.txt2img(
                     args.model,
                     prompt,
-                    args.negative_prompt,
+                    negative_prompt,
                     path,
                     args.dimension[0],
                     args.dimension[1],
