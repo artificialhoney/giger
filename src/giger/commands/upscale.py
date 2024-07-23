@@ -16,7 +16,12 @@ class UpscaleCommand:
         )
 
         self.parser.add_argument(
-            "-s", "--scale", help="The output image scale", required=True, default=4
+            "-s",
+            "--scale",
+            help="The output image scale",
+            required=True,
+            default=4,
+            type=int,
         )
 
     def execute(self, args):
