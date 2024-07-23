@@ -37,6 +37,7 @@ class RoopService:
         gfpgan_path=None,
         enhance=False,
         det_size=(640, 640),
+        input_target=0,
     ):
         roop_dir = os.path.join(str(Path.home()), "roop")
         if not model_name:
@@ -74,8 +75,9 @@ class RoopService:
             return
 
         result = numpy.array(input_image)
-        for f in list(input_face):
-            result = model.get(result, f, source_face[0])
+        for idx, x in enumerate(input_face):
+            if idx == input_target:
+                result = model.get(result, x, source_face[0])
         if enhance:
             _, _, result = enhancer.enhance(result, paste_back=True)
         result_image = Image.fromarray(result)

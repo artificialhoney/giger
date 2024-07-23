@@ -20,6 +20,7 @@ class RoopCommand:
         self.parser.add_argument("-g", "--gfpgan_path", help="GFPGAN model path")
         self.parser.add_argument("-dw", "--determined_width", default=640, type=int)
         self.parser.add_argument("-dh", "--determined_height", default=640, type=int)
+        self.parser.add_argument("-t", "--input_target", default=0, type=int)
 
     def execute(self, args):
         _logger.info('Running Roop for "{0}" with "{1}"'.format(args.input, args.face))
@@ -34,4 +35,5 @@ class RoopCommand:
             enhance=args.enhance,
             gfpgan_path=args.gfpgan_path,
             det_size=(args.determined_width, args.determined_height),
+            input_target=args.input_target,
         )

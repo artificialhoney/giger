@@ -113,6 +113,7 @@ class CharacterCLI:
         )
         parser.add_argument("-f", "--face", help="Face input image", required=False)
         parser.add_argument("-ef", "--enhance_face", action="store_true")
+        parser.add_argument("-ft", "--face_target", default=0, type=int)
 
         parser.add_argument("--net", help="ControlNet input image", required=False)
         parser.add_argument(
@@ -270,6 +271,7 @@ class CharacterCLI:
                     input,
                     str(input) + ".swapped.png",
                     enhance=args.enhance_face,
+                    input_target=args.face_target,
                 )
 
         if args.scale:
