@@ -31,7 +31,7 @@ class RoopCommand:
             args.face,
             args.input,
             args.output,
-            model=args.model,
+            args.model,
             enhance=args.enhance,
             gfpgan_path=args.gfpgan_path,
             det_size=(args.determined_width, args.determined_height),
