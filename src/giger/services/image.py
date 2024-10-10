@@ -3,7 +3,6 @@ from pathlib import Path
 
 import piexif
 import torch
-from compel import Compel
 from diffusers import (
     AutoPipelineForImage2Image,
     AutoPipelineForText2Image,
@@ -52,9 +51,9 @@ class ImageService:
 
         exif_bytes = self._get_exif_bytes(prompt)
         generator = self._create_generator(seed, count)
-        conditioning = self._add_compel(pipeline, prompt)
+
         images = pipeline(
-            prompt_embeds=conditioning,
+            prompt=prompt,
             generator=generator,
             width=width,
             height=height,
@@ -88,9 +87,9 @@ class ImageService:
 
         exif_bytes = self._get_exif_bytes(prompt)
         generator = self._create_generator(seed, count)
-        conditioning = self._add_compel(pipeline, prompt)
+
         images = pipeline(
-            prompt_embeds=conditioning,
+            prompt=prompt,
             generator=generator,
             num_images_per_prompt=count,
             negative_prompt=negative_prompt,
@@ -133,10 +132,9 @@ class ImageService:
         pipeline.scheduler = UniPCMultistepScheduler.from_config(
             pipeline.scheduler.config
         )
-        conditioning = self._add_compel(pipeline, prompt)
 
         images = pipeline(
-            prompt_embeds=conditioning,
+            prompt=prompt,
             generator=generator,
             width=width,
             height=height,
@@ -234,12 +232,6 @@ class ImageService:
         )
 
         return pipeline
-
-    def _add_compel(self, pipeline, prompt):
-        compel = Compel(
-            tokenizer=pipeline.tokenizer, text_encoder=pipeline.text_encoder
-        )
-        return compel.build_conditioning_tensor(prompt)
 
     def _adjust_image(self, image, width, height, resample=Image.Resampling.LANCZOS):
         im = Image.open(image).convert("RGB")
