@@ -213,17 +213,19 @@ class ImageService:
                 )
             else:
                 pipeline = type.from_pretrained(model, torch_dtype=torch.float32)
-        adapters = []
-        for lora_index in range(len(loras)):
-            adapter = "lora" + str(lora_index)
-            adapters += [adapter]
-            pipeline.load_lora_weights(
-                loras[lora_index]["model"],
-                weight_name=loras[lora_index]["filename"],
-                adapter_name=adapter,
-            )
 
-        pipeline.set_adapters(adapters, adapter_weights=[x["scale"] for x in loras])
+        if len(loras) > 0:
+            adapters = []
+            for lora_index, lora in enumerate(loras):
+                adapter = "lora" + str(lora_index)
+                adapters += [adapter]
+                pipeline.load_lora_weights(
+                    lora["model"],
+                    weight_name=lora["filename"],
+                    adapter_name=adapter,
+                )
+
+            pipeline.set_adapters(adapters, adapter_weights=[x["scale"] for x in loras])
 
         pipeline.load_textual_inversion(
             "embed/EasyNegative",
