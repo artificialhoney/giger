@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-from sys import platform
 
 import piexif
 import torch
@@ -12,7 +11,7 @@ from diffusers import (
     StableDiffusionPipeline,
     UniPCMultistepScheduler,
 )
-from huggingface_hub import Repository
+from huggingface_hub import login
 from PIL import Image
 
 
@@ -190,6 +189,8 @@ class ImageService:
         return piexif.dump(exif_dict)
 
     def _setup_pipeline(self, model, type, loras=[], controlnet_model=None):
+        login()
+
         if controlnet_model:
             controlnet = ControlNetModel.from_pretrained(
                 controlnet_model,
