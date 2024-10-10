@@ -5,16 +5,17 @@ import piexif
 import torch
 from compel import Compel
 from diffusers import (
+    AutoPipelineForImage2Image,
+    AutoPipelineForText2Image,
     ControlNetModel,
     StableDiffusionControlNetPipeline,
-    StableDiffusionImg2ImgPipeline,
-    StableDiffusionPipeline,
     UniPCMultistepScheduler,
 )
+from huggingface_hub import login
 from PIL import Image
 
 
-def _bypass_safety(images, clip_input):
+def _bypass_safety(images):
     if len(images.shape) == 4:
         num_images = images.shape[0]
         return images, [False] * num_images
@@ -44,7 +45,7 @@ class ImageService:
         name="txt2img",
         bypass_safety=False,
     ):
-        pipeline = self._setup_pipeline(model, StableDiffusionPipeline, loras)
+        pipeline = self._setup_pipeline(model, AutoPipelineForText2Image, loras)
 
         if bypass_safety:
             pipeline.safety_checker = _bypass_safety
@@ -80,7 +81,7 @@ class ImageService:
         name="img2img",
         bypass_safety=False,
     ):
-        pipeline = self._setup_pipeline(model, StableDiffusionImg2ImgPipeline, loras)
+        pipeline = self._setup_pipeline(model, AutoPipelineForImage2Image, loras)
 
         if bypass_safety:
             pipeline.safety_checker = _bypass_safety
