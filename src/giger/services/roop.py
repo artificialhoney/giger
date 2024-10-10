@@ -75,7 +75,7 @@ class RoopService:
             return
 
         result = numpy.array(input_image)
-        if input_target > len(input_face) - 1:
+        if input_target == -1:
             input_target = len(input_face) - 1
         for idx, x in enumerate(input_face):
             if idx == input_target:
