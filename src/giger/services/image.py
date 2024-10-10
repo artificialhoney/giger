@@ -14,7 +14,7 @@ from huggingface_hub import login
 from PIL import Image
 
 
-def _bypass_safety(images):
+def _bypass_safety(images, clip_input):
     if len(images.shape) == 4:
         num_images = images.shape[0]
         return images, [False] * num_images
