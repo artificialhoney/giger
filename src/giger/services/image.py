@@ -38,13 +38,16 @@ class ImageService:
         width,
         height,
         loras=[],
+        inversions=[],
         seed=0,
         count=1,
         steps=50,
         name="txt2img",
         bypass_safety=False,
     ):
-        pipeline = self._setup_pipeline(model, AutoPipelineForText2Image, loras)
+        pipeline = self._setup_pipeline(
+            model, AutoPipelineForText2Image, loras, inversions
+        )
 
         if bypass_safety:
             pipeline.safety_checker = _bypass_safety
@@ -74,13 +77,16 @@ class ImageService:
         height,
         image,
         loras=[],
+        inversions=[],
         seed=0,
         count=1,
         steps=50,
         name="img2img",
         bypass_safety=False,
     ):
-        pipeline = self._setup_pipeline(model, AutoPipelineForImage2Image, loras)
+        pipeline = self._setup_pipeline(
+            model, AutoPipelineForImage2Image, loras, inversions
+        )
 
         if bypass_safety:
             pipeline.safety_checker = _bypass_safety
@@ -113,6 +119,7 @@ class ImageService:
         control_guidance_end,
         image,
         loras=[],
+        inversions=[],
         seed=0,
         count=1,
         steps=50,
@@ -120,7 +127,11 @@ class ImageService:
         bypass_safety=False,
     ):
         pipeline = self._setup_pipeline(
-            model, StableDiffusionControlNetPipeline, loras, controlnet_model
+            model,
+            StableDiffusionControlNetPipeline,
+            loras,
+            inversions,
+            controlnet_model,
         )
 
         if bypass_safety:
@@ -186,7 +197,9 @@ class ImageService:
         }
         return piexif.dump(exif_dict)
 
-    def _setup_pipeline(self, model, type, loras=[], controlnet_model=None):
+    def _setup_pipeline(
+        self, model, type, loras=[], inversions=[], controlnet_model=None
+    ):
         if controlnet_model:
             controlnet = ControlNetModel.from_pretrained(
                 controlnet_model,
@@ -225,11 +238,13 @@ class ImageService:
 
             pipeline.set_adapters(adapters, adapter_weights=[x["scale"] for x in loras])
 
-        pipeline.load_textual_inversion(
-            "embed/EasyNegative",
-            weight_name="EasyNegative.safetensors",
-            token="EasyNegative",
-        )
+        if len(inversions) > 0:
+            for inversion in list(inversions):
+                pipeline.load_textual_inversion(
+                    inversion["model"],
+                    weight_name=inversion["filename"],
+                    token=inversion["token"],
+                )
 
         return pipeline
 

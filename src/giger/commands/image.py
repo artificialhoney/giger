@@ -64,6 +64,24 @@ class ImageCommand:
             "--lora_scale", help="The LoRA scale", nargs="*", default=[], type=float
         )
         self.parser.add_argument(
+            "--inversion_model",
+            help="A textual inversion model to use",
+            nargs="*",
+            default=[],
+        )
+        self.parser.add_argument(
+            "--inversion_filename",
+            help="The textual inversion file name",
+            nargs="*",
+            default=[],
+        )
+        self.parser.add_argument(
+            "--inversion_token",
+            help="The textual inversion token",
+            nargs="*",
+            default=[],
+        )
+        self.parser.add_argument(
             "--bypass_safety", help="Bypass Safety (NSFW)", action="store_true"
         )
 
@@ -88,6 +106,20 @@ class ImageCommand:
                     "scale": args.lora_scale[index]
                     if index < len(args.lora_scale)
                     else 1.0,
+                }
+            )
+
+        inversions = []
+        for index, inversion_model in enumerate(args.inversion_model):
+            inversions.append(
+                {
+                    "model": inversion_model,
+                    "filename": args.inversion_filename[index]
+                    if index < len(args.inversion_filename)
+                    else None,
+                    "token": args.inversion_token[index]
+                    if index < len(args.inversion_token)
+                    else None,
                 }
             )
 
@@ -117,6 +149,7 @@ class ImageCommand:
                         args.control_guidance_end,
                         args.input,
                         loras,
+                        inversions,
                         s,
                         args.batch_size,
                         args.inference_steps,
@@ -133,6 +166,7 @@ class ImageCommand:
                         args.height,
                         args.input,
                         loras,
+                        inversions,
                         s,
                         args.batch_size,
                         args.inference_steps,
@@ -148,6 +182,7 @@ class ImageCommand:
                     args.width,
                     args.height,
                     loras,
+                    inversions,
                     s,
                     args.batch_size,
                     args.inference_steps,
