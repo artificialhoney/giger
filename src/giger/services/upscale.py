@@ -16,7 +16,7 @@ class UpscaleService:
         device = torch.device("cuda" if self.cuda else "cpu")
 
         model = RealESRGAN(device, scale=scale)
-        model.load_weights("weights/RealESRGAN_x4.pth", download=True)
+        model.load_weights("weights/RealESRGAN_x8.pth", download=True)
 
         image = Image.open(input).convert("RGB")
         sr_image = model.predict(image)
