@@ -30,7 +30,6 @@ class ImageCommand:
         self.parser.add_argument("--width", default=768, type=int)
         self.parser.add_argument("--height", default=432, type=int)
         self.parser.add_argument("--batch_size", default=1, type=int)
-        self.parser.add_argument("--batch_count", default=1, type=int)
         self.parser.add_argument("--inference_steps", default=50, type=int)
         self.parser.add_argument("--seed", type=int)
         self.parser.add_argument(
@@ -132,60 +131,58 @@ class ImageCommand:
         path = os.path.join(args.output, args.name)
         pathlib.Path(path).mkdir(parents=True, exist_ok=True)
 
-        for x in range(args.batch_count):
-            s = seed + x * args.batch_size
-            if args.input != None:
-                if args.controlnet_model != None:
-                    self.service.controlnet(
-                        args.model,
-                        prompt,
-                        args.negative_prompt,
-                        path,
-                        args.width,
-                        args.height,
-                        args.controlnet_model,
-                        args.controlnet_conditioning_scale,
-                        args.control_guidance_start,
-                        args.control_guidance_end,
-                        args.input,
-                        loras,
-                        inversions,
-                        s,
-                        args.batch_size,
-                        args.inference_steps,
-                        args.name + "-" + str(x).rjust(3, "0"),
-                        args.bypass_safety,
-                    )
-                else:
-                    self.service.img2img(
-                        args.model,
-                        prompt,
-                        args.negative_prompt,
-                        path,
-                        args.width,
-                        args.height,
-                        args.input,
-                        loras,
-                        inversions,
-                        s,
-                        args.batch_size,
-                        args.inference_steps,
-                        args.name + "-" + str(x).rjust(3, "0"),
-                        args.bypass_safety,
-                    )
-            else:
-                self.service.txt2img(
+        if args.input != None:
+            if args.controlnet_model != None:
+                self.service.controlnet(
                     args.model,
                     prompt,
                     args.negative_prompt,
                     path,
                     args.width,
                     args.height,
+                    args.controlnet_model,
+                    args.controlnet_conditioning_scale,
+                    args.control_guidance_start,
+                    args.control_guidance_end,
+                    args.input,
                     loras,
                     inversions,
-                    s,
+                    seed,
                     args.batch_size,
                     args.inference_steps,
-                    args.name + "-" + str(x).rjust(3, "0"),
+                    args.name,
                     args.bypass_safety,
                 )
+            else:
+                self.service.img2img(
+                    args.model,
+                    prompt,
+                    args.negative_prompt,
+                    path,
+                    args.width,
+                    args.height,
+                    args.input,
+                    loras,
+                    inversions,
+                    seed,
+                    args.batch_size,
+                    args.inference_steps,
+                    args.name,
+                    args.bypass_safety,
+                )
+        else:
+            self.service.txt2img(
+                args.model,
+                prompt,
+                args.negative_prompt,
+                path,
+                args.width,
+                args.height,
+                loras,
+                inversions,
+                seed,
+                args.batch_size,
+                args.inference_steps,
+                args.name,
+                args.bypass_safety,
+            )
