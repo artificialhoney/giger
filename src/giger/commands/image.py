@@ -128,8 +128,7 @@ class ImageCommand:
 
         self.service = ImageService()
 
-        path = os.path.join(args.output, args.name)
-        pathlib.Path(path).mkdir(parents=True, exist_ok=True)
+        pathlib.Path(args.output).mkdir(parents=True, exist_ok=True)
 
         if args.input != None:
             if args.controlnet_model != None:
@@ -137,7 +136,7 @@ class ImageCommand:
                     args.model,
                     prompt,
                     args.negative_prompt,
-                    path,
+                    args.output,
                     args.width,
                     args.height,
                     args.controlnet_model,
@@ -158,7 +157,7 @@ class ImageCommand:
                     args.model,
                     prompt,
                     args.negative_prompt,
-                    path,
+                    args.output,
                     args.width,
                     args.height,
                     args.input,
@@ -175,7 +174,7 @@ class ImageCommand:
                 args.model,
                 prompt,
                 args.negative_prompt,
-                path,
+                args.output,
                 args.width,
                 args.height,
                 loras,
