@@ -164,12 +164,7 @@ class ImageService:
         for x in range(len(list(images[0]))):
             p = os.path.join(
                 Path(output).resolve(),
-                name
-                + "-"
-                + str(seed + x).rjust(6, "0")
-                + "-"
-                + str(x).rjust(3, "0")
-                + ".png",
+                name + "-" + str(seed + x).rjust(6, "0") + ".png",
             )
 
             images[0][x].save(
