@@ -9,8 +9,7 @@ from diffusers.utils import logging
 from giger.cli import run
 from giger.commands.image import ImageCommand
 from giger.commands.prompt import PromptCommand
-from giger.commands.roop import RoopCommand
-from giger.commands.template import TemplateCommand
+from giger.commands.swap import SwapCommand
 
 __author__ = "Sebastian Krüger"
 __copyright__ = "Sebastian Krüger"
@@ -35,38 +34,6 @@ def test_loglevel():
         run()
         assert logging.get_verbosity() == loglevel
     ImageCommand.execute = execute
-
-
-def test_template(snapshot):
-    """CLI Template Tests"""
-    snapshots_dir = os.path.join(
-        os.path.dirname(__file__), "snapshots", "cli", "template"
-    )
-    snapshot.snapshot_dir = snapshots_dir
-
-    fixtures = [
-        (
-            "basic",
-            [
-                "--config",
-                "hero=Viking",
-                "--data",
-                "hero.yml",
-                "A {{hero}} with long hair and sword",
-            ],
-        ),
-    ]
-    execute = TemplateCommand.execute
-    TemplateCommand.execute = MagicMock()
-    for test_name, fixture in fixtures:
-        sys.argv = ["giger", "template"] + fixture
-        run()
-
-        snapshot.assert_match(
-            yaml.dump(TemplateCommand.execute.call_args.args),
-            os.path.join(snapshots_dir, test_name + ".yml.snapshot"),
-        )
-    TemplateCommand.execute = execute
 
 
 def test_prompt(snapshot):
@@ -98,9 +65,9 @@ def test_prompt(snapshot):
     PromptCommand.execute = execute
 
 
-def test_roop(snapshot):
-    """CLI Roop Tests"""
-    snapshots_dir = os.path.join(os.path.dirname(__file__), "snapshots", "cli", "roop")
+def test_swap(snapshot):
+    """CLI Swap Tests"""
+    snapshots_dir = os.path.join(os.path.dirname(__file__), "snapshots", "cli", "swap")
     snapshot.snapshot_dir = snapshots_dir
 
     fixtures = [
@@ -109,18 +76,18 @@ def test_roop(snapshot):
             ["--input", "image.png", "--face", "face.png", "--output", "output.png"],
         )
     ]
-    execute = RoopCommand.execute
-    RoopCommand.execute = MagicMock()
+    execute = SwapCommand.execute
+    SwapCommand.execute = MagicMock()
     for test_name, fixture in fixtures:
-        sys.argv = ["giger", "roop"] + fixture
-        RoopCommand.execute = MagicMock()
+        sys.argv = ["giger", "swap"] + fixture
+        SwapCommand.execute = MagicMock()
         run()
 
         snapshot.assert_match(
-            yaml.dump(RoopCommand.execute.call_args.args),
+            yaml.dump(SwapCommand.execute.call_args.args),
             os.path.join(snapshots_dir, test_name + ".yml.snapshot"),
         )
-    RoopCommand.execute = execute
+    SwapCommand.execute = execute
 
 
 def test_image(snapshot):

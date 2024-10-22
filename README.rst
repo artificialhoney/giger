@@ -56,27 +56,6 @@ Increase verbosity to also output the ``diffusers`` logging.
     giger -vv
 
 
-template
---------
-
-Use a ``jinja2`` template file and supply data from file. Overwrite variables and print out to console.
-
-.. code:: bash
-
-   giger template --config hero=viking --data hero.yml "$(cat hero.txt.j2)"
-
-Use an inline ``jinja2`` template file and supply data. Write out to file.
-
-.. code:: bash
-
-   giger template --config hero=viking "A {{hero}} with long hair and sword" --output viking.txt
-
-You can also pipe from another command to the template task.
-
-.. code:: bash
-
-   echo "A {{hero}} with long hair and sword" | giger template --config hero=viking  --output viking.txt
-
 prompt
 ------
 
@@ -120,14 +99,14 @@ controlnet
 
    giger image "A viking with long hair and sword, Concept art, Photorealistic, Octane render, Cinematic, Ultra-Wide-Angle Shot, 8k" --output $HOME/Desktop/ --name viking --input input.png --controlnet_model "lllyasviel/sd-controlnet-hed"
 
-roop
+swap
 ----
 
 Simply change the face in an input image and render the result to disc.
 
 .. code:: bash
 
-   giger roop --face face.jpg --input target.png --output output.png
+   giger swap --face face.jpg --input target.png --output output.png
 
 upscale
 -------

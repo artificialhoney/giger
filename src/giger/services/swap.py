@@ -12,7 +12,7 @@ from PIL import Image
 _logger = logging.getLogger(__name__)
 
 
-class RoopService:
+class SwapService:
     def _get_face(self, source, det_size=(640, 640)):
         face_analyser = insightface.app.FaceAnalysis(
             name="buffalo_l", providers=["CPUExecutionProvider"]
@@ -39,15 +39,15 @@ class RoopService:
         det_size=(640, 640),
         input_target=0,
     ):
-        roop_dir = os.path.join(str(Path.home()), "roop")
+        swap_dir = os.path.join(str(Path.home()), "swap")
         if not model_name:
-            if not os.path.exists(roop_dir):
+            if not os.path.exists(swap_dir):
                 Repository(
-                    roop_dir, clone_from="ezioruan/inswapper_128.onnx", revision="main"
+                    swap_dir, clone_from="ezioruan/inswapper_128.onnx", revision="main"
                 )
-            model_name = os.path.join(roop_dir, "inswapper_128.onnx")
+            model_name = os.path.join(swap_dir, "inswapper_128.onnx")
         if enhance and not gfpgan_path:
-            gfpgan_path = os.path.join(roop_dir, "GFPGANv1.4.pth")
+            gfpgan_path = os.path.join(swap_dir, "GFPGANv1.4.pth")
             if not os.path.exists(gfpgan_path):
                 download_path = "https://github.com/TencentARC/GFPGAN/releases/download/v1.3.4/GFPGANv1.4.pth"
                 urllib.request.urlretrieve(download_path, gfpgan_path)

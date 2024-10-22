@@ -1,6 +1,6 @@
 !!python/tuple
 - !!python/object:argparse.Namespace
-  command: roop
+  command: swap
   face: face.png
   input: image.png
   loglevel: null

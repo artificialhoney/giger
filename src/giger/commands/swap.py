@@ -3,9 +3,9 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class RoopCommand:
+class SwapCommand:
     def __init__(self, parser):
-        self.parser = parser.add_parser("roop", help="Swap faces")
+        self.parser = parser.add_parser("swap", help="Swap faces")
         self.parser.add_argument(
             "-f", "--face", help="The source face image", required=True
         )
@@ -23,11 +23,11 @@ class RoopCommand:
         self.parser.add_argument("-t", "--input_target", default=0, type=int)
 
     def execute(self, args):
-        _logger.info('Running Roop for "{0}" with "{1}"'.format(args.input, args.face))
+        _logger.info('Running Swap for "{0}" with "{1}"'.format(args.input, args.face))
 
-        from ..services.roop import RoopService
+        from ..services.swap import SwapService
 
-        RoopService().swap(
+        SwapService().swap(
             args.face,
             args.input,
             args.output,

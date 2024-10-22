@@ -77,8 +77,8 @@ Changes
 ~~~~~~~
 - Image command tests. [Sebastian Krüger]
 - Furo theme update. [Sebastian Krüger]
-- Remove roop snapshot. [Sebastian Krüger]
-- Roop testing. [Sebastian Krüger]
+- Remove swap snapshot. [Sebastian Krüger]
+- Swap testing. [Sebastian Krüger]
 - More tests. [Sebastian Krüger]
 
 Other
@@ -153,7 +153,7 @@ Other
 
 Feature
 ~~~~~~~
-- Better roop. [Sebastian Krüger]
+- Better swap. [Sebastian Krüger]
 - Image variations. [Sebastian Krüger]
 - Lora scale. [Sebastian Krüger]
 - Lora weights. [Sebastian Krüger]
@@ -165,7 +165,7 @@ Feature
 - Conditioning scale. [Sebastian Krüger]
 - Conditioning scale. [Sebastian Krüger]
 - Controlnet. [Sebastian Krüger]
-- Roop. [Sebastian Krüger]
+- Swap. [Sebastian Krüger]
 - Autocomplete. [Sebastian Krüger]
 - Txt2img. [Sebastian Krüger]
 - Prompt generator. [Sebastian Krüger]
@@ -178,10 +178,10 @@ Feature
 
 Fix
 ~~~
-- Roop. [Sebastian Krüger]
+- Swap. [Sebastian Krüger]
 - Variations. [Sebastian Krüger]
 - Image resize. [Sebastian Krüger]
-- Roop. [Sebastian Krüger]
+- Swap. [Sebastian Krüger]
 - Compel quoting. [Sebastian Krüger]
 - Prompt context. [Sebastian Krüger]
 - Variations. [Sebastian Krüger]

@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from giger.services.roop import RoopService
+from giger.services.swap import SwapService
 
 __author__ = "Sebastian Krüger"
 __copyright__ = "Sebastian Krüger"
@@ -9,8 +9,8 @@ __license__ = "MIT"
 
 
 def test_swap():
-    """RoopService().swap"""
-    tmp_dir = os.path.join(os.path.dirname(__file__), "..", "tmp", "roop")
+    """SwapService().swap"""
+    tmp_dir = os.path.join(os.path.dirname(__file__), "..", "tmp", "swap")
     os.makedirs(tmp_dir, exist_ok=True)
     face = os.path.join(os.path.dirname(__file__), "..", "fixtures", "face.jpg")
     input = os.path.join(os.path.dirname(__file__), "..", "fixtures", "input.jpg")
@@ -25,10 +25,10 @@ def test_swap():
             face,
             input,
             os.path.join(tmp_dir, "fail.jpg"),
-            os.path.join(Path.home(), "roop", "GFPGANv1.4.pth"),
+            os.path.join(Path.home(), "swap", "GFPGANv1.4.pth"),
         ),
     ]
 
     for test_name, face, input, output, model_name in fixtures:
-        RoopService().swap(face, input, output, model_name=model_name)
+        SwapService().swap(face, input, output, model_name=model_name)
         assert os.path.exists(output) == (test_name != "fail")

@@ -9,8 +9,7 @@ from giger import __version__
 
 from .commands.image import ImageCommand
 from .commands.prompt import PromptCommand
-from .commands.roop import RoopCommand
-from .commands.template import TemplateCommand
+from .commands.swap import SwapCommand
 from .commands.upscale import UpscaleCommand
 
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -61,10 +60,9 @@ class CLI:
 
         subparsers = parser.add_subparsers(dest="command", required=True)
 
-        self.template = TemplateCommand(subparsers)
         self.prompt = PromptCommand(subparsers)
         self.image = ImageCommand(subparsers)
-        self.roop = RoopCommand(subparsers)
+        self.swap = SwapCommand(subparsers)
         self.upscale = UpscaleCommand(subparsers)
 
         return parser.parse_args(args)
@@ -87,9 +85,7 @@ class CLI:
     def run(self, args):
         args = self.parse_args(args)
         self.setup_logging(args.loglevel)
-        if args.command == "template":
-            self.template.execute(args)
-        elif args.command == "prompt":
+        if args.command == "prompt":
             self.prompt.execute(args)
         elif args.command == "image":
             from diffusers import utils
@@ -104,7 +100,7 @@ class CLI:
         elif args.command == "upscale":
             self.upscale.execute(args)
         else:
-            self.roop.execute(args)
+            self.swap.execute(args)
 
 
 def run():
