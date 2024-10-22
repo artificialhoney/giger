@@ -7,10 +7,9 @@ from diffusers import (
     AutoPipelineForImage2Image,
     AutoPipelineForText2Image,
     ControlNetModel,
+    DPMSolverMultistepScheduler,
     StableDiffusionControlNetPipeline,
-    UniPCMultistepScheduler,
 )
-from huggingface_hub import login
 from PIL import Image
 
 
@@ -139,10 +138,6 @@ class ImageService:
 
         exif_bytes = self._get_exif_bytes(prompt)
         generator = self._create_generator(seed, count)
-        # speed up diffusion process with faster scheduler and memory optimization
-        pipeline.scheduler = UniPCMultistepScheduler.from_config(
-            pipeline.scheduler.config
-        )
 
         images = pipeline(
             prompt=prompt,
@@ -240,6 +235,10 @@ class ImageService:
                     weight_name=inversion["filename"],
                     token=inversion["token"],
                 )
+
+        pipeline.scheduler = DPMSolverMultistepScheduler.from_config(
+            pipeline.scheduler.config
+        )
 
         return pipeline
 
